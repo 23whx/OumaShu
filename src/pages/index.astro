@@ -17,11 +17,13 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
     <aside class="w-64 bg-white dark:bg-black border-r border-gray-200 dark:border-gray-700 fixed h-full overflow-y-auto flex flex-col">
       <!-- Logo -->
       <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-        <div class="flex items-center space-x-2">
-          <span class="text-2xl">🌸</span>
-          <h1 class="text-xl font-bold text-gray-900 dark:text-white">OumaShu</h1>
+        <div class="flex items-center space-x-3">
+          <img src="/logo.png" alt="OumaShu Logo" class="w-8 h-8" />
+          <div>
+            <h1 class="text-xl font-bold text-gray-900 dark:text-white">OumaShu</h1>
+            <p class="text-sm text-gray-600 dark:text-gray-400">小工具导航站</p>
+          </div>
         </div>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">小工具导航站</p>
       </div>
 
       <!-- 分类列表 -->
