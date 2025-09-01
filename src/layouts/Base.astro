@@ -1,5 +1,6 @@
 ---
 import { detectLocale, getTextDirection, SUPPORTED_LOCALES, type Locale } from '../utils/i18n';
+import '../styles/global.css';
 
 export interface Props {
   title?: string;
@@ -99,15 +100,60 @@ const jsonLd = {
   
   <!-- Theme -->
   <meta name="theme-color" content="#fff5f7" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   
   <!-- Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://pagead2.googlesyndication.com">
   
-  <!-- 样式 -->
-  <link rel="stylesheet" href="/src/styles/global.css">
-  
+  <!-- 关键CSS内联 -->
+  <style>
+    /* CSS变量定义 */
+    :root {
+      --color-bg: #fff5f7;
+      --color-fg: #111827;
+      --color-card: #ffffff;
+      --color-brand: #e91e63;
+      --color-accent: #4ade80;
+      --color-border: #e5e7eb;
+      --color-muted: #6b7280;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Hiragino Sans GB', sans-serif;
+      --transition-normal: 250ms ease;
+    }
+    
+    :root[data-theme='dark'] {
+      --color-bg: #000000;
+      --color-fg: #e5e7eb;
+      --color-card: #111111;
+      --color-brand: #ff5c8a;
+      --color-accent: #34d399;
+      --color-border: #2a2a2a;
+      --color-muted: #9ca3af;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    html {
+      font-family: var(--font-sans);
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--color-bg);
+      color: var(--color-fg);
+      line-height: 1.6;
+      transition: background-color var(--transition-normal), color var(--transition-normal);
+    }
+    
+    .sakura-gradient {
+      background: linear-gradient(135deg, var(--color-bg), var(--color-card));
+    }
+  </style>
+
   <!-- 主题初始化脚本 (防止闪烁) -->
   <script is:inline>
     (function() {
@@ -127,7 +173,7 @@ const jsonLd = {
       // 更新 meta theme-color
       const metaThemeColor = document.querySelector('meta[name="theme-color"]');
       if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', theme === 'dark' ? '#0b0b0c' : '#fff5f7');
+        metaThemeColor.setAttribute('content', theme === 'dark' ? '#000000' : '#fff5f7');
       }
     })();
   </script>
