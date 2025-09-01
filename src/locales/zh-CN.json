@@ -1,0 +1,78 @@
+{
+  "site": {
+    "title": "OumaShu - 小工具导航站",
+    "description": "极简日式风格的小工具集合站。一站式入口，提升您的工作效率。",
+    "keywords": "工具, 效率, 导航, 应用"
+  },
+  "nav": {
+    "home": "首页",
+    "categories": "分类", 
+    "about": "关于",
+    "search": "搜索"
+  },
+  "header": {
+    "logo_alt": "OumaShu 标志",
+    "menu": "菜单",
+    "language": "语言",
+    "theme": "主题"
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色", 
+    "system": "跟随系统"
+  },
+  "search": {
+    "placeholder": "搜索工具...",
+    "no_results": "未找到相关工具",
+    "results_count": "找到 {{count}} 个工具"
+  },
+  "filters": {
+    "all": "全部",
+    "featured": "推荐",
+    "recent": "最新",
+    "popular": "热门",
+    "category": "分类",
+    "tag": "标签",
+    "clear": "清除筛选"
+  },
+  "tools": {
+    "featured": "推荐",
+    "new": "新",
+    "popular": "热门",
+    "updated": "{{date}} 更新",
+    "visit": "访问工具",
+    "external_link": "外部链接"
+  },
+  "categories": {
+    "ai": "AI 与机器学习",
+    "productivity": "生产力工具",
+    "design": "设计与图形", 
+    "development": "开发工具",
+    "language": "语言学习",
+    "entertainment": "娱乐",
+    "utilities": "实用工具",
+    "education": "教育"
+  },
+  "footer": {
+    "about": "关于 OumaShu",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "contact": "联系我们",
+    "made_with": "用 ❤️ 为效率而生"
+  },
+  "ads": {
+    "sponsored": "赞助",
+    "advertisement": "广告"
+  },
+  "error": {
+    "page_not_found": "页面未找到",
+    "something_wrong": "出现了一些问题",
+    "try_again": "重试",
+    "go_home": "返回首页"
+  },
+  "loading": {
+    "tools": "加载工具中...",
+    "search": "搜索中...",
+    "general": "加载中..."
+  }
+}

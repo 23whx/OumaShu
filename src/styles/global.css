@@ -1,0 +1,107 @@
+/* 导入主题样式 */
+@import './theme.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 全局重置和基础样式 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  line-height: 1.6;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  min-height: 100vh;
+}
+
+/* 确保样式正确应用 */
+.sakura-gradient {
+  background: linear-gradient(135deg, #fff5f7 0%, #f0fdf4 100%);
+}
+
+.dark .sakura-gradient {
+  background: linear-gradient(135deg, #0b0b0c 0%, #111827 100%);
+}
+
+/* 工具卡片渐变样式 */
+.tool-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tool-card:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* 樱花渐变背景 */
+.sakura-gradient-card {
+  background: linear-gradient(135deg, #e91e63, #f48fb1, #e91e63);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 侧边栏样式 */
+.sidebar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* 响应式工具卡片 */
+@media (max-width: 768px) {
+  .tool-card {
+    height: auto;
+    min-height: 180px;
+  }
+}
+
+/* 修复按钮样式 */
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg font-medium transition-all duration-200;
+}
+
+.btn-primary {
+  @apply bg-sakura-500 text-white hover:bg-sakura-600 shadow-sm;
+}
+
+.btn-secondary {
+  @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700;
+}
+
+/* 卡片样式 */
+.card {
+  @apply bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-all duration-200;
+}
+
+/* 标签样式 */
+.tag {
+  @apply inline-flex items-center px-3 py-1 bg-sakura-50 dark:bg-sakura-900/20 text-sakura-600 dark:text-sakura-400 border border-sakura-200 dark:border-sakura-800 rounded-full text-sm font-medium;
+}
+
+.tag-accent {
+  @apply bg-leaf-50 dark:bg-leaf-900/20 text-leaf-600 dark:text-leaf-400 border-leaf-200 dark:border-leaf-800;
+}
+
+.tag-featured {
+  @apply bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800;
+}

@@ -1,0 +1,78 @@
+{
+  "site": {
+    "title": "OumaShu - دليل الأدوات",
+    "description": "مركز أدوات صغيرة بتصميم ياباني بسيط. مدخل واحد لتحسين إنتاجيتك.",
+    "keywords": "أدوات, إنتاجية, دليل, تطبيقات"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "categories": "الفئات", 
+    "about": "حول",
+    "search": "بحث"
+  },
+  "header": {
+    "logo_alt": "شعار OumaShu",
+    "menu": "القائمة",
+    "language": "اللغة",
+    "theme": "السمة"
+  },
+  "theme": {
+    "light": "فاتح",
+    "dark": "داكن", 
+    "system": "تابع النظام"
+  },
+  "search": {
+    "placeholder": "البحث عن أدوات...",
+    "no_results": "لم يتم العثور على أدوات",
+    "results_count": "تم العثور على {{count}} أداة"
+  },
+  "filters": {
+    "all": "الكل",
+    "featured": "مميز",
+    "recent": "الأحدث",
+    "popular": "الأكثر شعبية",
+    "category": "الفئة",
+    "tag": "العلامة",
+    "clear": "مسح الفلاتر"
+  },
+  "tools": {
+    "featured": "مميز",
+    "new": "جديد",
+    "popular": "شائع",
+    "updated": "محدث في {{date}}",
+    "visit": "زيارة الأداة",
+    "external_link": "رابط خارجي"
+  },
+  "categories": {
+    "ai": "الذكاء الاصطناعي والتعلم الآلي",
+    "productivity": "أدوات الإنتاجية",
+    "design": "التصميم والرسوميات", 
+    "development": "أدوات التطوير",
+    "language": "تعلم اللغات",
+    "entertainment": "الترفيه",
+    "utilities": "الأدوات المساعدة",
+    "education": "التعليم"
+  },
+  "footer": {
+    "about": "حول OumaShu",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "contact": "اتصل بنا",
+    "made_with": "صُنع بـ ❤️ من أجل الإنتاجية"
+  },
+  "ads": {
+    "sponsored": "برعاية",
+    "advertisement": "إعلان"
+  },
+  "error": {
+    "page_not_found": "الصفحة غير موجودة",
+    "something_wrong": "حدث خطأ ما",
+    "try_again": "حاول مرة أخرى",
+    "go_home": "العودة للرئيسية"
+  },
+  "loading": {
+    "tools": "جارٍ تحميل الأدوات...",
+    "search": "جارٍ البحث...",
+    "general": "جارٍ التحميل..."
+  }
+}

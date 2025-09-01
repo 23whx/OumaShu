@@ -1,0 +1,78 @@
+{
+  "site": {
+    "title": "OumaShu - ツールディレクトリ",
+    "description": "ミニマルな和風スタイルのマイクロツール集約サイト。生産性向上のワンストップエントリー。",
+    "keywords": "ツール, 生産性, ディレクトリ, アプリ"
+  },
+  "nav": {
+    "home": "ホーム",
+    "categories": "カテゴリー", 
+    "about": "概要",
+    "search": "検索"
+  },
+  "header": {
+    "logo_alt": "OumaShu ロゴ",
+    "menu": "メニュー",
+    "language": "言語",
+    "theme": "テーマ"
+  },
+  "theme": {
+    "light": "ライト",
+    "dark": "ダーク", 
+    "system": "システムに従う"
+  },
+  "search": {
+    "placeholder": "ツールを検索...",
+    "no_results": "ツールが見つかりません",
+    "results_count": "{{count}}個のツールが見つかりました"
+  },
+  "filters": {
+    "all": "すべて",
+    "featured": "おすすめ",
+    "recent": "最新",
+    "popular": "人気",
+    "category": "カテゴリー",
+    "tag": "タグ",
+    "clear": "フィルターをクリア"
+  },
+  "tools": {
+    "featured": "おすすめ",
+    "new": "新着",
+    "popular": "人気",
+    "updated": "{{date}}に更新",
+    "visit": "ツールを開く",
+    "external_link": "外部リンク"
+  },
+  "categories": {
+    "ai": "AI・機械学習",
+    "productivity": "生産性ツール",
+    "design": "デザイン・グラフィック", 
+    "development": "開発ツール",
+    "language": "語学学習",
+    "entertainment": "エンターテイメント",
+    "utilities": "ユーティリティ",
+    "education": "教育"
+  },
+  "footer": {
+    "about": "OumaShuについて",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "contact": "お問い合わせ",
+    "made_with": "生産性のために❤️で作られました"
+  },
+  "ads": {
+    "sponsored": "スポンサー",
+    "advertisement": "広告"
+  },
+  "error": {
+    "page_not_found": "ページが見つかりません",
+    "something_wrong": "何か問題が発生しました",
+    "try_again": "再試行",
+    "go_home": "ホームに戻る"
+  },
+  "loading": {
+    "tools": "ツールを読み込み中...",
+    "search": "検索中...",
+    "general": "読み込み中..."
+  }
+}

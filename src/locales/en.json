@@ -1,0 +1,78 @@
+{
+  "site": {
+    "title": "OumaShu - Tools Directory",
+    "description": "Minimal Japanese-style hub for your micro tools. All-in-one entry for productivity apps.",
+    "keywords": "tools, productivity, directory, apps"
+  },
+  "nav": {
+    "home": "Home",
+    "categories": "Categories", 
+    "about": "About",
+    "search": "Search"
+  },
+  "header": {
+    "logo_alt": "OumaShu Logo",
+    "menu": "Menu",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark", 
+    "system": "System"
+  },
+  "search": {
+    "placeholder": "Search tools...",
+    "no_results": "No tools found",
+    "results_count": "{{count}} tools found"
+  },
+  "filters": {
+    "all": "All",
+    "featured": "Featured",
+    "recent": "Recent",
+    "popular": "Popular",
+    "category": "Category",
+    "tag": "Tag",
+    "clear": "Clear filters"
+  },
+  "tools": {
+    "featured": "Featured",
+    "new": "New",
+    "popular": "Popular",
+    "updated": "Updated {{date}}",
+    "visit": "Visit Tool",
+    "external_link": "External Link"
+  },
+  "categories": {
+    "ai": "AI & Machine Learning",
+    "productivity": "Productivity",
+    "design": "Design & Graphics", 
+    "development": "Development",
+    "language": "Language Learning",
+    "entertainment": "Entertainment",
+    "utilities": "Utilities",
+    "education": "Education"
+  },
+  "footer": {
+    "about": "About OumaShu",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact",
+    "made_with": "Made with ❤️ for productivity"
+  },
+  "ads": {
+    "sponsored": "Sponsored",
+    "advertisement": "Advertisement"
+  },
+  "error": {
+    "page_not_found": "Page not found",
+    "something_wrong": "Something went wrong",
+    "try_again": "Try again",
+    "go_home": "Go home"
+  },
+  "loading": {
+    "tools": "Loading tools...",
+    "search": "Searching...",
+    "general": "Loading..."
+  }
+}
