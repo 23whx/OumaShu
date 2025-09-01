@@ -311,6 +311,16 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'category_descriptions': {
           'entertainment': '娱乐工具和有趣应用',
           'education': '教育工具和学习资源'
+        },
+        'tools': {
+          'learn-languages': {
+            'name': 'Learn Languages',
+            'description': 'AI 对话练习与 PDF 问答训练，提升外语能力的完整解决方案'
+          },
+          'subtitle-screenshot': {
+            'name': 'Subtitle Screenshot Generator', 
+            'description': '名人背景字幕截图生成器，快速制作有趣的字幕模因图片'
+          }
         }
       },
       'zh-TW': {
@@ -327,6 +337,16 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'category_descriptions': {
           'entertainment': '娛樂工具和有趣應用',
           'education': '教育工具和學習資源'
+        },
+        'tools': {
+          'learn-languages': {
+            'name': 'Learn Languages',
+            'description': 'AI 對話練習與 PDF 問答訓練，提升外語能力的完整解決方案'
+          },
+          'subtitle-screenshot': {
+            'name': 'Subtitle Screenshot Generator',
+            'description': '名人背景字幕截圖生成器，快速製作有趣的字幕模因圖片'
+          }
         }
       },
       'en': {
@@ -343,6 +363,16 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'category_descriptions': {
           'entertainment': 'Fun tools and entertainment utilities',
           'education': 'Educational tools and learning resources'
+        },
+        'tools': {
+          'learn-languages': {
+            'name': 'Learn Languages',
+            'description': 'AI conversation practice and PDF Q&A training for language learning'
+          },
+          'subtitle-screenshot': {
+            'name': 'Subtitle Screenshot Generator',
+            'description': 'Celebrity background subtitle screenshot generator for creating memes'
+          }
         }
       },
       'ja-JP': {
@@ -359,6 +389,16 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'category_descriptions': {
           'entertainment': '楽しいツールとエンターテイメントユーティリティ',
           'education': '教育ツールと学習リソース'
+        },
+        'tools': {
+          'learn-languages': {
+            'name': 'Learn Languages',
+            'description': 'AI会話練習とPDF Q&A学習で外国語能力を向上'
+          },
+          'subtitle-screenshot': {
+            'name': 'Subtitle Screenshot Generator',
+            'description': '有名人背景字幕スクリーンショット生成器でミーム画像作成'
+          }
         }
       },
       'ar': {
@@ -375,6 +415,16 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'category_descriptions': {
           'entertainment': 'أدوات ممتعة ومرافق ترفيهية',
           'education': 'أدوات تعليمية وموارد تعلم'
+        },
+        'tools': {
+          'learn-languages': {
+            'name': 'تعلم اللغات',
+            'description': 'ممارسة المحادثة بالذكاء الاصطناعي وتدريب الأسئلة والأجوبة لتعلم اللغات'
+          },
+          'subtitle-screenshot': {
+            'name': 'مولد لقطة الشاشة مع الترجمة',
+            'description': 'مولد لقطات الشاشة مع ترجمة المشاهير لإنشاء الميمات'
+          }
         }
       },
       'ru': {
@@ -391,6 +441,16 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'category_descriptions': {
           'entertainment': 'Развлекательные инструменты и утилиты',
           'education': 'Образовательные инструменты и учебные ресурсы'
+        },
+        'tools': {
+          'learn-languages': {
+            'name': 'Изучение языков',
+            'description': 'ИИ разговорная практика и обучение Q&A с PDF для изучения языков'
+          },
+          'subtitle-screenshot': {
+            'name': 'Генератор скриншотов с субтитрами',
+            'description': 'Генератор скриншотов с субтитрами знаменитостей для создания мемов'
+          }
         }
       }
     };
@@ -399,6 +459,67 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
     let currentLocale = localStorage.getItem('locale') || 'zh-CN';
     languageFlag.textContent = localeData[currentLocale]?.flag || '🇨🇳';
     
+    // 更新当前显示的工具卡片
+    function updateCurrentToolCards(locale) {
+      const t = translations[locale] || translations['zh-CN'];
+      const toolsGrid = document.getElementById('tools-grid');
+      const currentCategoryBtn = document.querySelector('.category-btn.bg-sakura-50, .category-btn[class*="bg-sakura"]');
+      
+      if (currentCategoryBtn && toolsGrid) {
+        const categoryId = currentCategoryBtn.dataset.category;
+        const categoryTools = window.toolsData.filter(tool => tool.category === categoryId);
+        
+        if (categoryTools.length > 0) {
+          toolsGrid.innerHTML = categoryTools.map(tool => {
+            // 获取翻译的工具名称和描述
+            const toolTranslation = t.tools && t.tools[tool.id];
+            const translatedName = toolTranslation ? toolTranslation.name : tool.name;
+            const translatedDesc = toolTranslation ? toolTranslation.description : tool.description;
+            
+            return `
+            <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-subdomain="${tool.subdomain}">
+              <div class="
+                relative overflow-hidden rounded-xl p-6 h-50
+                bg-gradient-to-br from-sakura-400 to-sakura-600
+                hover:from-sakura-500 hover:to-sakura-700
+                transform hover:scale-105 transition-all duration-300 ease-out
+                shadow-lg hover:shadow-xl
+                text-white
+              ">
+                <div class="absolute top-0 right-0 opacity-20">
+                  <div class="w-32 h-32 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
+                </div>
+                <div class="absolute bottom-0 left-0 opacity-10">
+                  <div class="w-24 h-24 rounded-full bg-white transform -translate-x-4 translate-y-4"></div>
+                </div>
+                <div class="relative z-10 h-full flex flex-col">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="text-3xl">${tool.icon || '🛠️'}</div>
+                    ${tool.featured ? '<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">⭐ 推荐</span>' : ''}
+                  </div>
+                  <h3 class="text-xl font-bold mb-2 line-clamp-1">${translatedName}</h3>
+                  <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${translatedDesc}</p>
+                  <div class="flex items-center justify-between">
+                    <div class="flex flex-wrap gap-1">
+                      ${tool.tags.slice(0, 2).map(tag => `
+                        <span class="bg-white/20 backdrop-blur-sm text-xs px-2 py-1 rounded-full">${tag}</span>
+                      `).join('')}
+                    </div>
+                    <div class="flex items-center text-white/80">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
     // 更新页面文本的函数
     function updatePageText(locale) {
       const t = translations[locale] || translations['zh-CN'];
@@ -452,6 +573,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           }
         }
       }
+      
+      // 更新当前显示的工具卡片
+      updateCurrentToolCards(locale);
     }
     
     // 初始化页面文本
@@ -537,7 +661,13 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           toolsGrid.classList.remove('hidden');
           emptyState.classList.add('hidden');
           
-          toolsGrid.innerHTML = categoryTools.map(tool => `
+          toolsGrid.innerHTML = categoryTools.map(tool => {
+            // 获取翻译的工具名称和描述
+            const toolTranslation = t.tools && t.tools[tool.id];
+            const translatedName = toolTranslation ? toolTranslation.name : tool.name;
+            const translatedDesc = toolTranslation ? toolTranslation.description : tool.description;
+            
+            return `
             <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-subdomain="${tool.subdomain}">
               <div class="
                 relative overflow-hidden rounded-xl p-6 h-50
@@ -558,8 +688,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                     <div class="text-3xl">${tool.icon || '🛠️'}</div>
                     ${tool.featured ? '<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">⭐ 推荐</span>' : ''}
                   </div>
-                  <h3 class="text-xl font-bold mb-2 line-clamp-1">${tool.name}</h3>
-                  <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${tool.description}</p>
+                  <h3 class="text-xl font-bold mb-2 line-clamp-1">${translatedName}</h3>
+                  <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${translatedDesc}</p>
                   <div class="flex items-center justify-between">
                     <div class="flex flex-wrap gap-1">
                       ${tool.tags.slice(0, 2).map(tag => `
@@ -575,7 +705,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 </div>
               </div>
             </div>
-          `).join('');
+            `;
+          }).join('');
         }
       });
     });
