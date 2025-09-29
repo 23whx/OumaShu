@@ -39,6 +39,13 @@ export const categories: ToolCategory[] = [
     description: 'Educational tools and learning resources',
     icon: '📚',
     color: '#84cc16'
+  },
+  {
+    id: 'utilities',
+    name: 'Utilities',
+    description: 'Practical tools and utilities',
+    icon: '🔧',
+    color: '#06b6d4'
   }
 ];
 
@@ -77,6 +84,40 @@ export const tools: ToolItem[] = [
     isNew: false,
     screenshots: [
       '/og/subtitle-screenshot-1.jpg'
+    ]
+  },
+  {
+    id: 'media-trim',
+    name: 'MediaTrim',
+    description: '在线视频转音频工具，支持音频剪切、格式转换，多种导出格式',
+    tags: ['视频转音频', '音频剪切', '格式转换', 'MP3', 'WAV', '在线工具'],
+    subdomain: 'media-trim',
+    url: 'https://audio-trimmer-converter.vercel.app/',
+    icon: '🎵',
+    featured: true,
+    updatedAt: '2024-12-01T12:00:00Z',
+    category: 'utilities',
+    popularity: 92,
+    isNew: true,
+    screenshots: [
+      '/og/media-trim-1.jpg'
+    ]
+  },
+  {
+    id: 'mbti-test',
+    name: 'MBTI Personality Test',
+    description: '专业MBTI人格类型测试，68题深度分析，了解你的性格特征和行为模式',
+    tags: ['心理测试', 'MBTI', '人格分析', '性格测试', '自我认知'],
+    subdomain: 'mbti',
+    url: 'https://mbti-one-eta.vercel.app/',
+    icon: '🧠',
+    featured: true,
+    updatedAt: '2024-12-01T11:30:00Z',
+    category: 'entertainment',
+    popularity: 90,
+    isNew: true,
+    screenshots: [
+      '/og/mbti-test-1.jpg'
     ]
   }
 ];
