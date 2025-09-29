@@ -69,7 +69,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             <button 
               id="theme-toggle-btn"
               class="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              title="切换主题"
+              title="主题切换"
             >
               <span id="theme-icon" class="text-lg">💻</span>
             </button>
@@ -80,7 +80,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             <button 
               id="language-toggle-btn"
               class="flex items-center space-x-1 px-2 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              title="切换语言"
+              title="语言切换"
             >
               <span id="language-flag">🇨🇳</span>
               <span class="text-xs">▼</span>
@@ -137,8 +137,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
               {defaultCategory.description}
             </p>
           </div>
-          <div class="text-sm text-gray-500 dark:text-gray-400">
-            <span id="tools-count">{defaultTools.length}</span> 个工具
+          <div class="text-sm text-gray-500 dark:text-gray-400" id="tools-count-text">
+            <span id="tools-count">{defaultTools.length}</span> <span id="tools-count-unit">个工具</span>
           </div>
         </div>
       </header>
@@ -173,8 +173,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                   <div class="flex items-center justify-between mb-4">
                     <div class="text-3xl">{tool.icon || '🛠️'}</div>
                     {tool.featured && (
-                      <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                        ⭐ 推荐
+                      <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">
+                        ⭐ <span class="featured-text">推荐</span>
                       </span>
                     )}
                   </div>
@@ -211,10 +211,10 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         {/* 空状态 */}
         <div id="empty-state" class="hidden text-center py-16">
           <div class="text-6xl mb-4">📦</div>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2" id="empty-state-title">
             该分类暂无工具
           </h3>
-          <p class="text-gray-600 dark:text-gray-400">
+          <p class="text-gray-600 dark:text-gray-400" id="empty-state-desc">
             更多工具正在开发中，敬请期待！
           </p>
         </div>
@@ -302,6 +302,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'site_subtitle': '小工具导航站',
         'categories_title': '工具分类',
         'tools_count': '个工具',
+        'featured_text': '推荐',
+        'theme_toggle_title': '主题切换',
+        'language_toggle_title': '语言切换',
         'empty_state_title': '该分类暂无工具',
         'empty_state_desc': '更多工具正在开发中，敬请期待！',
         'categories': {
@@ -325,7 +328,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           },
           'media-trim': {
             'name': 'MediaTrim',
-            'description': '在线视频转音频工具，支持音频剪切、格式转换，多种导出格式'
+            'description': '在线视频转音频工具，支持音频剪切、格式转换'
           },
           'mbti-test': {
             'name': 'MBTI人格测试',
@@ -338,6 +341,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'site_subtitle': '小工具導航站',
         'categories_title': '工具分類',
         'tools_count': '個工具',
+        'featured_text': '推薦',
+        'theme_toggle_title': '主題切換',
+        'language_toggle_title': '語言切換',
         'empty_state_title': '該分類暫無工具',
         'empty_state_desc': '更多工具正在開發中，敬請期待！',
         'categories': {
@@ -361,7 +367,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           },
           'media-trim': {
             'name': 'MediaTrim',
-            'description': '線上視頻轉音頻工具，支援音頻剪切、格式轉換，多種導出格式'
+            'description': '線上視頻轉音頻工具，支援音頻剪切、格式轉換'
           },
           'mbti-test': {
             'name': 'MBTI人格測試',
@@ -374,6 +380,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'site_subtitle': 'Tools Directory',
         'categories_title': 'Tool Categories',
         'tools_count': 'tools',
+        'featured_text': 'Featured',
+        'theme_toggle_title': 'Toggle theme',
+        'language_toggle_title': 'Switch language',
         'empty_state_title': 'No tools in this category',
         'empty_state_desc': 'More tools are coming soon!',
         'categories': {
@@ -410,6 +419,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'site_subtitle': 'ツールディレクトリ',
         'categories_title': 'ツールカテゴリ',
         'tools_count': 'ツール',
+        'featured_text': 'おすすめ',
+        'theme_toggle_title': 'テーマ切り替え',
+        'language_toggle_title': '言語切り替え',
         'empty_state_title': 'このカテゴリにはツールがありません',
         'empty_state_desc': 'より多くのツールが近日公開予定です！',
         'categories': {
@@ -446,6 +458,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'site_subtitle': 'دليل الأدوات',
         'categories_title': 'فئات الأدوات',
         'tools_count': 'أدوات',
+        'featured_text': 'مميز',
+        'theme_toggle_title': 'تبديل المظهر',
+        'language_toggle_title': 'تغيير اللغة',
         'empty_state_title': 'لا توجد أدوات في هذه الفئة',
         'empty_state_desc': 'المزيد من الأدوات قادمة قريباً!',
         'categories': {
@@ -482,6 +497,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'site_subtitle': 'Каталог инструментов',
         'categories_title': 'Категории инструментов',
         'tools_count': 'инструментов',
+        'featured_text': 'Рекомендуемое',
+        'theme_toggle_title': 'Переключить тему',
+        'language_toggle_title': 'Изменить язык',
         'empty_state_title': 'В этой категории нет инструментов',
         'empty_state_desc': 'Больше инструментов появится в ближайшее время!',
         'categories': {
@@ -555,7 +573,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="text-3xl">${tool.icon || '🛠️'}</div>
-                    ${tool.featured ? '<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">⭐ 推荐</span>' : ''}
+                    ${tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
                   </div>
                   <h3 class="text-xl font-bold mb-2 line-clamp-1">${translatedName}</h3>
                   <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${translatedDesc}</p>
@@ -607,14 +625,22 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       });
       
       // 更新工具计数文本
-      const toolsCountText = document.getElementById('tools-count');
-      if (toolsCountText) {
-        const count = toolsCountText.textContent;
-        const parentElement = toolsCountText.parentElement;
-        if (parentElement) {
-          parentElement.innerHTML = `<span id="tools-count">${count}</span> ${t.tools_count}`;
-        }
+      const toolsCountUnit = document.getElementById('tools-count-unit');
+      if (toolsCountUnit) {
+        toolsCountUnit.textContent = t.tools_count;
       }
+      
+      // 更新推荐标签文本
+      const featuredTexts = document.querySelectorAll('.featured-text');
+      featuredTexts.forEach(el => {
+        el.textContent = t.featured_text;
+      });
+      
+      // 更新按钮title
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      const languageToggleBtn = document.getElementById('language-toggle-btn');
+      if (themeToggleBtn) themeToggleBtn.title = t.theme_toggle_title;
+      if (languageToggleBtn) languageToggleBtn.title = t.language_toggle_title;
       
       // 更新空状态文本
       const emptyStateTitle = document.querySelector('#empty-state h3');
@@ -640,6 +666,22 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
     
     // 初始化页面文本
     updatePageText(currentLocale);
+    
+    // 初始化当前分类的翻译
+    const t = translations[currentLocale] || translations['zh-CN'];
+    const firstCategory = categories[0];
+    if (firstCategory) {
+      const categoryTitle = document.getElementById('category-title');
+      const categoryDescription = document.getElementById('category-description');
+      if (categoryTitle) {
+        const translatedName = t.categories[firstCategory.id] || firstCategory.name;
+        categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${firstCategory.icon}</span>${translatedName}`;
+      }
+      if (categoryDescription) {
+        const translatedDesc = t.category_descriptions[firstCategory.id] || firstCategory.description;
+        categoryDescription.textContent = translatedDesc;
+      }
+    }
     
     // 语言切换按钮点击
     languageToggleBtn.addEventListener('click', () => {
@@ -708,9 +750,10 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         categoryDescription.textContent = translatedDesc;
         
         // 更新工具计数文本
-        const countParent = toolsCount.parentElement;
-        if (countParent) {
-          countParent.innerHTML = `<span id="tools-count">${categoryTools.length}</span> ${t.tools_count}`;
+        toolsCount.textContent = categoryTools.length;
+        const toolsCountUnit = document.getElementById('tools-count-unit');
+        if (toolsCountUnit) {
+          toolsCountUnit.textContent = t.tools_count;
         }
 
         // 更新工具网格
@@ -746,7 +789,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="text-3xl">${tool.icon || '🛠️'}</div>
-                    ${tool.featured ? '<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">⭐ 推荐</span>' : ''}
+                    ${tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
                   </div>
                   <h3 class="text-xl font-bold mb-2 line-clamp-1">${translatedName}</h3>
                   <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${translatedDesc}</p>

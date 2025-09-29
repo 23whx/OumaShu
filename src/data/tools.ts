@@ -89,7 +89,7 @@ export const tools: ToolItem[] = [
   {
     id: 'media-trim',
     name: 'MediaTrim',
-    description: '在线视频转音频工具，支持音频剪切、格式转换，多种导出格式',
+    description: '在线视频转音频工具，支持音频剪切、格式转换',
     tags: ['视频转音频', '音频剪切', '格式转换', 'MP3', 'WAV', '在线工具'],
     subdomain: 'media-trim',
     url: 'https://audio-trimmer-converter.vercel.app/',
