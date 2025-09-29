@@ -541,13 +541,109 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       }
     };
     
+    // 根据IP自动检测语言
+    async function detectLocaleByIP() {
+      try {
+        // 首先检查localStorage是否有用户手动设置的语言
+        const savedLocale = localStorage.getItem('locale');
+        if (savedLocale) {
+          return savedLocale;
+        }
+        
+        // 使用免费的IP地理位置API检测用户位置
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        
+        // 根据国家代码映射到语言
+        const countryToLocale = {
+          'CN': 'zh-CN',     // 中国大陆
+          'TW': 'zh-TW',     // 台湾
+          'HK': 'zh-TW',     // 香港
+          'MO': 'zh-TW',     // 澳门
+          'JP': 'ja-JP',     // 日本
+          'RU': 'ru',        // 俄罗斯
+          'BY': 'ru',        // 白俄罗斯
+          'KZ': 'ru',        // 哈萨克斯坦
+          'KG': 'ru',        // 吉尔吉斯斯坦
+          'SA': 'ar',        // 沙特阿拉伯
+          'AE': 'ar',        // 阿联酋
+          'EG': 'ar',        // 埃及
+          'JO': 'ar',        // 约旦
+          'LB': 'ar',        // 黎巴嫩
+          'SY': 'ar',        // 叙利亚
+          'IQ': 'ar',        // 伊拉克
+          'KW': 'ar',        // 科威特
+          'QA': 'ar',        // 卡塔尔
+          'BH': 'ar',        // 巴林
+          'OM': 'ar',        // 阿曼
+          'YE': 'ar',        // 也门
+          'MA': 'ar',        // 摩洛哥
+          'TN': 'ar',        // 突尼斯
+          'DZ': 'ar',        // 阿尔及利亚
+          'LY': 'ar',        // 利比亚
+          'SD': 'ar',        // 苏丹
+        };
+        
+        return countryToLocale[data.country_code] || 'en'; // 默认英语
+      } catch (error) {
+        console.log('IP detection failed, using default locale:', error);
+        return 'en'; // 检测失败时默认英语
+      }
+    }
+    
     // 获取当前语言
-    let currentLocale = localStorage.getItem('locale') || 'zh-CN';
-    languageFlag.textContent = localeData[currentLocale]?.flag || '🇨🇳';
+    let currentLocale = 'en'; // 临时设置为英语，等待检测结果
+    
+    // 异步检测并设置语言
+    detectLocaleByIP().then(detectedLocale => {
+      currentLocale = detectedLocale;
+      languageFlag.textContent = localeData[currentLocale]?.flag || '🇺🇸';
+      
+      // 初始化页面文本
+      updatePageText(currentLocale);
+      
+      // 初始化当前分类的翻译
+      const t = translations[currentLocale] || translations['en'];
+      const firstCategory = window.categoriesData[0];
+      if (firstCategory) {
+        const categoryTitle = document.getElementById('category-title');
+        const categoryDescription = document.getElementById('category-description');
+        if (categoryTitle) {
+          const translatedName = t.categories[firstCategory.id] || firstCategory.name;
+          categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${firstCategory.icon}</span>${translatedName}`;
+        }
+        if (categoryDescription) {
+          const translatedDesc = t.category_descriptions[firstCategory.id] || firstCategory.description;
+          categoryDescription.textContent = translatedDesc;
+        }
+      }
+      
+      console.log('Auto-detected locale:', currentLocale);
+    });
+    
+    // 设置初始语言标志为英语
+    languageFlag.textContent = localeData['en']?.flag || '🇺🇸';
+    
+    // 初始显示英文（在IP检测完成前）
+    updatePageText('en');
+    const initialT = translations['en'];
+    const firstCategory = window.categoriesData[0];
+    if (firstCategory) {
+      const categoryTitle = document.getElementById('category-title');
+      const categoryDescription = document.getElementById('category-description');
+      if (categoryTitle) {
+        const translatedName = initialT.categories[firstCategory.id] || firstCategory.name;
+        categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${firstCategory.icon}</span>${translatedName}`;
+      }
+      if (categoryDescription) {
+        const translatedDesc = initialT.category_descriptions[firstCategory.id] || firstCategory.description;
+        categoryDescription.textContent = translatedDesc;
+      }
+    }
     
     // 更新当前显示的工具卡片
     function updateCurrentToolCards(locale) {
-      const t = translations[locale] || translations['zh-CN'];
+      const t = translations[locale] || translations['en'];
       const toolsGrid = document.getElementById('tools-grid');
       const currentCategoryBtn = document.querySelector('.category-btn.bg-sakura-50, .category-btn[class*="bg-sakura"]');
       
@@ -608,7 +704,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
 
     // 更新页面文本的函数
     function updatePageText(locale) {
-      const t = translations[locale] || translations['zh-CN'];
+      const t = translations[locale] || translations['en'];
       
       // 更新站点标题和副标题
       const siteSubtitle = document.querySelector('p.text-sm.text-gray-600');
@@ -672,25 +768,6 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       updateCurrentToolCards(locale);
     }
     
-    // 初始化页面文本
-    updatePageText(currentLocale);
-    
-    // 初始化当前分类的翻译
-    const t = translations[currentLocale] || translations['zh-CN'];
-    const firstCategory = window.categoriesData[0];
-    if (firstCategory) {
-      const categoryTitle = document.getElementById('category-title');
-      const categoryDescription = document.getElementById('category-description');
-      if (categoryTitle) {
-        const translatedName = t.categories[firstCategory.id] || firstCategory.name;
-        categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${firstCategory.icon}</span>${translatedName}`;
-      }
-      if (categoryDescription) {
-        const translatedDesc = t.category_descriptions[firstCategory.id] || firstCategory.description;
-        categoryDescription.textContent = translatedDesc;
-      }
-    }
-    
     // 语言切换按钮点击
     languageToggleBtn.addEventListener('click', () => {
       languageDropdown.classList.toggle('hidden');
@@ -704,7 +781,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         currentLocale = locale;
         
         // 更新显示
-        languageFlag.textContent = localeData[locale]?.flag || '🇨🇳';
+        languageFlag.textContent = localeData[locale]?.flag || '🇺🇸';
         languageDropdown.classList.add('hidden');
         
         // 防止阿拉伯语改变布局 - 暂时禁用RTL
@@ -744,7 +821,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         btn.className += ' bg-sakura-50 dark:bg-sakura-900/20 text-sakura-600 dark:text-sakura-400 border border-sakura-200 dark:border-sakura-800';
 
         // 更新标题（使用翻译）
-        const t = translations[currentLocale] || translations['zh-CN'];
+        const t = translations[currentLocale] || translations['en'];
         const translatedName = t.categories[categoryId] || category.name;
         const translatedDesc = t.category_descriptions[categoryId] || category.description;
         
