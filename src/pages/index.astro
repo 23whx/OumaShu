@@ -286,6 +286,14 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
     const languageFlag = document.getElementById('language-flag');
     const languageOptions = document.querySelectorAll('.language-option');
     
+    // 分类和工具相关元素
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const toolsGrid = document.getElementById('tools-grid');
+    const categoryTitle = document.getElementById('category-title');
+    const categoryDescription = document.getElementById('category-description');
+    const toolsCount = document.getElementById('tools-count');
+    const emptyState = document.getElementById('empty-state');
+    
     const localeData = {
       'zh-CN': { flag: '🇨🇳', name: '简体中文' },
       'zh-TW': { flag: '🇹🇼', name: '繁體中文' },
@@ -669,7 +677,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
     
     // 初始化当前分类的翻译
     const t = translations[currentLocale] || translations['zh-CN'];
-    const firstCategory = categories[0];
+    const firstCategory = window.categoriesData[0];
     if (firstCategory) {
       const categoryTitle = document.getElementById('category-title');
       const categoryDescription = document.getElementById('category-description');
@@ -717,12 +725,6 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         languageDropdown.classList.add('hidden');
       }
     });
-    const categoryButtons = document.querySelectorAll('.category-btn');
-    const toolsGrid = document.getElementById('tools-grid');
-    const categoryTitle = document.getElementById('category-title');
-    const categoryDescription = document.getElementById('category-description');
-    const toolsCount = document.getElementById('tools-count');
-    const emptyState = document.getElementById('empty-state');
 
     // 分类切换
     categoryButtons.forEach(btn => {
