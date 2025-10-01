@@ -214,6 +214,7 @@ const jsonLd = {
   </div>
   
   <!-- Service Worker 注册 (可选) -->
+  <!-- 如需 PWA 功能，请创建 /public/sw.js 文件并取消下面的注释
   <script is:inline>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -223,6 +224,7 @@ const jsonLd = {
       });
     }
   </script>
+  -->
   
   <!-- 页面性能监控 -->
   <script is:inline>
