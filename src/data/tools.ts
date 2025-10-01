@@ -119,6 +119,23 @@ export const tools: ToolItem[] = [
     screenshots: [
       '/og/mbti-test-1.jpg'
     ]
+  },
+  {
+    id: 'video2gif',
+    name: 'Video2GIF 转换器',
+    description: '在线视频转GIF工具，支持多种视频格式，快速生成高质量GIF动图',
+    tags: ['视频转换', 'GIF制作', '动图生成', '格式转换', '在线工具'],
+    subdomain: 'video2gif',
+    url: 'https://video2gif-brown.vercel.app/',
+    icon: '🎬',
+    featured: true,
+    updatedAt: '2024-12-01T14:00:00Z',
+    category: 'utilities',
+    popularity: 85,
+    isNew: true,
+    screenshots: [
+      '/og/video2gif-1.jpg'
+    ]
   }
 ];
 
