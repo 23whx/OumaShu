@@ -2,6 +2,23 @@
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: ['class', '[data-theme="dark"]'],
+  safelist: [
+    // 使用模式匹配确保所有 sakura 相关的类名都被包含
+    {
+      pattern: /^(from|to|bg|text|border|ring|shadow)-(sakura|leaf)-(50|100|200|300|400|500|600|700|800|900)$/,
+      variants: ['hover', 'focus', 'active', 'dark'],
+    },
+    {
+      pattern: /^(from|to|bg|text|border)-(sakura|leaf)-(50|100|200|300|400|500|600|700|800|900)\/(10|20|30|40|50|60|70|80|90)$/,
+      variants: ['hover', 'dark'],
+    },
+    // 其他动态使用的类
+    'bg-white/10',
+    'bg-white/20',
+    'text-white/80',
+    'text-white/90',
+    'backdrop-blur-sm',
+  ],
   theme: {
     extend: {
       colors: {

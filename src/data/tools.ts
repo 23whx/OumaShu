@@ -9,6 +9,7 @@ export interface ToolItem {
   url?: string;        // 完整 URL，便于本地预览
   icon?: string;       // 图标 URL 或 emoji
   featured?: boolean;  // 是否为推荐工具
+  thirdParty?: boolean; // 是否为第三方工具
   updatedAt?: string;  // ISO 时间字符串
   category?: string;   // 主要分类
   popularity?: number; // 人气分数 (0-100)
@@ -59,7 +60,7 @@ export const tools: ToolItem[] = [
     subdomain: 'learn',
     url: 'https://learn-languages-pi.vercel.app/',
     icon: '🌍',
-    featured: true,
+    featured: false,
     updatedAt: '2024-12-01T10:00:00Z',
     category: 'education',
     popularity: 95,
@@ -77,7 +78,7 @@ export const tools: ToolItem[] = [
     subdomain: 'screenshot',
     url: 'https://fake-screenshot-one.vercel.app/',
     icon: '📸',
-    featured: true,
+    featured: false,
     updatedAt: '2024-11-28T15:30:00Z',
     category: 'entertainment',
     popularity: 88,
@@ -94,7 +95,7 @@ export const tools: ToolItem[] = [
     subdomain: 'media-trim',
     url: 'https://audio-trimmer-converter.vercel.app/',
     icon: '🎵',
-    featured: true,
+    featured: false,
     updatedAt: '2024-12-01T12:00:00Z',
     category: 'utilities',
     popularity: 92,
@@ -111,7 +112,7 @@ export const tools: ToolItem[] = [
     subdomain: 'mbti',
     url: 'https://mbti-one-eta.vercel.app/',
     icon: '🧠',
-    featured: true,
+    featured: false,
     updatedAt: '2024-12-01T11:30:00Z',
     category: 'entertainment',
     popularity: 90,
@@ -128,7 +129,7 @@ export const tools: ToolItem[] = [
     subdomain: 'video2gif',
     url: 'https://video2gif-brown.vercel.app/',
     icon: '🎬',
-    featured: true,
+    featured: false,
     updatedAt: '2024-12-01T14:00:00Z',
     category: 'utilities',
     popularity: 85,
@@ -145,7 +146,7 @@ export const tools: ToolItem[] = [
     subdomain: 'pic-press',
     url: 'https://pic-press.vercel.app/',
     icon: '📸',
-    featured: true,
+    featured: false,
     updatedAt: '2024-12-01T15:00:00Z',
     category: 'utilities',
     popularity: 88,
@@ -156,13 +157,14 @@ export const tools: ToolItem[] = [
   },
   {
     id: 'pansou',
-    name: 'PanSou 网盘搜索 [第三方]',
-    description: '高性能网盘资源搜索API服务，支持TG频道和插件搜索，多频道并发搜索与智能排序 (第三方工具)',
-    tags: ['网盘搜索', '资源搜索', 'API服务', 'TG频道', '并发搜索', '第三方工具'],
+    name: 'PanSou 网盘搜索',
+    description: '高性能网盘资源搜索API服务，支持TG频道和插件搜索，多频道并发搜索与智能排序',
+    tags: ['网盘搜索', '资源搜索', 'API服务', 'TG频道', '并发搜索'],
     subdomain: 'pansou',
     url: 'https://so.252035.xyz/',
     icon: '🔍',
-    featured: false, // 第三方工具不设为推荐
+    featured: true,
+    thirdParty: true, // 标记为第三方工具
     updatedAt: '2024-12-01T16:00:00Z',
     category: 'utilities',
     popularity: 75,

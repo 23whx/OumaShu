@@ -191,7 +191,11 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="text-3xl">{tool.icon || '🛠️'}</div>
-                    {tool.featured && (
+                    {tool.thirdParty ? (
+                      <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">
+                        🔗 <span class="third-party-text">第三方</span>
+                      </span>
+                    ) : tool.featured && (
                       <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">
                         ⭐ <span class="featured-text">推荐</span>
                       </span>
@@ -360,6 +364,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'categories_title': '工具分类',
         'tools_count': '个工具',
         'featured_text': '推荐',
+        'third_party_text': '第三方',
         'theme_toggle_title': '主题切换',
         'language_toggle_title': '语言切换',
         'empty_state_title': '该分类暂无工具',
@@ -400,8 +405,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'description': '免费在线批量图片压缩工具，支持JPG、PNG、WebP、AVIF格式，本地处理保护隐私'
           },
           'pansou': {
-            'name': 'PanSou 网盘搜索 [第三方]',
-            'description': '高性能网盘资源搜索API服务，支持TG频道和插件搜索，多频道并发搜索与智能排序 (第三方工具)'
+            'name': 'PanSou 网盘搜索',
+            'description': '高性能网盘资源搜索API服务，支持TG频道和插件搜索，多频道并发搜索与智能排序'
           }
         }
       },
@@ -411,6 +416,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'categories_title': '工具分類',
         'tools_count': '個工具',
         'featured_text': '推薦',
+        'third_party_text': '第三方',
         'theme_toggle_title': '主題切換',
         'language_toggle_title': '語言切換',
         'empty_state_title': '該分類暫無工具',
@@ -451,8 +457,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'description': '免費線上批量圖片壓縮工具，支援JPG、PNG、WebP、AVIF格式，本地處理保護隱私'
           },
           'pansou': {
-            'name': 'PanSou 網盤搜尋 [第三方]',
-            'description': '高性能網盤資源搜尋API服務，支援TG頻道和插件搜尋，多頻道並發搜尋與智能排序 (第三方工具)'
+            'name': 'PanSou 網盤搜尋',
+            'description': '高性能網盤資源搜尋API服務，支援TG頻道和插件搜尋，多頻道並發搜尋與智能排序'
           }
         }
       },
@@ -462,6 +468,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'categories_title': 'Tool Categories',
         'tools_count': 'tools',
         'featured_text': 'Featured',
+        'third_party_text': '3rd Party',
         'theme_toggle_title': 'Toggle theme',
         'language_toggle_title': 'Switch language',
         'empty_state_title': 'No tools in this category',
@@ -502,8 +509,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'description': 'Free online batch image compressor supporting JPG, PNG, WebP, AVIF formats with local processing for privacy'
           },
           'pansou': {
-            'name': 'PanSou Cloud Search [3rd Party]',
-            'description': 'High-performance cloud storage search API service with TG channel and plugin support, concurrent multi-channel search (3rd party tool)'
+            'name': 'PanSou Cloud Search',
+            'description': 'High-performance cloud storage search API service with TG channel and plugin support, concurrent multi-channel search'
           }
         }
       },
@@ -513,6 +520,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'categories_title': 'ツールカテゴリ',
         'tools_count': 'ツール',
         'featured_text': 'おすすめ',
+        'third_party_text': 'サードパーティ',
         'theme_toggle_title': 'テーマ切り替え',
         'language_toggle_title': '言語切り替え',
         'empty_state_title': 'このカテゴリにはツールがありません',
@@ -553,8 +561,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'description': '無料オンライン一括画像圧縮ツール、JPG・PNG・WebP・AVIF対応、ローカル処理でプライバシー保護'
           },
           'pansou': {
-            'name': 'PanSou クラウド検索 [サードパーティ]',
-            'description': '高性能クラウドストレージ検索APIサービス、TGチャンネルとプラグイン対応、マルチチャンネル並行検索 (サードパーティツール)'
+            'name': 'PanSou クラウド検索',
+            'description': '高性能クラウドストレージ検索APIサービス、TGチャンネルとプラグイン対応、マルチチャンネル並行検索'
           }
         }
       },
@@ -564,6 +572,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'categories_title': 'فئات الأدوات',
         'tools_count': 'أدوات',
         'featured_text': 'مميز',
+        'third_party_text': 'طرف ثالث',
         'theme_toggle_title': 'تبديل المظهر',
         'language_toggle_title': 'تغيير اللغة',
         'empty_state_title': 'لا توجد أدوات في هذه الفئة',
@@ -604,8 +613,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'description': 'أداة ضغط الصور المجانية عبر الإنترنت، تدعم JPG وPNG وWebP وAVIF، معالجة محلية لحماية الخصوصية'
           },
           'pansou': {
-            'name': 'بحث التخزين السحابي PanSou [طرف ثالث]',
-            'description': 'خدمة بحث عالية الأداء لموارد التخزين السحابي مع دعم قنوات TG والمكونات الإضافية، بحث متزامن متعدد القنوات (أداة طرف ثالث)'
+            'name': 'بحث التخزين السحابي PanSou',
+            'description': 'خدمة بحث عالية الأداء لموارد التخزين السحابي مع دعم قنوات TG والمكونات الإضافية، بحث متزامن متعدد القنوات'
           }
         }
       },
@@ -615,6 +624,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         'categories_title': 'Категории инструментов',
         'tools_count': 'инструментов',
         'featured_text': 'Рекомендуемое',
+        'third_party_text': 'Сторонний',
         'theme_toggle_title': 'Переключить тему',
         'language_toggle_title': 'Изменить язык',
         'empty_state_title': 'В этой категории нет инструментов',
@@ -655,8 +665,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'description': 'Бесплатный онлайн компрессор изображений с поддержкой JPG, PNG, WebP, AVIF и локальной обработкой для защиты конфиденциальности'
           },
           'pansou': {
-            'name': 'Поиск в облаке PanSou [сторонний]',
-            'description': 'Высокопроизводительный API-сервис поиска ресурсов облачного хранилища с поддержкой TG-каналов и плагинов, параллельный многоканальный поиск (сторонний инструмент)'
+            'name': 'Поиск в облаке PanSou',
+            'description': 'Высокопроизводительный API-сервис поиска ресурсов облачного хранилища с поддержкой TG-каналов и плагинов, параллельный многоканальный поиск'
           }
         }
       }
@@ -798,7 +808,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="text-3xl">${tool.icon || '🛠️'}</div>
-                    ${tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
+                    ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
                   </div>
                   <h3 class="text-xl font-bold mb-2 line-clamp-1">${translatedName}</h3>
                   <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${translatedDesc}</p>
@@ -859,6 +869,12 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       const featuredTexts = document.querySelectorAll('.featured-text');
       featuredTexts.forEach(el => {
         el.textContent = t.featured_text;
+      });
+      
+      // 更新第三方标签文本
+      const thirdPartyTexts = document.querySelectorAll('.third-party-text');
+      thirdPartyTexts.forEach(el => {
+        el.textContent = t.third_party_text;
       });
       
       // 更新按钮title
@@ -989,7 +1005,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="text-3xl">${tool.icon || '🛠️'}</div>
-                    ${tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
+                    ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
                   </div>
                   <h3 class="text-xl font-bold mb-2 line-clamp-1">${translatedName}</h3>
                   <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${translatedDesc}</p>
