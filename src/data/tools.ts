@@ -136,6 +136,40 @@ export const tools: ToolItem[] = [
     screenshots: [
       '/og/video2gif-1.jpg'
     ]
+  },
+  {
+    id: 'pic-press',
+    name: 'PicPress 图片压缩器',
+    description: '免费在线批量图片压缩工具，支持JPG、PNG、WebP、AVIF格式，本地处理保护隐私',
+    tags: ['图片压缩', '批量处理', '格式转换', '隐私保护', '本地处理', '在线工具'],
+    subdomain: 'pic-press',
+    url: 'https://pic-press.vercel.app/',
+    icon: '📸',
+    featured: true,
+    updatedAt: '2024-12-01T15:00:00Z',
+    category: 'utilities',
+    popularity: 88,
+    isNew: true,
+    screenshots: [
+      '/og/pic-press-1.jpg'
+    ]
+  },
+  {
+    id: 'pansou',
+    name: 'PanSou 网盘搜索 [第三方]',
+    description: '高性能网盘资源搜索API服务，支持TG频道和插件搜索，多频道并发搜索与智能排序 (第三方工具)',
+    tags: ['网盘搜索', '资源搜索', 'API服务', 'TG频道', '并发搜索', '第三方工具'],
+    subdomain: 'pansou',
+    url: 'https://so.252035.xyz/',
+    icon: '🔍',
+    featured: false, // 第三方工具不设为推荐
+    updatedAt: '2024-12-01T16:00:00Z',
+    category: 'utilities',
+    popularity: 75,
+    isNew: true,
+    screenshots: [
+      '/og/pansou-1.jpg'
+    ]
   }
 ];
 
