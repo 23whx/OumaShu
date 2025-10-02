@@ -3,21 +3,39 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: ['class', '[data-theme="dark"]'],
   safelist: [
-    // 使用模式匹配确保所有 sakura 相关的类名都被包含
+    // 渐变背景 - 动态生成的 HTML 中使用
+    'bg-gradient-to-br',
+    // 樱花色渐变类名 - 在 innerHTML 中动态使用
+    'from-sakura-400',
+    'from-sakura-500', 
+    'to-sakura-600',
+    'to-sakura-700',
+    'hover:from-sakura-500',
+    'hover:to-sakura-700',
+    // 樱花色其他类名
+    'bg-sakura-50',
+    'bg-sakura-900',
+    'text-sakura-600',
+    'text-sakura-400',
+    'border-sakura-200',
+    'border-sakura-800',
+    // 使用正则匹配所有可能的 sakura 和 leaf 颜色组合
     {
-      pattern: /^(from|to|bg|text|border|ring|shadow)-(sakura|leaf)-(50|100|200|300|400|500|600|700|800|900)$/,
-      variants: ['hover', 'focus', 'active', 'dark'],
+      pattern: /^(from|to|bg|text|border|ring)-(sakura|leaf)-(50|100|200|300|400|500|600|700|800|900)$/,
+      variants: ['hover', 'focus', 'dark'],
     },
     {
-      pattern: /^(from|to|bg|text|border)-(sakura|leaf)-(50|100|200|300|400|500|600|700|800|900)\/(10|20|30|40|50|60|70|80|90)$/,
+      pattern: /^(bg|text|border)-(sakura|leaf)-(50|100|200|300|400|500|600|700|800|900)\/(10|20|30|40|50|60|70|80|90)$/,
       variants: ['hover', 'dark'],
     },
-    // 其他动态使用的类
+    // 透明度类 - 在动态 HTML 中使用
     'bg-white/10',
     'bg-white/20',
     'text-white/80',
     'text-white/90',
     'backdrop-blur-sm',
+    'opacity-10',
+    'opacity-20',
   ],
   theme: {
     extend: {
