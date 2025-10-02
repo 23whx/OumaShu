@@ -172,6 +172,23 @@ export const tools: ToolItem[] = [
     screenshots: [
       '/og/pansou-1.jpg'
     ]
+  },
+  {
+    id: 'text-grove',
+    name: 'TextGrove 文本工具站',
+    description: '全功能文本处理工具集，包含字数统计、文本去重、词频统计、简繁转换、文本格式化，本地处理保护隐私',
+    tags: ['文本处理', '字数统计', '文本去重', '词频统计', '简繁转换', '格式化', '隐私保护'],
+    subdomain: 'text-grove',
+    url: 'https://text-grove.vercel.app/',
+    icon: '🌲',
+    featured: false,
+    updatedAt: '2024-12-01T17:00:00Z',
+    category: 'utilities',
+    popularity: 82,
+    isNew: true,
+    screenshots: [
+      '/og/text-grove-1.jpg'
+    ]
   }
 ];
 
