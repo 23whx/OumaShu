@@ -189,6 +189,24 @@ export const tools: ToolItem[] = [
     screenshots: [
       '/og/text-grove-1.jpg'
     ]
+  },
+  {
+    id: 'p2p-transfer',
+    name: 'P2P 端到端传输',
+    description: '安全的端到端文件和文字传输工具，数据不经过服务器，保护隐私安全',
+    tags: ['文件传输', '端到端', 'P2P', '隐私保护', '安全传输', '第三方工具'],
+    subdomain: 'p2p-transfer',
+    url: 'https://transfer.52python.cn/',
+    icon: '🔗',
+    featured: false,
+    thirdParty: true,
+    updatedAt: '2024-12-01T18:00:00Z',
+    category: 'utilities',
+    popularity: 78,
+    isNew: true,
+    screenshots: [
+      '/og/p2p-transfer-1.jpg'
+    ]
   }
 ];
 
