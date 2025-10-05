@@ -42,11 +42,53 @@ export const categories: ToolCategory[] = [
     color: '#84cc16'
   },
   {
-    id: 'utilities',
-    name: 'Utilities',
-    description: 'Practical tools and utilities',
-    icon: '🔧',
+    id: 'workplace-slack',
+    name: 'Workplace Slack',
+    description: 'Tools for workplace entertainment and relaxation',
+    icon: '🐟',
+    color: '#6366f1'
+  },
+  {
+    id: 'search',
+    name: 'Search',
+    description: 'Search engines and discovery tools',
+    icon: '🔍',
     color: '#06b6d4'
+  },
+  {
+    id: 'text',
+    name: 'Text',
+    description: 'Text processing and editing tools',
+    icon: '📝',
+    color: '#8b5cf6'
+  },
+  {
+    id: 'image',
+    name: 'Image',
+    description: 'Image processing and editing tools',
+    icon: '🖼️',
+    color: '#ec4899'
+  },
+  {
+    id: 'video',
+    name: 'Video',
+    description: 'Video processing and conversion tools',
+    icon: '🎬',
+    color: '#ef4444'
+  },
+  {
+    id: 'audio',
+    name: 'Audio',
+    description: 'Audio processing and conversion tools',
+    icon: '🎵',
+    color: '#10b981'
+  },
+  {
+    id: 'file-transfer',
+    name: 'File Transfer',
+    description: 'File sharing and transfer tools',
+    icon: '📁',
+    color: '#f59e0b'
   }
 ];
 
@@ -80,7 +122,7 @@ export const tools: ToolItem[] = [
     icon: '📸',
     featured: false,
     updatedAt: '2024-11-28T15:30:00Z',
-    category: 'entertainment',
+    category: 'image',
     popularity: 88,
     isNew: false,
     screenshots: [
@@ -97,7 +139,7 @@ export const tools: ToolItem[] = [
     icon: '🎵',
     featured: false,
     updatedAt: '2024-12-01T12:00:00Z',
-    category: 'utilities',
+    category: 'audio',
     popularity: 92,
     isNew: true,
     screenshots: [
@@ -131,7 +173,7 @@ export const tools: ToolItem[] = [
     icon: '🎬',
     featured: false,
     updatedAt: '2024-12-01T14:00:00Z',
-    category: 'utilities',
+    category: 'video',
     popularity: 85,
     isNew: true,
     screenshots: [
@@ -148,7 +190,7 @@ export const tools: ToolItem[] = [
     icon: '📸',
     featured: false,
     updatedAt: '2024-12-01T15:00:00Z',
-    category: 'utilities',
+    category: 'image',
     popularity: 88,
     isNew: true,
     screenshots: [
@@ -166,7 +208,7 @@ export const tools: ToolItem[] = [
     featured: true,
     thirdParty: true, // 标记为第三方工具
     updatedAt: '2024-12-01T16:00:00Z',
-    category: 'utilities',
+    category: 'search',
     popularity: 75,
     isNew: true,
     screenshots: [
@@ -183,7 +225,7 @@ export const tools: ToolItem[] = [
     icon: '🌲',
     featured: false,
     updatedAt: '2024-12-01T17:00:00Z',
-    category: 'utilities',
+    category: 'text',
     popularity: 82,
     isNew: true,
     screenshots: [
@@ -201,11 +243,28 @@ export const tools: ToolItem[] = [
     featured: false,
     thirdParty: true,
     updatedAt: '2024-12-01T18:00:00Z',
-    category: 'utilities',
+    category: 'file-transfer',
     popularity: 78,
     isNew: true,
     screenshots: [
       '/og/p2p-transfer-1.jpg'
+    ]
+  },
+  {
+    id: 'work-whale',
+    name: 'Work Whale 摸鱼阅读器',
+    description: '伪装成Microsoft Word界面的网页端小说阅读器，完美融入办公环境，让你安心摸鱼',
+    tags: ['摸鱼神器', '小说阅读', 'Word伪装', '办公隐身', '职场娱乐'],
+    subdomain: 'work-whale',
+    url: 'https://work-whale.vercel.app/',
+    icon: '🐋',
+    featured: false,
+    updatedAt: '2024-12-01T19:00:00Z',
+    category: 'workplace-slack',
+    popularity: 85,
+    isNew: true,
+    screenshots: [
+      '/og/work-whale-1.jpg'
     ]
   }
 ];
