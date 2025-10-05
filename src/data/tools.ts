@@ -266,6 +266,23 @@ export const tools: ToolItem[] = [
     screenshots: [
       '/og/work-whale-1.jpg'
     ]
+  },
+  {
+    id: 'stealth-novel',
+    name: 'StealthNovel 隐蔽阅读器',
+    description: 'Windows桌面版隐蔽小说阅读器，支持任务栏标题显示和伪装弹窗模式，办公室摸鱼必备神器',
+    tags: ['Windows软件', '隐蔽阅读', '任务栏显示', '伪装弹窗', '摸鱼神器', '小说阅读'],
+    subdomain: 'stealth-novel',
+    url: 'https://work-flatfish.vercel.app/',
+    icon: '🐟',
+    featured: false,
+    updatedAt: '2024-12-01T20:00:00Z',
+    category: 'workplace-slack',
+    popularity: 90,
+    isNew: true,
+    screenshots: [
+      '/og/stealth-novel-1.jpg'
+    ]
   }
 ];
 
