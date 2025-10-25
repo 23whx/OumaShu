@@ -183,12 +183,13 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 {/* 内容 */}
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden icon-container" data-url={tool.url} data-icon={tool.icon || '🔗'}>
+                      <span class="text-2xl emoji-icon">{tool.icon || '🔗'}</span>
                       <img 
-                        src={`${new URL(tool.url).origin}/favicon.ico`}
+                        src={`https://icons.duckduckgo.com/ip3/${new URL(tool.url).hostname}.ico`}
                         alt={`${tool.name} icon`}
-                        class="w-8 h-8 object-contain"
-                        onerror="this.onerror=null; this.src='https://icons.duckduckgo.com/ip3/'+encodeURIComponent(new URL(tool.url).hostname)+'.ico'; this.onerror=function(){this.onerror=null; this.src='https://www.google.com/s2/favicons?domain='+encodeURIComponent(new URL(tool.url).hostname)+'&sz=128'; this.onerror=function(){this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<span class=\\'text-2xl\\'>${tool.icon || '🔗'}</span>';};};"
+                        class="w-8 h-8 object-contain hidden favicon-img"
+                        loading="lazy"
                       />
                     </div>
                     {tool.thirdParty ? (
@@ -255,6 +256,56 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // 图标加载函数
+    function loadFavicons() {
+      const containers = document.querySelectorAll('.icon-container');
+      containers.forEach(container => {
+        const img = container.querySelector('.favicon-img');
+        const emoji = container.querySelector('.emoji-icon');
+        const url = container.dataset.url;
+        
+        if (img && url) {
+          const testImg = new Image();
+          const hostname = new URL(url).hostname;
+          
+          // 尝试多个源
+          const sources = [
+            `https://icons.duckduckgo.com/ip3/${hostname}.ico`,
+            `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`,
+            `${new URL(url).origin}/favicon.ico`
+          ];
+          
+          let currentIndex = 0;
+          
+          const tryNextSource = () => {
+            if (currentIndex < sources.length) {
+              testImg.src = sources[currentIndex];
+              currentIndex++;
+            }
+          };
+          
+          testImg.onload = function() {
+            if (this.width > 0 && this.height > 0) {
+              img.src = this.src;
+              img.classList.remove('hidden');
+              if (emoji) emoji.classList.add('hidden');
+            } else {
+              tryNextSource();
+            }
+          };
+          
+          testImg.onerror = function() {
+            tryNextSource();
+          };
+          
+          tryNextSource();
+        }
+      });
+    }
+    
+    // 页面加载后执行
+    loadFavicons();
+    
     // 移动端菜单切换
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const sidebar = document.getElementById('sidebar');
@@ -968,12 +1019,13 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 </div>
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden icon-container" data-url="${tool.url}" data-icon="${tool.icon || '🔗'}">
+                      <span class="text-2xl emoji-icon">${tool.icon || '🔗'}</span>
                       <img 
-                        src="${new URL(tool.url).origin}/favicon.ico"
+                        src="https://icons.duckduckgo.com/ip3/${new URL(tool.url).hostname}.ico"
                         alt="${translatedName} icon"
-                        class="w-8 h-8 object-contain"
-                        onerror="this.onerror=null; this.src='https://icons.duckduckgo.com/ip3/'+encodeURIComponent(new URL(tool.url).hostname)+'.ico'; this.onerror=function(){this.onerror=null; this.src='https://www.google.com/s2/favicons?domain='+encodeURIComponent(new URL(tool.url).hostname)+'&sz=128'; this.onerror=function(){this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<span class=\\'text-2xl\\'>${tool.icon || '🔗'}</span>';};};"
+                        class="w-8 h-8 object-contain hidden favicon-img"
+                        loading="lazy"
                       />
                     </div>
                     ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
@@ -997,6 +1049,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             </div>
             `;
           }).join('');
+          
+          // 重新加载图标
+          setTimeout(() => loadFavicons(), 100);
         }
       }
     }
@@ -1165,12 +1220,13 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 </div>
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden icon-container" data-url="${tool.url}" data-icon="${tool.icon || '🔗'}">
+                      <span class="text-2xl emoji-icon">${tool.icon || '🔗'}</span>
                       <img 
-                        src="${new URL(tool.url).origin}/favicon.ico"
+                        src="https://icons.duckduckgo.com/ip3/${new URL(tool.url).hostname}.ico"
                         alt="${translatedName} icon"
-                        class="w-8 h-8 object-contain"
-                        onerror="this.onerror=null; this.src='https://icons.duckduckgo.com/ip3/'+encodeURIComponent(new URL(tool.url).hostname)+'.ico'; this.onerror=function(){this.onerror=null; this.src='https://www.google.com/s2/favicons?domain='+encodeURIComponent(new URL(tool.url).hostname)+'&sz=128'; this.onerror=function(){this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<span class=\\'text-2xl\\'>${tool.icon || '🔗'}</span>';};};"
+                        class="w-8 h-8 object-contain hidden favicon-img"
+                        loading="lazy"
                       />
                     </div>
                     ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
@@ -1194,6 +1250,9 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             </div>
             `;
           }).join('');
+          
+          // 重新加载图标
+          setTimeout(() => loadFavicons(), 100);
         }
       });
     });
