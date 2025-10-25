@@ -190,7 +190,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                         alt={`${tool.name} icon`}
                         class="w-8 h-8 object-contain relative z-10"
                         loading="lazy"
-                        onload="this.style.opacity='1'"
+                        onload="if(this.naturalWidth > 20 && this.naturalHeight > 20) this.style.opacity='1'; else this.style.opacity='0';"
                         onerror="this.style.opacity='0'"
                         style="opacity: 0; transition: opacity 0.3s;"
                       />
@@ -979,7 +979,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                         alt="${translatedName} icon"
                         class="w-8 h-8 object-contain relative z-10"
                         loading="lazy"
-                        onload="this.style.opacity='1'"
+                        onload="if(this.naturalWidth > 20 && this.naturalHeight > 20) this.style.opacity='1'; else this.style.opacity='0';"
                         onerror="this.style.opacity='0'"
                         style="opacity: 0; transition: opacity 0.3s;"
                       />
@@ -1180,7 +1180,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                         alt="${translatedName} icon"
                         class="w-8 h-8 object-contain relative z-10"
                         loading="lazy"
-                        onload="this.style.opacity='1'"
+                        onload="if(this.naturalWidth > 20 && this.naturalHeight > 20) this.style.opacity='1'; else this.style.opacity='0';"
                         onerror="this.style.opacity='0'"
                         style="opacity: 0; transition: opacity 0.3s;"
                       />
