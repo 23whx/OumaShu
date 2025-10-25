@@ -184,12 +184,15 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
+                      <span class="text-2xl absolute inset-0 flex items-center justify-center">{tool.icon || '🔗'}</span>
                       <img 
                         src={`${tool.url}favicon.ico`}
                         alt={`${tool.name} icon`}
-                        class="w-8 h-8 object-contain"
-                        loading="lazy"
-                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22%3E%3Ctext y=%2224%22 font-size=%2224%22%3E{tool.icon || '🔗'}%3C/text%3E%3C/svg%3E'"
+                        class="w-8 h-8 object-contain relative z-10"
+                        loading="eager"
+                        onload="this.style.opacity='1'"
+                        onerror="this.style.opacity='0'"
+                        style="opacity: 0; transition: opacity 0.2s;"
                       />
                     </div>
                     {tool.thirdParty ? (
@@ -1169,12 +1172,15 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
+                      <span class="text-2xl absolute inset-0 flex items-center justify-center">${tool.icon || '🔗'}</span>
                       <img 
                         src="${tool.url}favicon.ico"
                         alt="${translatedName} icon"
-                        class="w-8 h-8 object-contain"
-                        loading="lazy"
-                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22%3E%3Ctext y=%2224%22 font-size=%2224%22%3E${tool.icon || '🔗'}%3C/text%3E%3C/svg%3E'"
+                        class="w-8 h-8 object-contain relative z-10"
+                        loading="eager"
+                        onload="this.style.opacity='1'"
+                        onerror="this.style.opacity='0'"
+                        style="opacity: 0; transition: opacity 0.2s;"
                       />
                     </div>
                     ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
