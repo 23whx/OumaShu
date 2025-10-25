@@ -185,34 +185,11 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                   <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
                       <img 
-                        src={`${new URL(tool.url).origin}/favicon.ico`}
+                        src={`https://www.google.com/s2/favicons?sz=64&domain=${new URL(tool.url).hostname}`}
                         alt={`${tool.name} icon`}
                         class="w-8 h-8 object-contain"
                         loading="eager"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                       />
-                      <img 
-                        src={`${new URL(tool.url).origin}/favicon.png`}
-                        alt={`${tool.name} icon png`}
-                        class="w-8 h-8 object-contain"
-                        style="display:none" 
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                      />
-                      <img 
-                        src={`${new URL(tool.url).origin}/favicon.svg`}
-                        alt={`${tool.name} icon svg`}
-                        class="w-8 h-8 object-contain"
-                        style="display:none" 
-                        onerror={`this.style.display='none'; this.nextElementSibling.style.display='block';`}
-                      />
-                      <img 
-                        src={`https://www.google.com/s2/favicons?sz=128&domain=${new URL(tool.url).hostname}`}
-                        alt={`${tool.name} icon s2`}
-                        class="w-8 h-8 object-contain"
-                        style="display:none" 
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                      />
-                      <span class="text-2xl">{tool.icon || '🔗'}</span>
                     </div>
                     {tool.thirdParty ? (
                       <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">
@@ -1192,34 +1169,11 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                   <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
                       <img 
-                        src="${new URL(tool.url).origin}/favicon.ico"
+                        src="https://www.google.com/s2/favicons?sz=64&domain=${new URL(tool.url).hostname}"
                         alt="${translatedName} icon"
                         class="w-8 h-8 object-contain"
                         loading="eager"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                       />
-                      <img 
-                        src="${new URL(tool.url).origin}/favicon.png"
-                        alt="${translatedName} icon png"
-                        class="w-8 h-8 object-contain"
-                        style="display:none" 
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                      />
-                      <img 
-                        src="${new URL(tool.url).origin}/favicon.svg"
-                        alt="${translatedName} icon svg"
-                        class="w-8 h-8 object-contain"
-                        style="display:none" 
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                      />
-                      <img 
-                        src="https://www.google.com/s2/favicons?sz=128&domain=${new URL(tool.url).hostname}"
-                        alt="${translatedName} icon s2"
-                        class="w-8 h-8 object-contain"
-                        style="display:none" 
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                      />
-                      <span class="text-2xl">${tool.icon || '🔗'}</span>
                     </div>
                     ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
                   </div>
@@ -1297,60 +1251,4 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
-  /* Favicon 加载优化 */
-  .favicon-img {
-    opacity: 1;
-  }
-  
-  .favicon-img.loaded {
-    animation: fadeIn 0.3s ease-in;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.8); }
-    to { opacity: 1; transform: scale(1); }
-  }
 </style>
-
-<script is:inline>
-  // 简单的 Favicon 加载处理
-  function handleFaviconLoad() {
-    const faviconImages = document.querySelectorAll('.favicon-img');
-    
-    faviconImages.forEach(img => {
-      // 如果图片已经加载完成
-      if (img.complete && img.naturalWidth > 0) {
-        img.classList.add('loaded');
-      } else {
-        // 监听加载事件
-        img.addEventListener('load', function() {
-          if (this.naturalWidth > 0 && this.naturalHeight > 0) {
-            this.classList.add('loaded');
-          }
-        });
-        
-        img.addEventListener('error', function() {
-          // 加载失败，图标会自动显示 emoji（因为是背景层）
-          this.style.opacity = '0';
-        });
-      }
-    });
-  }
-  
-  // 页面加载时执行
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', handleFaviconLoad);
-  } else {
-    handleFaviconLoad();
-  }
-  
-  // 监听动态内容变化（分类切换）
-  const toolsGrid = document.getElementById('tools-grid');
-  if (toolsGrid) {
-    const observer = new MutationObserver(() => {
-      handleFaviconLoad();
-    });
-    observer.observe(toolsGrid, { childList: true });
-  }
-</script>
