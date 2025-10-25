@@ -184,14 +184,35 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
-                      <span class="text-2xl absolute z-0">{tool.icon || '🔗'}</span>
+                      <img 
+                        src={`${new URL(tool.url).origin}/favicon.ico`}
+                        alt={`${tool.name} icon`}
+                        class="w-8 h-8 object-contain"
+                        loading="eager"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                      />
+                      <img 
+                        src={`${new URL(tool.url).origin}/favicon.png`}
+                        alt={`${tool.name} icon png`}
+                        class="w-8 h-8 object-contain"
+                        style="display:none" 
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                      />
+                      <img 
+                        src={`${new URL(tool.url).origin}/favicon.svg`}
+                        alt={`${tool.name} icon svg`}
+                        class="w-8 h-8 object-contain"
+                        style="display:none" 
+                        onerror={`this.style.display='none'; this.nextElementSibling.style.display='block';`}
+                      />
                       <img 
                         src={`https://www.google.com/s2/favicons?sz=128&domain=${new URL(tool.url).hostname}`}
-                        alt={`${tool.name} icon`}
-                        class="w-8 h-8 object-contain relative z-10 favicon-img"
-                        loading="eager"
-                        style="background: transparent;"
+                        alt={`${tool.name} icon s2`}
+                        class="w-8 h-8 object-contain"
+                        style="display:none" 
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                       />
+                      <span class="text-2xl">{tool.icon || '🔗'}</span>
                     </div>
                     {tool.thirdParty ? (
                       <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">
@@ -1170,14 +1191,35 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
-                      <span class="text-2xl absolute z-0">${tool.icon || '🔗'}</span>
+                      <img 
+                        src="${new URL(tool.url).origin}/favicon.ico"
+                        alt="${translatedName} icon"
+                        class="w-8 h-8 object-contain"
+                        loading="eager"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                      />
+                      <img 
+                        src="${new URL(tool.url).origin}/favicon.png"
+                        alt="${translatedName} icon png"
+                        class="w-8 h-8 object-contain"
+                        style="display:none" 
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                      />
+                      <img 
+                        src="${new URL(tool.url).origin}/favicon.svg"
+                        alt="${translatedName} icon svg"
+                        class="w-8 h-8 object-contain"
+                        style="display:none" 
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                      />
                       <img 
                         src="https://www.google.com/s2/favicons?sz=128&domain=${new URL(tool.url).hostname}"
-                        alt="${translatedName} icon"
-                        class="w-8 h-8 object-contain relative z-10 favicon-img"
-                        loading="eager"
-                        style="background: transparent;"
+                        alt="${translatedName} icon s2"
+                        class="w-8 h-8 object-contain"
+                        style="display:none" 
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                       />
+                      <span class="text-2xl">${tool.icon || '🔗'}</span>
                     </div>
                     ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
                   </div>
