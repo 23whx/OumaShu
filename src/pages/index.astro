@@ -265,37 +265,89 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         const url = container.dataset.url;
         
         if (img && url) {
-          const testImg = new Image();
           const hostname = new URL(url).hostname;
           
           // 尝试多个源
           const sources = [
-            `https://icons.duckduckgo.com/ip3/${hostname}.ico`,
             `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`,
-            `${new URL(url).origin}/favicon.ico`
+            `${new URL(url).origin}/favicon.ico`,
+            `https://icons.duckduckgo.com/ip3/${hostname}.ico`
           ];
           
           let currentIndex = 0;
+          let attempts = 0;
+          const maxAttempts = sources.length;
           
           const tryNextSource = () => {
-            if (currentIndex < sources.length) {
-              testImg.src = sources[currentIndex];
-              currentIndex++;
+            if (currentIndex >= sources.length || attempts >= maxAttempts) {
+              // 所有源都失败，保持显示 emoji
+              return;
             }
-          };
-          
-          testImg.onload = function() {
-            if (this.width > 0 && this.height > 0) {
-              img.src = this.src;
-              img.classList.remove('hidden');
-              if (emoji) emoji.classList.add('hidden');
-            } else {
+            
+            const testImg = new Image();
+            const currentSource = sources[currentIndex];
+            attempts++;
+            currentIndex++;
+            
+            // 设置超时，避免长时间等待
+            const timeout = setTimeout(() => {
+              testImg.src = ''; // 取消加载
               tryNextSource();
-            }
-          };
-          
-          testImg.onerror = function() {
-            tryNextSource();
+            }, 3000);
+            
+            testImg.onload = function() {
+              clearTimeout(timeout);
+              
+              // 验证图片是否真实有效（尺寸检查 + 非通用占位符）
+              if (this.width > 16 && this.height > 16 && 
+                  this.naturalWidth > 0 && this.naturalHeight > 0) {
+                // 创建canvas检查图片是否为纯色或占位符
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = this.width;
+                canvas.height = this.height;
+                
+                try {
+                  ctx.drawImage(this, 0, 0);
+                  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                  const data = imageData.data;
+                  
+                  // 检查是否有足够的颜色变化（非单色图片）
+                  let colorVariance = 0;
+                  for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    colorVariance += Math.abs(r - 128) + Math.abs(g - 128) + Math.abs(b - 128);
+                  }
+                  
+                  // 如果颜色变化足够大，认为是有效图标
+                  if (colorVariance > 1000) {
+                    img.src = currentSource;
+                    img.classList.remove('hidden');
+                    if (emoji) emoji.classList.add('hidden');
+                  } else {
+                    // 可能是占位符，尝试下一个源
+                    tryNextSource();
+                  }
+                } catch (e) {
+                  // Canvas 操作失败（可能是跨域），直接使用图片
+                  img.src = currentSource;
+                  img.classList.remove('hidden');
+                  if (emoji) emoji.classList.add('hidden');
+                }
+              } else {
+                tryNextSource();
+              }
+            };
+            
+            testImg.onerror = function() {
+              clearTimeout(timeout);
+              tryNextSource();
+            };
+            
+            testImg.crossOrigin = 'anonymous'; // 允许 canvas 访问
+            testImg.src = currentSource;
           };
           
           tryNextSource();
