@@ -183,17 +183,15 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 {/* 内容 */}
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
-                      <span class="text-2xl absolute">{tool.icon || '🔗'}</span>
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
                       <img 
-                        src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64`}
+                        src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=128`}
                         alt={`${tool.name} icon`}
-                        class="w-8 h-8 object-contain relative z-10"
+                        class="w-8 h-8 object-contain"
                         loading="lazy"
-                        onload="if(this.naturalWidth > 20 && this.naturalHeight > 20) this.style.opacity='1'; else this.style.opacity='0';"
-                        onerror="this.style.opacity='0'"
-                        style="opacity: 0; transition: opacity 0.3s;"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                       />
+                      <span class="text-2xl" style="display: none;">{tool.icon || '🔗'}</span>
                     </div>
                     {tool.thirdParty ? (
                       <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">
@@ -972,17 +970,15 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
                 </div>
                 <div class="relative z-10 h-full flex flex-col">
                   <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
-                      <span class="text-2xl absolute">${tool.icon || '🔗'}</span>
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
                       <img 
-                        src="https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64"
+                        src="https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=128"
                         alt="${translatedName} icon"
-                        class="w-8 h-8 object-contain relative z-10"
+                        class="w-8 h-8 object-contain"
                         loading="lazy"
-                        onload="if(this.naturalWidth > 20 && this.naturalHeight > 20) this.style.opacity='1'; else this.style.opacity='0';"
-                        onerror="this.style.opacity='0'"
-                        style="opacity: 0; transition: opacity 0.3s;"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                       />
+                      <span class="text-2xl" style="display: none;">${tool.icon || '🔗'}</span>
                     </div>
                     ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
                   </div>
