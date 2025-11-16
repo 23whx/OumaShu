@@ -45,7 +45,7 @@ const defaultTools = tools;
               "
             >
               <div class="flex items-center space-x-3">
-                <span class="text-lg">🏠</span>
+                <img src="/icons/classification/all.png" alt="All Tools" class="w-5 h-5 object-contain" />
                 <span class="font-medium">All Tools</span>
               </div>
               <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-full">
@@ -67,7 +67,7 @@ const defaultTools = tools;
                   "
                 >
                   <div class="flex items-center space-x-3">
-                    <span class="text-lg">{category.icon}</span>
+                    <img src={category.icon} alt={category.name} class="w-5 h-5 object-contain" />
                     <span class="font-medium">{category.name}</span>
                   </div>
                   <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-full">
@@ -165,7 +165,7 @@ const defaultTools = tools;
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center" id="category-title">
-              <span class="mr-3 text-3xl">🏠</span>
+              <img src="/icons/classification/all.png" alt="All Tools" class="mr-3 w-8 h-8 object-contain" />
               All Tools
             </h2>
             <p class="text-gray-600 dark:text-gray-400 mt-1" id="category-description">
@@ -231,7 +231,7 @@ const defaultTools = tools;
           return (
             <div class="mb-8 category-section" data-category-id={category.id}>
               <div class="flex items-center mb-4">
-                <span class="text-2xl mr-3">{category.icon}</span>
+                <img src={category.icon} alt={category.name} class="w-7 h-7 object-contain mr-3" />
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white category-name">
                   {category.name}
                 </h3>
@@ -490,7 +490,8 @@ const defaultTools = tools;
            'audio': '音频',
            'file-transfer': '文件传输',
            'social': '社交',
-           'games': '游戏'
+           'games': '游戏',
+           'resources': '资源'
          },
          'category_descriptions': {
            'entertainment': '娱乐工具和有趣应用',
@@ -503,7 +504,8 @@ const defaultTools = tools;
            'audio': '音频处理和转换工具',
            'file-transfer': '文件共享和传输工具',
            'social': '社交网络和通讯工具',
-           'games': '有趣的游戏和互动娱乐'
+           'games': '有趣的游戏和互动娱乐',
+           'resources': '精选资源集合和资源目录'
          },
         'tools': {
           'learn-languages': {
@@ -561,6 +563,22 @@ const defaultTools = tools;
            'cuisine-chat': {
              'name': 'CuisineChat 临时聊天室',
              'description': '免费在线临时聊天工具，无需注册，创建即用，支持实时消息、文件分享，注重隐私保护'
+           },
+           'fmhy': {
+             'name': 'FMHY',
+             'description': '免费资源集散地 - 互联网上最大的免费资源集合'
+           },
+           'axutongxue': {
+             'name': '阿虚同学的储物间',
+             'description': '阿虚同学的储物间 - 精选学习资源、软件工具、课程资料集合'
+           },
+           'wotaku': {
+             'name': 'Wotaku',
+             'description': '御宅族索引 - 动漫、漫画、游戏等御宅文化资源导航'
+           },
+           'feisoo': {
+             'name': '飞搜侠',
+             'description': '飞书文档搜索神器 - 快速搜索和发现飞书文档资源'
            }
          }
        },
@@ -588,7 +606,8 @@ const defaultTools = tools;
            'audio': '音頻',
            'file-transfer': '文件傳輸',
            'social': '社交',
-           'games': '遊戲'
+           'games': '遊戲',
+           'resources': '資源'
          },
          'category_descriptions': {
            'entertainment': '娛樂工具和有趣應用',
@@ -601,7 +620,8 @@ const defaultTools = tools;
            'audio': '音頻處理和轉換工具',
            'file-transfer': '文件共享和傳輸工具',
            'social': '社交網絡和通訊工具',
-           'games': '有趣的遊戲和互動娛樂'
+           'games': '有趣的遊戲和互動娛樂',
+           'resources': '精選資源集合和資源目錄'
          },
         'tools': {
           'learn-languages': {
@@ -659,6 +679,22 @@ const defaultTools = tools;
            'cuisine-chat': {
              'name': 'CuisineChat 臨時聊天室',
              'description': '免費線上臨時聊天工具，無需註冊，創建即用，支援即時訊息、檔案分享，注重隱私保護'
+           },
+           'fmhy': {
+             'name': 'FMHY',
+             'description': '免費資源集散地 - 互聯網上最大的免費資源集合'
+           },
+           'axutongxue': {
+             'name': '阿虛同學的儲物間',
+             'description': '阿虛同學的儲物間 - 精選學習資源、軟體工具、課程資料集合'
+           },
+           'wotaku': {
+             'name': 'Wotaku',
+             'description': '御宅族索引 - 動漫、漫畫、遊戲等御宅文化資源導航'
+           },
+           'feisoo': {
+             'name': '飛搜俠',
+             'description': '飛書文檔搜索神器 - 快速搜索和發現飛書文檔資源'
            }
          }
        },
@@ -686,7 +722,8 @@ const defaultTools = tools;
            'audio': 'Audio',
            'file-transfer': 'File Transfer',
            'social': 'Social',
-           'games': 'Games'
+           'games': 'Games',
+           'resources': 'Resources'
          },
          'category_descriptions': {
            'entertainment': 'Fun tools and entertainment utilities',
@@ -699,7 +736,8 @@ const defaultTools = tools;
            'audio': 'Audio processing and conversion tools',
            'file-transfer': 'File sharing and transfer tools',
            'social': 'Social networking and communication tools',
-           'games': 'Fun games and interactive entertainment'
+           'games': 'Fun games and interactive entertainment',
+           'resources': 'Curated resource collections and directories'
          },
         'tools': {
           'learn-languages': {
@@ -757,6 +795,22 @@ const defaultTools = tools;
            'cuisine-chat': {
              'name': 'CuisineChat Temporary Chat Room',
              'description': 'Free online temporary chat tool, no registration required, instant creation, supports real-time messaging and file sharing with privacy protection'
+           },
+           'fmhy': {
+             'name': 'FMHY',
+             'description': 'Free Resources Hub - The largest collection of free stuff on the internet'
+           },
+           'axutongxue': {
+             'name': 'Axu\'s Storage',
+             'description': 'Axu\'s Storage - Curated learning resources, software tools, and course materials'
+           },
+           'wotaku': {
+             'name': 'Wotaku',
+             'description': 'Otaku Index - Resource directory for anime, manga, games and otaku culture'
+           },
+           'feisoo': {
+             'name': 'Feisoo',
+             'description': 'Feishu Document Search Tool - Quickly search and discover Feishu document resources'
            }
          }
        },
@@ -784,7 +838,8 @@ const defaultTools = tools;
            'audio': '音声',
            'file-transfer': 'ファイル転送',
            'social': 'ソーシャル',
-           'games': 'ゲーム'
+           'games': 'ゲーム',
+           'resources': 'リソース'
          },
          'category_descriptions': {
            'entertainment': '楽しいツールとエンターテイメントユーティリティ',
@@ -797,7 +852,8 @@ const defaultTools = tools;
            'audio': '音声処理と変換ツール',
            'file-transfer': 'ファイル共有と転送ツール',
            'social': 'ソーシャルネットワーキングとコミュニケーションツール',
-           'games': '楽しいゲームとインタラクティブエンターテイメント'
+           'games': '楽しいゲームとインタラクティブエンターテイメント',
+           'resources': '厳選されたリソースコレクションとディレクトリ'
          },
         'tools': {
           'learn-languages': {
@@ -855,6 +911,22 @@ const defaultTools = tools;
            'cuisine-chat': {
              'name': 'CuisineChat 一時チャットルーム',
              'description': '無料オンライン一時チャットツール、登録不要、即座に作成、リアルタイムメッセージとファイル共有対応、プライバシー保護重視'
+           },
+           'fmhy': {
+             'name': 'FMHY',
+             'description': '無料リソースハブ - インターネット上最大の無料リソースコレクション'
+           },
+           'axutongxue': {
+             'name': 'Axuの倉庫',
+             'description': 'Axuの倉庫 - 厳選された学習リソース、ソフトウェアツール、コース教材'
+           },
+           'wotaku': {
+             'name': 'Wotaku',
+             'description': 'オタク索引 - アニメ、漫画、ゲームなどオタク文化リソースディレクトリ'
+           },
+           'feisoo': {
+             'name': 'Feisoo',
+             'description': 'Feishu文書検索ツール - Feishu文書リソースを素早く検索・発見'
            }
          }
        },
@@ -882,7 +954,8 @@ const defaultTools = tools;
            'audio': 'الصوت',
            'file-transfer': 'نقل الملفات',
            'social': 'الاجتماعية',
-           'games': 'الألعاب'
+           'games': 'الألعاب',
+           'resources': 'الموارد'
          },
          'category_descriptions': {
            'entertainment': 'أدوات ممتعة ومرافق ترفيهية',
@@ -895,7 +968,8 @@ const defaultTools = tools;
            'audio': 'أدوات معالجة وتحويل الصوت',
            'file-transfer': 'أدوات مشاركة ونقل الملفات',
            'social': 'أدوات التواصل الاجتماعي والاتصال',
-           'games': 'ألعاب ممتعة وترفيه تفاعلي'
+           'games': 'ألعاب ممتعة وترفيه تفاعلي',
+           'resources': 'مجموعات موارد منسقة وأدلة'
          },
         'tools': {
           'learn-languages': {
@@ -953,6 +1027,22 @@ const defaultTools = tools;
            'cuisine-chat': {
              'name': 'CuisineChat غرفة دردشة مؤقتة',
              'description': 'أداة دردشة مؤقتة مجانية عبر الإنترنت، لا تحتاج إلى تسجيل، إنشاء فوري، تدعم الرسائل الفورية ومشاركة الملفات مع حماية الخصوصية'
+           },
+           'fmhy': {
+             'name': 'FMHY',
+             'description': 'مركز الموارد المجانية - أكبر مجموعة من الأشياء المجانية على الإنترنت'
+           },
+           'axutongxue': {
+             'name': 'مخزن Axu',
+             'description': 'مخزن Axu - موارد تعليمية منسقة وأدوات برمجية ومواد دورات'
+           },
+           'wotaku': {
+             'name': 'Wotaku',
+             'description': 'فهرس أوتاكو - دليل موارد للأنمي والمانجا والألعاب وثقافة أوتاكو'
+           },
+           'feisoo': {
+             'name': 'Feisoo',
+             'description': 'أداة بحث مستندات Feishu - ابحث واكتشف موارد مستندات Feishu بسرعة'
            }
          }
        },
@@ -980,7 +1070,8 @@ const defaultTools = tools;
            'audio': 'Аудио',
            'file-transfer': 'Передача файлов',
            'social': 'Социальные сети',
-           'games': 'Игры'
+           'games': 'Игры',
+           'resources': 'Ресурсы'
          },
          'category_descriptions': {
            'entertainment': 'Развлекательные инструменты и утилиты',
@@ -993,7 +1084,8 @@ const defaultTools = tools;
            'audio': 'Инструменты обработки и конвертации аудио',
            'file-transfer': 'Инструменты обмена и передачи файлов',
            'social': 'Социальные сети и коммуникационные инструменты',
-           'games': 'Веселые игры и интерактивные развлечения'
+           'games': 'Веселые игры и интерактивные развлечения',
+           'resources': 'Тщательно подобранные коллекции ресурсов и каталоги'
          },
         'tools': {
           'learn-languages': {
@@ -1051,6 +1143,22 @@ const defaultTools = tools;
            'cuisine-chat': {
              'name': 'CuisineChat временный чат',
              'description': 'Бесплатный онлайн инструмент для временного чата, без регистрации, мгновенное создание, поддерживает обмен сообщениями и файлами с защитой конфиденциальности'
+           },
+           'fmhy': {
+             'name': 'FMHY',
+             'description': 'Хаб бесплатных ресурсов - Самая большая коллекция бесплатных ресурсов в интернете'
+           },
+           'axutongxue': {
+             'name': 'Хранилище Axu',
+             'description': 'Хранилище Axu - Тщательно подобранные учебные ресурсы, программные инструменты и курсовые материалы'
+           },
+           'wotaku': {
+             'name': 'Wotaku',
+             'description': 'Индекс отаку - Каталог ресурсов по аниме, манге, играм и культуре отаку'
+           },
+           'feisoo': {
+             'name': 'Feisoo',
+             'description': 'Инструмент поиска документов Feishu - Быстрый поиск и обнаружение ресурсов документов Feishu'
            }
          }
        }
@@ -1132,7 +1240,7 @@ const defaultTools = tools;
     // categoryTitle 和 categoryDescription 已在顶层声明
     const initialT = translations['en'];
     if (categoryTitle) {
-      categoryTitle.innerHTML = `<span class="mr-3 text-3xl">🏠</span>${initialT.all_tools || 'All Tools'}`;
+      categoryTitle.innerHTML = `<img src="/icons/classification/all.png" alt="All Tools" class="mr-3 w-8 h-8 object-contain inline-block" />${initialT.all_tools || 'All Tools'}`;
     }
     if (categoryDescription) {
       categoryDescription.textContent = initialT.all_tools_desc || 'Collection of all practical tools to boost your productivity';
@@ -1401,7 +1509,7 @@ const defaultTools = tools;
           // 显示介绍section
           if (introSection) introSection.classList.remove('hidden');
           
-          categoryTitle.innerHTML = `<span class="mr-3 text-3xl">🏠</span>${t.all_tools || 'All Tools'}`;
+          categoryTitle.innerHTML = `<img src="/icons/classification/all.png" alt="All Tools" class="mr-3 w-8 h-8 object-contain inline-block" />${t.all_tools || 'All Tools'}`;
           categoryDescription.textContent = t.all_tools_desc || 'Collection of all practical tools to boost your productivity';
           
           toolsCount.textContent = window.toolsData.length;
@@ -1423,7 +1531,7 @@ const defaultTools = tools;
           const translatedName = t.categories[categoryId] || category.name;
           const translatedDesc = t.category_descriptions[categoryId] || category.description;
           
-          categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${category.icon}</span>${translatedName}`;
+          categoryTitle.innerHTML = `<img src="${category.icon}" alt="${translatedName}" class="mr-3 w-8 h-8 object-contain inline-block" />${translatedName}`;
           categoryDescription.textContent = translatedDesc;
           
           // 更新工具计数文本

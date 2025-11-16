@@ -28,80 +28,87 @@ export interface ToolCategory {
 // 工具分类定义
 export const categories: ToolCategory[] = [
   {
+    id: 'resources',
+    name: 'Resources',
+    description: 'Curated resource collections and directories',
+    icon: '/icons/classification/resource.png',
+    color: '#f59e0b'
+  },
+  {
     id: 'entertainment',
     name: 'Entertainment',
     description: 'Fun tools and entertainment utilities',
-    icon: '🎮',
+    icon: '/icons/classification/entertainment.png',
     color: '#f97316'
   },
   {
     id: 'education',
     name: 'Education',
     description: 'Educational tools and learning resources',
-    icon: '📚',
+    icon: '/icons/classification/education.png',
     color: '#84cc16'
   },
   {
     id: 'workplace-slack',
     name: 'Workplace Slack',
     description: 'Tools for workplace entertainment and relaxation',
-    icon: '🐟',
+    icon: '/icons/classification/slack.png',
     color: '#6366f1'
   },
   {
     id: 'search',
     name: 'Search',
     description: 'Search engines and discovery tools',
-    icon: '🔍',
+    icon: '/icons/classification/search.png',
     color: '#06b6d4'
   },
   {
     id: 'text',
     name: 'Text',
     description: 'Text processing and editing tools',
-    icon: '📝',
+    icon: '/icons/classification/text.png',
     color: '#8b5cf6'
   },
   {
     id: 'image',
     name: 'Image',
     description: 'Image processing and editing tools',
-    icon: '🖼️',
+    icon: '/icons/classification/image.png',
     color: '#ec4899'
   },
   {
     id: 'video',
     name: 'Video',
     description: 'Video processing and conversion tools',
-    icon: '🎬',
+    icon: '/icons/classification/video.png',
     color: '#ef4444'
   },
   {
     id: 'audio',
     name: 'Audio',
     description: 'Audio processing and conversion tools',
-    icon: '🎵',
+    icon: '/icons/classification/audio.png',
     color: '#10b981'
   },
   {
     id: 'file-transfer',
     name: 'File Transfer',
     description: 'File sharing and transfer tools',
-    icon: '📁',
+    icon: '/icons/classification/document.png',
     color: '#f59e0b'
   },
   {
     id: 'social',
     name: 'Social',
     description: 'Social networking and communication tools',
-    icon: '💬',
+    icon: '/icons/classification/socialContact.png',
     color: '#3b82f6'
   },
   {
     id: 'games',
     name: 'Games',
     description: 'Fun games and interactive entertainment',
-    icon: '🎮',
+    icon: '/icons/classification/game.png',
     color: '#a855f7'
   }
 ];
@@ -351,6 +358,66 @@ export const tools: ToolItem[] = [
     screenshots: [
       '/og/cuisine-chat-1.jpg'
     ]
+  },
+  {
+    id: 'fmhy',
+    name: 'FMHY',
+    description: '免费资源集散地 - 互联网上最大的免费资源集合',
+    tags: ['资源导航', '免费资源', '工具集合', '索引'],
+    url: 'https://fmhy.net/',
+    icon: '🌐',
+    featured: false,
+    thirdParty: true,
+    updatedAt: '2024-12-02T11:00:00Z',
+    category: 'resources',
+    popularity: 95,
+    isNew: false,
+    screenshots: []
+  },
+  {
+    id: 'axutongxue',
+    name: '阿虚同学的储物间',
+    description: '阿虚同学的储物间 - 精选学习资源、软件工具、课程资料集合',
+    tags: ['学习资源', '课程资料', '软件工具', '资源分享'],
+    url: 'https://axutongxue.com/',
+    icon: '📦',
+    featured: false,
+    thirdParty: true,
+    updatedAt: '2024-12-02T11:00:00Z',
+    category: 'resources',
+    popularity: 90,
+    isNew: false,
+    screenshots: []
+  },
+  {
+    id: 'wotaku',
+    name: 'Wotaku',
+    description: '御宅族索引 - 动漫、漫画、游戏等御宅文化资源导航',
+    tags: ['动漫资源', '漫画', '游戏', '御宅文化', '索引'],
+    url: 'https://wotaku.wiki/',
+    icon: '🎌',
+    featured: false,
+    thirdParty: true,
+    updatedAt: '2024-12-02T11:00:00Z',
+    category: 'resources',
+    popularity: 85,
+    isNew: false,
+    screenshots: []
+  },
+  {
+    id: 'feisoo',
+    name: '飞搜侠',
+    description: '飞书文档搜索神器 - 快速搜索和发现飞书文档资源',
+    tags: ['文档搜索', '飞书', '搜索引擎', '资源发现'],
+    url: 'https://www.feisoo.com/',
+    icon: '🔍',
+    featured: false,
+    thirdParty: true,
+    updatedAt: '2024-12-02T11:00:00Z',
+    category: 'search',
+    popularity: 80,
+    isNew: false,
+    screenshots: []
   }
 ];
 

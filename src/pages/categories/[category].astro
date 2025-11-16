@@ -31,7 +31,7 @@ const { category, categoryTools } = Astro.props;
           Back to Home
         </a>
         <div class="flex items-center space-x-4">
-          <span class="text-5xl">{category.icon}</span>
+          <img src={category.icon} alt={category.name} class="w-16 h-16 object-contain" />
           <div>
             <h1 class="text-4xl font-bold text-gray-900 dark:text-white">{category.name}</h1>
             <p class="text-lg text-gray-600 dark:text-gray-400 mt-2">{category.description}</p>
