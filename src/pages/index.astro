@@ -2,15 +2,14 @@
 import Base from '../layouts/Base.astro';
 import { tools, categories, getToolsCountByCategory } from '../data/tools';
 
-// 默认显示第一个分类的工具
-const defaultCategory = categories[0];
-const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
+// 默认显示所有工具
+const defaultTools = tools;
 ---
 
-<Base 
-  title="OumaShu - 小工具导航站"
-  description="极简日式风格的小工具集合站。分类浏览，提升您的工作效率。"
-  keywords="工具, 效率, 导航, 应用, 生产力, 分类"
+<Base
+  title="OumaShu - Tools Directory | All-in-One Productivity Hub"
+  description="Curated tools directory to boost your productivity. Browse by category for free online tools including video, audio, text, image converters, and more."
+  keywords="tools, productivity, online tools, free tools, utilities, web apps, screen recorder, chat, converter, directory"
 >
   <div class="min-h-screen flex">
     <!-- 移动端遮罩层 -->
@@ -24,7 +23,7 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           <img src="/logo.png" alt="OumaShu Logo" class="w-8 h-8" />
           <div>
             <h1 class="text-xl font-bold text-gray-900 dark:text-white">OumaShu</h1>
-            <p class="text-sm text-gray-600 dark:text-gray-400">小工具导航站</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Tools Directory</p>
           </div>
         </div>
       </div>
@@ -32,23 +31,40 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       <!-- 分类列表 -->
       <nav class="p-4">
         <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
-          工具分类
+          Tool Categories
         </h2>
         <ul class="space-y-1" id="category-list">
-          {categories.map((category, index) => {
+          <!-- 所有工具选项 -->
+          <li>
+            <button
+              data-category="all"
+              class="
+                w-full flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all duration-200
+                bg-sakura-50 dark:bg-sakura-900/20 text-sakura-600 dark:text-sakura-400 border border-sakura-200 dark:border-sakura-800
+                category-btn
+              "
+            >
+              <div class="flex items-center space-x-3">
+                <span class="text-lg">🏠</span>
+                <span class="font-medium">All Tools</span>
+              </div>
+              <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-full">
+                {tools.length}
+              </span>
+            </button>
+          </li>
+          
+          {categories.map((category) => {
             const toolCount = getToolsCountByCategory(tools, category.id);
             return (
               <li>
                 <button
                   data-category={category.id}
-                  class={`
+                  class="
                     w-full flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all duration-200
-                    ${index === 0 
-                      ? 'bg-sakura-50 dark:bg-sakura-900/20 text-sakura-600 dark:text-sakura-400 border border-sakura-200 dark:border-sakura-800' 
-                      : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
-                    }
+                    text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700
                     category-btn
-                  `}
+                  "
                 >
                   <div class="flex items-center space-x-3">
                     <span class="text-lg">{category.icon}</span>
@@ -149,103 +165,188 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center" id="category-title">
-              <span class="mr-3 text-3xl">{defaultCategory.icon}</span>
-              {defaultCategory.name}
+              <span class="mr-3 text-3xl">🏠</span>
+              All Tools
             </h2>
             <p class="text-gray-600 dark:text-gray-400 mt-1" id="category-description">
-              {defaultCategory.description}
+              Collection of all practical tools to boost your productivity
             </p>
           </div>
           <div class="text-sm text-gray-500 dark:text-gray-400" id="tools-count-text">
-            <span id="tools-count">{defaultTools.length}</span> <span id="tools-count-unit">个工具</span>
+            <span id="tools-count">{defaultTools.length}</span> <span id="tools-count-unit">tools</span>
           </div>
         </div>
       </header>
 
-      <!-- 工具卡片网格 -->
-      <div class="p-4 lg:p-8 bg-gray-50 dark:bg-black">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6" id="tools-grid">
-          {defaultTools.map((tool) => (
-            <div 
-              class="group cursor-pointer tool-card"
-              data-tool-url={tool.url}
-              data-tool-subdomain={tool.subdomain}
-            >
-              <div class="relative overflow-hidden rounded-xl p-6 h-50 bg-gradient-to-br from-sakura-400 to-sakura-600 hover:from-sakura-500 hover:to-sakura-700 transform hover:scale-105 transition-all duration-300 ease-out shadow-lg hover:shadow-xl text-white" style="background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);">
-                {/* 背景装饰 */}
-                <div class="absolute top-0 right-0 opacity-20">
-                  <div class="w-32 h-32 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
-                </div>
-                <div class="absolute bottom-0 left-0 opacity-10">
-                  <div class="w-24 h-24 rounded-full bg-white transform -translate-x-4 translate-y-4"></div>
-                </div>
+      <!-- Introduction Section -->
+      <section class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-8 py-8" id="intro-section">
+        <div class="max-w-4xl">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Welcome to OumaShu - Your Ultimate Productivity Hub
+          </h2>
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            OumaShu is a carefully curated directory of free online tools designed to boost your productivity 
+            and creativity. Whether you're looking for text processing tools, image editors, video converters, 
+            or entertainment apps, we've got you covered. All tools are hand-picked for quality, ease of use, 
+            and privacy protection.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div class="flex items-start space-x-3">
+              <span class="text-2xl">🆓</span>
+              <div>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">100% Free</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  All tools are completely free to use with no hidden costs or subscriptions required.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-2xl">🔒</span>
+              <div>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Privacy First</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Most tools process data locally in your browser, ensuring your privacy and security.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-2xl">⚡</span>
+              <div>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">No Installation</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Access all tools directly in your browser without downloading or installing anything.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                {/* 内容 */}
-                <div class="relative z-10 h-full flex flex-col">
-                  <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
-                      <span class="text-2xl absolute inset-0 flex items-center justify-center">{tool.icon || '🔗'}</span>
-                      <img 
-                        src={`${tool.url}favicon.ico`}
-                        alt={`${tool.name} icon`}
-                        class="w-8 h-8 object-contain relative z-10"
-                        loading="eager"
-                        onload="this.style.opacity='1'"
-                        onerror="this.style.opacity='0'"
-                        style="opacity: 0; transition: opacity 0.2s;"
-                      />
-                    </div>
-                    {tool.thirdParty ? (
-                      <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">
-                        🔗 <span class="third-party-text">第三方</span>
+      <!-- 工具列表视图（所有工具时显示） -->
+      <div class="p-4 lg:p-8 bg-gray-50 dark:bg-black" id="all-tools-list">
+        {categories.map((category) => {
+          const categoryTools = tools.filter(tool => tool.category === category.id);
+          if (categoryTools.length === 0) return null;
+          
+          return (
+            <div class="mb-8 category-section" data-category-id={category.id}>
+              <div class="flex items-center mb-4">
+                <span class="text-2xl mr-3">{category.icon}</span>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white category-name">
+                  {category.name}
+                </h3>
+                <span class="ml-3 text-sm text-gray-500 dark:text-gray-400 category-count">
+                  ({categoryTools.length})
+                </span>
+              </div>
+              <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {categoryTools.map((tool, index) => (
+                    <a
+                      href={tool.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group tool-link"
+                      data-tool-id={tool.id}
+                    >
+                      <span class="text-lg mr-2">{tool.icon || '🔗'}</span>
+                      <span class="text-gray-900 dark:text-white text-sm font-medium truncate tool-name">
+                        {tool.name}
                       </span>
-                    ) : tool.featured && (
-                      <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">
-                        ⭐ <span class="featured-text">推荐</span>
-                      </span>
-                    )}
-                  </div>
-                  
-                  <h3 class="text-xl font-bold mb-2 line-clamp-1">
-                    {tool.name}
-                  </h3>
-                  
-                  <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">
-                    {tool.description}
-                  </p>
-                  
-                  <div class="flex items-center justify-between">
-                    <div class="flex flex-wrap gap-1">
-                      {tool.tags.slice(0, 2).map((tag) => (
-                        <span class="bg-white/20 backdrop-blur-sm text-xs px-2 py-1 rounded-full">
-                          {tag}
+                      {tool.thirdParty && (
+                        <span class="ml-1 text-xs text-gray-400 third-party-indicator">
+                          🔗
                         </span>
-                      ))}
-                    </div>
-                    
-                    <div class="flex items-center text-white/80">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      )}
+                      <svg class="w-3 h-3 ml-auto text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                       </svg>
-                    </div>
-                  </div>
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
+      </div>
 
-        {/* 空状态 */}
+      <!-- 工具卡片视图（具体分类时显示） -->
+      <div class="p-4 lg:p-8 bg-gray-50 dark:bg-black hidden" id="category-tools-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tools-grid">
+          <!-- 卡片将通过 JavaScript 动态生成 -->
+        </div>
+        
+        <!-- 空状态 -->
         <div id="empty-state" class="hidden text-center py-16">
-          <div class="text-6xl mb-4">📦</div>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2" id="empty-state-title">
-            该分类暂无工具
+          <div class="text-6xl mb-4">🔍</div>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" id="empty-state-title">
+            No tools in this category
           </h3>
           <p class="text-gray-600 dark:text-gray-400" id="empty-state-desc">
-            更多工具正在开发中，敬请期待！
+            More tools are coming soon!
           </p>
         </div>
       </div>
+
+      <!-- Footer -->
+      <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 px-4 lg:px-8 py-8 mt-12">
+        <div class="max-w-7xl mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+            <div>
+              <div class="flex items-center space-x-2 mb-3">
+                <img src="/logo.png" alt="OumaShu Logo" class="w-6 h-6" />
+                <h3 class="font-bold text-gray-900 dark:text-white">OumaShu</h3>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Your ultimate productivity hub. Discover free online tools to boost your workflow.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Quick Links</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="/about" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a href="/privacy" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                    Privacy Policy
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Contact</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="mailto:wanghongxiang@gmail.com" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                    Email: wanghongxiang@gmail.com
+                  </a>
+                </li>
+                <li>
+                  <a href="https://x.com/Rollkey4" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                    X: @Rollkey4
+                  </a>
+                </li>
+                <li class="text-sm text-gray-600 dark:text-gray-400">
+                  Website: oumashu.top
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+            <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+              © 2024 OumaShu. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </main>
   </div>
 </Base>
@@ -345,11 +446,14 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
     
     // 分类和工具相关元素
     // categoryButtons 已在上面定义
-    const toolsGrid = document.getElementById('tools-grid');
     const categoryTitle = document.getElementById('category-title');
     const categoryDescription = document.getElementById('category-description');
     const toolsCount = document.getElementById('tools-count');
+    const allToolsList = document.getElementById('all-tools-list');
+    const categoryToolsGrid = document.getElementById('category-tools-grid');
+    const toolsGrid = document.getElementById('tools-grid');
     const emptyState = document.getElementById('empty-state');
+    const introSection = document.getElementById('intro-section');
     
     const localeData = {
       'zh-CN': { flag: '🇨🇳', name: '简体中文' },
@@ -362,10 +466,12 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
 
     // 翻译映射
     const translations = {
-      'zh-CN': {
+       'zh-CN': {
         'site_name': 'OumaShu',
         'site_subtitle': '小工具导航站',
         'categories_title': '工具分类',
+        'all_tools': '所有工具',
+        'all_tools_desc': '汇集所有实用工具，提升您的工作效率',
         'tools_count': '个工具',
         'featured_text': '推荐',
         'third_party_text': '第三方',
@@ -379,22 +485,26 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           'workplace-slack': '职场摸鱼',
           'search': '搜索',
           'text': '文本',
-          'image': '图片',
-          'video': '视频',
-          'audio': '音频',
-          'file-transfer': '文件传输'
-        },
-        'category_descriptions': {
-          'entertainment': '娱乐工具和有趣应用',
-          'education': '教育工具和学习资源',
-          'workplace-slack': '职场娱乐和放松工具',
-          'search': '搜索引擎和发现工具',
-          'text': '文本处理和编辑工具',
-          'image': '图片处理和编辑工具',
-          'video': '视频处理和转换工具',
-          'audio': '音频处理和转换工具',
-          'file-transfer': '文件共享和传输工具'
-        },
+           'image': '图片',
+           'video': '视频',
+           'audio': '音频',
+           'file-transfer': '文件传输',
+           'social': '社交',
+           'games': '游戏'
+         },
+         'category_descriptions': {
+           'entertainment': '娱乐工具和有趣应用',
+           'education': '教育工具和学习资源',
+           'workplace-slack': '职场娱乐和放松工具',
+           'search': '搜索引擎和发现工具',
+           'text': '文本处理和编辑工具',
+           'image': '图片处理和编辑工具',
+           'video': '视频处理和转换工具',
+           'audio': '音频处理和转换工具',
+           'file-transfer': '文件共享和传输工具',
+           'social': '社交网络和通讯工具',
+           'games': '有趣的游戏和互动娱乐'
+         },
         'tools': {
           'learn-languages': {
             'name': '语言学习助手',
@@ -436,16 +546,30 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'name': 'Work Whale 摸鱼阅读器',
             'description': '伪装成Microsoft Word界面的网页端小说阅读器，完美融入办公环境，让你安心摸鱼'
           },
-          'stealth-novel': {
-            'name': 'StealthNovel 隐蔽阅读器',
-            'description': 'Windows桌面版隐蔽小说阅读器，支持任务栏标题显示和伪装弹窗模式，办公室摸鱼必备神器'
-          }
-        }
-      },
+           'stealth-novel': {
+             'name': 'StealthNovel 隐蔽阅读器',
+             'description': 'Windows桌面版隐蔽小说阅读器，支持任务栏标题显示和伪装弹窗模式，办公室摸鱼必备神器'
+           },
+           'bedmate': {
+             'name': 'BedMate 床搭子',
+             'description': '健康的床搭子互助平台，帮助用户寻找志同道合的睡眠伙伴，改善睡眠质量'
+           },
+           'screen-flow': {
+             'name': 'ScreenFlow 在线录屏',
+             'description': '免费在线录屏工具，支持屏幕录制、摄像头录制、音频录制，无需安装任何软件'
+           },
+           'cuisine-chat': {
+             'name': 'CuisineChat 临时聊天室',
+             'description': '免费在线临时聊天工具，无需注册，创建即用，支持实时消息、文件分享，注重隐私保护'
+           }
+         }
+       },
       'zh-TW': {
         'site_name': 'OumaShu',
         'site_subtitle': '小工具導航站',
         'categories_title': '工具分類',
+        'all_tools': '所有工具',
+        'all_tools_desc': '匯集所有實用工具，提升您的工作效率',
         'tools_count': '個工具',
         'featured_text': '推薦',
         'third_party_text': '第三方',
@@ -459,22 +583,26 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           'workplace-slack': '職場摸魚',
           'search': '搜尋',
           'text': '文本',
-          'image': '圖片',
-          'video': '視頻',
-          'audio': '音頻',
-          'file-transfer': '文件傳輸'
-        },
-        'category_descriptions': {
-          'entertainment': '娛樂工具和有趣應用',
-          'education': '教育工具和學習資源',
-          'workplace-slack': '職場娛樂和放鬆工具',
-          'search': '搜尋引擎和發現工具',
-          'text': '文本處理和編輯工具',
-          'image': '圖片處理和編輯工具',
-          'video': '視頻處理和轉換工具',
-          'audio': '音頻處理和轉換工具',
-          'file-transfer': '文件共享和傳輸工具'
-        },
+           'image': '圖片',
+           'video': '視頻',
+           'audio': '音頻',
+           'file-transfer': '文件傳輸',
+           'social': '社交',
+           'games': '遊戲'
+         },
+         'category_descriptions': {
+           'entertainment': '娛樂工具和有趣應用',
+           'education': '教育工具和學習資源',
+           'workplace-slack': '職場娛樂和放鬆工具',
+           'search': '搜尋引擎和發現工具',
+           'text': '文本處理和編輯工具',
+           'image': '圖片處理和編輯工具',
+           'video': '視頻處理和轉換工具',
+           'audio': '音頻處理和轉換工具',
+           'file-transfer': '文件共享和傳輸工具',
+           'social': '社交網絡和通訊工具',
+           'games': '有趣的遊戲和互動娛樂'
+         },
         'tools': {
           'learn-languages': {
             'name': '語言學習助手',
@@ -516,16 +644,30 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'name': 'Work Whale 摸魚閱讀器',
             'description': '偽裝成Microsoft Word界面的網頁端小說閱讀器，完美融入辦公環境，讓你安心摸魚'
           },
-          'stealth-novel': {
-            'name': 'StealthNovel 隱蔽閱讀器',
-            'description': 'Windows桌面版隱蔽小說閱讀器，支持任務欄標題顯示和偽裝彈窗模式，辦公室摸魚必備神器'
-          }
-        }
-      },
+           'stealth-novel': {
+             'name': 'StealthNovel 隱蔽閱讀器',
+             'description': 'Windows桌面版隱蔽小說閱讀器，支持任務欄標題顯示和偽裝彈窗模式，辦公室摸魚必備神器'
+           },
+           'bedmate': {
+             'name': 'BedMate 床搭子',
+             'description': '健康的床搭子互助平台，幫助用戶尋找志同道合的睡眠夥伴，改善睡眠質量'
+           },
+           'screen-flow': {
+             'name': 'ScreenFlow 線上錄屏',
+             'description': '免費線上錄屏工具，支援螢幕錄製、攝影機錄製、音訊錄製，無需安裝任何軟體'
+           },
+           'cuisine-chat': {
+             'name': 'CuisineChat 臨時聊天室',
+             'description': '免費線上臨時聊天工具，無需註冊，創建即用，支援即時訊息、檔案分享，注重隱私保護'
+           }
+         }
+       },
       'en': {
         'site_name': 'OumaShu',
         'site_subtitle': 'Tools Directory',
         'categories_title': 'Tool Categories',
+        'all_tools': 'All Tools',
+        'all_tools_desc': 'Collection of all practical tools to boost your productivity',
         'tools_count': 'tools',
         'featured_text': 'Featured',
         'third_party_text': '3rd Party',
@@ -539,22 +681,26 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           'workplace-slack': 'Workplace Slack',
           'search': 'Search',
           'text': 'Text',
-          'image': 'Image',
-          'video': 'Video',
-          'audio': 'Audio',
-          'file-transfer': 'File Transfer'
-        },
-        'category_descriptions': {
-          'entertainment': 'Fun tools and entertainment utilities',
-          'education': 'Educational tools and learning resources',
-          'workplace-slack': 'Tools for workplace entertainment and relaxation',
-          'search': 'Search engines and discovery tools',
-          'text': 'Text processing and editing tools',
-          'image': 'Image processing and editing tools',
-          'video': 'Video processing and conversion tools',
-          'audio': 'Audio processing and conversion tools',
-          'file-transfer': 'File sharing and transfer tools'
-        },
+           'image': 'Image',
+           'video': 'Video',
+           'audio': 'Audio',
+           'file-transfer': 'File Transfer',
+           'social': 'Social',
+           'games': 'Games'
+         },
+         'category_descriptions': {
+           'entertainment': 'Fun tools and entertainment utilities',
+           'education': 'Educational tools and learning resources',
+           'workplace-slack': 'Tools for workplace entertainment and relaxation',
+           'search': 'Search engines and discovery tools',
+           'text': 'Text processing and editing tools',
+           'image': 'Image processing and editing tools',
+           'video': 'Video processing and conversion tools',
+           'audio': 'Audio processing and conversion tools',
+           'file-transfer': 'File sharing and transfer tools',
+           'social': 'Social networking and communication tools',
+           'games': 'Fun games and interactive entertainment'
+         },
         'tools': {
           'learn-languages': {
             'name': 'Learn Languages',
@@ -596,16 +742,30 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'name': 'Work Whale Reader',
             'description': 'A web-based novel reader disguised as Microsoft Word interface, perfectly blends into office environment'
           },
-          'stealth-novel': {
-            'name': 'StealthNovel Stealth Reader',
-            'description': 'Windows desktop stealth novel reader with taskbar title display and disguised popup modes, essential for office reading'
-          }
-        }
-      },
+           'stealth-novel': {
+             'name': 'StealthNovel Stealth Reader',
+             'description': 'Windows desktop stealth novel reader with taskbar title display and disguised popup modes, essential for office reading'
+           },
+           'bedmate': {
+             'name': 'BedMate',
+             'description': 'Healthy sleep companion mutual aid platform, helping users find like-minded sleep partners to improve sleep quality'
+           },
+           'screen-flow': {
+             'name': 'ScreenFlow Online Screen Recorder',
+             'description': 'Free online screen recording tool, supports screen, webcam, and audio recording without installing any software'
+           },
+           'cuisine-chat': {
+             'name': 'CuisineChat Temporary Chat Room',
+             'description': 'Free online temporary chat tool, no registration required, instant creation, supports real-time messaging and file sharing with privacy protection'
+           }
+         }
+       },
       'ja-JP': {
         'site_name': 'OumaShu',
         'site_subtitle': 'ツールディレクトリ',
         'categories_title': 'ツールカテゴリ',
+        'all_tools': 'すべてのツール',
+        'all_tools_desc': 'すべての実用的なツールを集めて生産性を向上',
         'tools_count': 'ツール',
         'featured_text': 'おすすめ',
         'third_party_text': 'サードパーティ',
@@ -619,22 +779,26 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           'workplace-slack': '職場サボり',
           'search': '検索',
           'text': 'テキスト',
-          'image': '画像',
-          'video': '動画',
-          'audio': '音声',
-          'file-transfer': 'ファイル転送'
-        },
-        'category_descriptions': {
-          'entertainment': '楽しいツールとエンターテイメントユーティリティ',
-          'education': '教育ツールと学習リソース',
-          'workplace-slack': '職場でのエンターテイメントとリラクゼーションツール',
-          'search': '検索エンジンと発見ツール',
-          'text': 'テキスト処理と編集ツール',
-          'image': '画像処理と編集ツール',
-          'video': '動画処理と変換ツール',
-          'audio': '音声処理と変換ツール',
-          'file-transfer': 'ファイル共有と転送ツール'
-        },
+           'image': '画像',
+           'video': '動画',
+           'audio': '音声',
+           'file-transfer': 'ファイル転送',
+           'social': 'ソーシャル',
+           'games': 'ゲーム'
+         },
+         'category_descriptions': {
+           'entertainment': '楽しいツールとエンターテイメントユーティリティ',
+           'education': '教育ツールと学習リソース',
+           'workplace-slack': '職場でのエンターテイメントとリラクゼーションツール',
+           'search': '検索エンジンと発見ツール',
+           'text': 'テキスト処理と編集ツール',
+           'image': '画像処理と編集ツール',
+           'video': '動画処理と変換ツール',
+           'audio': '音声処理と変換ツール',
+           'file-transfer': 'ファイル共有と転送ツール',
+           'social': 'ソーシャルネットワーキングとコミュニケーションツール',
+           'games': '楽しいゲームとインタラクティブエンターテイメント'
+         },
         'tools': {
           'learn-languages': {
             'name': '言語学習アシスタント',
@@ -676,16 +840,30 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'name': 'Work Whale リーダー',
             'description': 'Microsoft Wordインターフェースに偽装したウェブベースの小説リーダー、オフィス環境に完璧に溶け込む'
           },
-          'stealth-novel': {
-            'name': 'StealthNovel ステルスリーダー',
-            'description': 'Windowsデスクトップ版ステルス小説リーダー、タスクバータイトル表示と偽装ポップアップモード対応、オフィス読書の必需品'
-          }
-        }
-      },
+           'stealth-novel': {
+             'name': 'StealthNovel ステルスリーダー',
+             'description': 'Windowsデスクトップ版ステルス小説リーダー、タスクバータイトル表示と偽装ポップアップモード対応、オフィス読書の必需品'
+           },
+           'bedmate': {
+             'name': 'BedMate',
+             'description': '健康的な睡眠パートナー相互支援プラットフォーム、志を同じくする睡眠パートナーを見つけて睡眠の質を向上'
+           },
+           'screen-flow': {
+             'name': 'ScreenFlow オンライン画面録画',
+             'description': '無料オンライン画面録画ツール、画面録画・ウェブカメラ録画・音声録画対応、ソフトウェアのインストール不要'
+           },
+           'cuisine-chat': {
+             'name': 'CuisineChat 一時チャットルーム',
+             'description': '無料オンライン一時チャットツール、登録不要、即座に作成、リアルタイムメッセージとファイル共有対応、プライバシー保護重視'
+           }
+         }
+       },
       'ar': {
         'site_name': 'OumaShu',
         'site_subtitle': 'دليل الأدوات',
         'categories_title': 'فئات الأدوات',
+        'all_tools': 'جميع الأدوات',
+        'all_tools_desc': 'مجموعة من جميع الأدوات العملية لتعزيز إنتاجيتك',
         'tools_count': 'أدوات',
         'featured_text': 'مميز',
         'third_party_text': 'طرف ثالث',
@@ -699,22 +877,26 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           'workplace-slack': 'التسلل في العمل',
           'search': 'البحث',
           'text': 'النص',
-          'image': 'الصور',
-          'video': 'الفيديو',
-          'audio': 'الصوت',
-          'file-transfer': 'نقل الملفات'
-        },
-        'category_descriptions': {
-          'entertainment': 'أدوات ممتعة ومرافق ترفيهية',
-          'education': 'أدوات تعليمية وموارد تعلم',
-          'workplace-slack': 'أدوات الترفيه والاسترخاء في مكان العمل',
-          'search': 'محركات البحث وأدوات الاكتشاف',
-          'text': 'أدوات معالجة وتحرير النصوص',
-          'image': 'أدوات معالجة وتحرير الصور',
-          'video': 'أدوات معالجة وتحويل الفيديو',
-          'audio': 'أدوات معالجة وتحويل الصوت',
-          'file-transfer': 'أدوات مشاركة ونقل الملفات'
-        },
+           'image': 'الصور',
+           'video': 'الفيديو',
+           'audio': 'الصوت',
+           'file-transfer': 'نقل الملفات',
+           'social': 'الاجتماعية',
+           'games': 'الألعاب'
+         },
+         'category_descriptions': {
+           'entertainment': 'أدوات ممتعة ومرافق ترفيهية',
+           'education': 'أدوات تعليمية وموارد تعلم',
+           'workplace-slack': 'أدوات الترفيه والاسترخاء في مكان العمل',
+           'search': 'محركات البحث وأدوات الاكتشاف',
+           'text': 'أدوات معالجة وتحرير النصوص',
+           'image': 'أدوات معالجة وتحرير الصور',
+           'video': 'أدوات معالجة وتحويل الفيديو',
+           'audio': 'أدوات معالجة وتحويل الصوت',
+           'file-transfer': 'أدوات مشاركة ونقل الملفات',
+           'social': 'أدوات التواصل الاجتماعي والاتصال',
+           'games': 'ألعاب ممتعة وترفيه تفاعلي'
+         },
         'tools': {
           'learn-languages': {
             'name': 'تعلم اللغات',
@@ -756,16 +938,30 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'name': 'قارئ Work Whale',
             'description': 'قارئ روايات ويب متنكر في واجهة Microsoft Word، يندمج بشكل مثالي في بيئة المكتب'
           },
-          'stealth-novel': {
-            'name': 'قارئ StealthNovel المخفي',
-            'description': 'قارئ روايات مخفي لسطح المكتب Windows مع عرض عنوان شريط المهام ووضع النوافذ المنبثقة المقنعة، ضروري للقراءة في المكتب'
-          }
-        }
-      },
+           'stealth-novel': {
+             'name': 'قارئ StealthNovel المخفي',
+             'description': 'قارئ روايات مخفي لسطح المكتب Windows مع عرض عنوان شريط المهام ووضع النوافذ المنبثقة المقنعة، ضروري للقراءة في المكتب'
+           },
+           'bedmate': {
+             'name': 'BedMate',
+             'description': 'منصة المساعدة المتبادلة لشريك النوم الصحي، تساعد المستخدمين في العثور على شركاء نوم متشابهين في التفكير لتحسين جودة النوم'
+           },
+           'screen-flow': {
+             'name': 'ScreenFlow تسجيل الشاشة عبر الإنترنت',
+             'description': 'أداة تسجيل شاشة مجانية عبر الإنترنت، تدعم تسجيل الشاشة وكاميرا الويب والصوت دون تثبيت أي برنامج'
+           },
+           'cuisine-chat': {
+             'name': 'CuisineChat غرفة دردشة مؤقتة',
+             'description': 'أداة دردشة مؤقتة مجانية عبر الإنترنت، لا تحتاج إلى تسجيل، إنشاء فوري، تدعم الرسائل الفورية ومشاركة الملفات مع حماية الخصوصية'
+           }
+         }
+       },
       'ru': {
         'site_name': 'OumaShu',
         'site_subtitle': 'Каталог инструментов',
         'categories_title': 'Категории инструментов',
+        'all_tools': 'Все инструменты',
+        'all_tools_desc': 'Коллекция всех практичных инструментов для повышения производительности',
         'tools_count': 'инструментов',
         'featured_text': 'Рекомендуемое',
         'third_party_text': 'Сторонний',
@@ -779,22 +975,26 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
           'workplace-slack': 'Прокрастинация',
           'search': 'Поиск',
           'text': 'Текст',
-          'image': 'Изображения',
-          'video': 'Видео',
-          'audio': 'Аудио',
-          'file-transfer': 'Передача файлов'
-        },
-        'category_descriptions': {
-          'entertainment': 'Развлекательные инструменты и утилиты',
-          'education': 'Образовательные инструменты и учебные ресурсы',
-          'workplace-slack': 'Инструменты для развлечения и отдыха на рабочем месте',
-          'search': 'Поисковые системы и инструменты обнаружения',
-          'text': 'Инструменты обработки и редактирования текста',
-          'image': 'Инструменты обработки и редактирования изображений',
-          'video': 'Инструменты обработки и конвертации видео',
-          'audio': 'Инструменты обработки и конвертации аудио',
-          'file-transfer': 'Инструменты обмена и передачи файлов'
-        },
+           'image': 'Изображения',
+           'video': 'Видео',
+           'audio': 'Аудио',
+           'file-transfer': 'Передача файлов',
+           'social': 'Социальные сети',
+           'games': 'Игры'
+         },
+         'category_descriptions': {
+           'entertainment': 'Развлекательные инструменты и утилиты',
+           'education': 'Образовательные инструменты и учебные ресурсы',
+           'workplace-slack': 'Инструменты для развлечения и отдыха на рабочем месте',
+           'search': 'Поисковые системы и инструменты обнаружения',
+           'text': 'Инструменты обработки и редактирования текста',
+           'image': 'Инструменты обработки и редактирования изображений',
+           'video': 'Инструменты обработки и конвертации видео',
+           'audio': 'Инструменты обработки и конвертации аудио',
+           'file-transfer': 'Инструменты обмена и передачи файлов',
+           'social': 'Социальные сети и коммуникационные инструменты',
+           'games': 'Веселые игры и интерактивные развлечения'
+         },
         'tools': {
           'learn-languages': {
             'name': 'Изучение языков',
@@ -836,12 +1036,24 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
             'name': 'Work Whale Читалка',
             'description': 'Веб-читалка романов, замаскированная под интерфейс Microsoft Word, идеально вписывается в рабочую среду'
           },
-          'stealth-novel': {
-            'name': 'StealthNovel Скрытая Читалка',
-            'description': 'Скрытая читалка романов для Windows с отображением в заголовке панели задач и режимом маскированных всплывающих окон, незаменима для чтения в офисе'
-          }
-        }
-      }
+           'stealth-novel': {
+             'name': 'StealthNovel Скрытая Читалка',
+             'description': 'Скрытая читалка романов для Windows с отображением в заголовке панели задач и режимом маскированных всплывающих окон, незаменима для чтения в офисе'
+           },
+           'bedmate': {
+             'name': 'BedMate',
+             'description': 'Платформа взаимопомощи здорового сна, помогает пользователям найти единомышленников-партнеров по сну для улучшения качества сна'
+           },
+           'screen-flow': {
+             'name': 'ScreenFlow онлайн запись экрана',
+             'description': 'Бесплатный онлайн инструмент для записи экрана, поддерживает запись экрана, веб-камеры и аудио без установки программного обеспечения'
+           },
+           'cuisine-chat': {
+             'name': 'CuisineChat временный чат',
+             'description': 'Бесплатный онлайн инструмент для временного чата, без регистрации, мгновенное создание, поддерживает обмен сообщениями и файлами с защитой конфиденциальности'
+           }
+         }
+       }
     };
     
     // 根据IP自动检测语言
@@ -905,21 +1117,8 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       // 初始化页面文本
       updatePageText(currentLocale);
       
-      // 初始化当前分类的翻译
-      const t = translations[currentLocale] || translations['en'];
-      const firstCategory = window.categoriesData[0];
-      if (firstCategory) {
-        const categoryTitle = document.getElementById('category-title');
-        const categoryDescription = document.getElementById('category-description');
-        if (categoryTitle) {
-          const translatedName = t.categories[firstCategory.id] || firstCategory.name;
-          categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${firstCategory.icon}</span>${translatedName}`;
-        }
-        if (categoryDescription) {
-          const translatedDesc = t.category_descriptions[firstCategory.id] || firstCategory.description;
-          categoryDescription.textContent = translatedDesc;
-        }
-      }
+      // 更新工具和分类文本
+      updateToolsAndCategories(currentLocale);
       
       console.log('Auto-detected locale:', currentLocale);
     });
@@ -929,83 +1128,43 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
     
     // 初始显示英文（在IP检测完成前）
     updatePageText('en');
+    // 初始化时显示"所有工具"，不显示特定分类
+    // categoryTitle 和 categoryDescription 已在顶层声明
     const initialT = translations['en'];
-    const firstCategory = window.categoriesData[0];
-    if (firstCategory) {
-      const categoryTitle = document.getElementById('category-title');
-      const categoryDescription = document.getElementById('category-description');
-      if (categoryTitle) {
-        const translatedName = initialT.categories[firstCategory.id] || firstCategory.name;
-        categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${firstCategory.icon}</span>${translatedName}`;
-      }
-      if (categoryDescription) {
-        const translatedDesc = initialT.category_descriptions[firstCategory.id] || firstCategory.description;
-        categoryDescription.textContent = translatedDesc;
-      }
+    if (categoryTitle) {
+      categoryTitle.innerHTML = `<span class="mr-3 text-3xl">🏠</span>${initialT.all_tools || 'All Tools'}`;
+    }
+    if (categoryDescription) {
+      categoryDescription.textContent = initialT.all_tools_desc || 'Collection of all practical tools to boost your productivity';
     }
     
-    // 更新当前显示的工具卡片
-    function updateCurrentToolCards(locale) {
+    // 更新工具名称和分类标题
+    function updateToolsAndCategories(locale) {
       const t = translations[locale] || translations['en'];
-      const toolsGrid = document.getElementById('tools-grid');
-      const currentCategoryBtn = document.querySelector('.category-btn.bg-sakura-50, .category-btn[class*="bg-sakura"]');
       
-      if (currentCategoryBtn && toolsGrid) {
-        const categoryId = currentCategoryBtn.dataset.category;
-        const categoryTools = window.toolsData.filter(tool => tool.category === categoryId);
+      // 更新分类标题
+      document.querySelectorAll('.category-section').forEach(section => {
+        const categoryId = section.dataset.categoryId;
+        const categoryNameElem = section.querySelector('.category-name');
         
-        if (categoryTools.length > 0) {
-          toolsGrid.innerHTML = categoryTools.map(tool => {
-            // 获取翻译的工具名称和描述
-            const toolTranslation = t.tools && t.tools[tool.id];
-            const translatedName = toolTranslation ? toolTranslation.name : tool.name;
-            const translatedDesc = toolTranslation ? toolTranslation.description : tool.description;
-            
-            return `
-            <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-subdomain="${tool.subdomain}">
-              <div class="relative overflow-hidden rounded-xl p-6 h-50 bg-gradient-to-br from-sakura-400 to-sakura-600 hover:from-sakura-500 hover:to-sakura-700 transform hover:scale-105 transition-all duration-300 ease-out shadow-lg hover:shadow-xl text-white" style="background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);">
-                <div class="absolute top-0 right-0 opacity-20">
-                  <div class="w-32 h-32 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
-                </div>
-                <div class="absolute bottom-0 left-0 opacity-10">
-                  <div class="w-24 h-24 rounded-full bg-white transform -translate-x-4 translate-y-4"></div>
-                </div>
-                <div class="relative z-10 h-full flex flex-col">
-                  <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
-                      <img 
-                        src="https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=128"
-                        alt="${translatedName} icon"
-                        class="w-8 h-8 object-contain"
-                        loading="lazy"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                      />
-                      <span class="text-2xl" style="display: none;">${tool.icon || '🔗'}</span>
-                    </div>
-                    ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
-                  </div>
-                  <h3 class="text-xl font-bold mb-2 line-clamp-1">${translatedName}</h3>
-                  <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${translatedDesc}</p>
-                  <div class="flex items-center justify-between">
-                    <div class="flex flex-wrap gap-1">
-                      ${tool.tags.slice(0, 2).map(tag => `
-                        <span class="bg-white/20 backdrop-blur-sm text-xs px-2 py-1 rounded-full">${tag}</span>
-                      `).join('')}
-                    </div>
-                    <div class="flex items-center text-white/80">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            `;
-          }).join('');
+        if (categoryNameElem && t.categories && t.categories[categoryId]) {
+          categoryNameElem.textContent = t.categories[categoryId];
         }
-      }
+      });
+      
+      // 更新工具名称
+      document.querySelectorAll('.tool-link').forEach(link => {
+        const toolId = link.dataset.toolId;
+        const toolNameElem = link.querySelector('.tool-name');
+        
+        if (toolNameElem && toolId && t.tools && t.tools[toolId]) {
+          toolNameElem.textContent = t.tools[toolId].name;
+        }
+      });
     }
+    
+    // 初始更新为英文
+    updateToolsAndCategories('en');
 
     // 更新页面文本的函数
     function updatePageText(locale) {
@@ -1024,12 +1183,15 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       }
       
       // 更新分类按钮文本
-      const categoryButtons = document.querySelectorAll('.category-btn');
       categoryButtons.forEach(btn => {
         const categoryId = btn.dataset.category;
         const nameSpan = btn.querySelector('span.font-medium');
-        if (nameSpan && t.categories[categoryId]) {
-          nameSpan.textContent = t.categories[categoryId];
+        if (nameSpan) {
+          if (categoryId === 'all') {
+            nameSpan.textContent = t.all_tools || '所有工具';
+          } else if (t.categories[categoryId]) {
+            nameSpan.textContent = t.categories[categoryId];
+          }
         }
       });
       
@@ -1058,25 +1220,52 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       if (languageToggleBtn) languageToggleBtn.title = t.language_toggle_title;
       
       // 更新空状态文本
-      const emptyStateTitle = document.querySelector('#empty-state h3');
-      const emptyStateDesc = document.querySelector('#empty-state p');
+      const emptyStateTitle = document.querySelector('#empty-state-title');
+      const emptyStateDesc = document.querySelector('#empty-state-desc');
       if (emptyStateTitle) emptyStateTitle.textContent = t.empty_state_title;
       if (emptyStateDesc) emptyStateDesc.textContent = t.empty_state_desc;
       
-      // 更新当前分类描述
+      // 更新卡片中的第三方标签文本
+      document.querySelectorAll('.third-party-text').forEach(el => {
+        el.textContent = t.third_party_text;
+      });
+      
+      // 更新当前分类描述和标题
       const categoryDesc = document.getElementById('category-description');
-      if (categoryDesc) {
+      const categoryTitleElem = document.getElementById('category-title');
+      if (categoryDesc || categoryTitleElem) {
         const currentCategoryBtn = document.querySelector('.category-btn.bg-sakura-50, .category-btn[class*="bg-sakura"]');
         if (currentCategoryBtn) {
           const categoryId = currentCategoryBtn.dataset.category;
-          if (t.category_descriptions[categoryId]) {
-            categoryDesc.textContent = t.category_descriptions[categoryId];
+          
+          if (categoryId === 'all') {
+            // 如果是"所有工具"
+            if (categoryTitleElem) {
+              categoryTitleElem.innerHTML = `<span class="mr-3 text-3xl">🏠</span>${t.all_tools || 'All Tools'}`;
+            }
+            if (categoryDesc) {
+              categoryDesc.textContent = t.all_tools_desc || 'Collection of all practical tools to boost your productivity';
+            }
+          } else {
+            // 如果是具体分类
+            const category = window.categoriesData.find(cat => cat.id === categoryId);
+            if (category) {
+              const translatedName = t.categories[categoryId] || category.name;
+              const translatedDesc = t.category_descriptions[categoryId] || category.description;
+              
+              if (categoryTitleElem) {
+                categoryTitleElem.innerHTML = `<span class="mr-3 text-3xl">${category.icon}</span>${translatedName}`;
+              }
+              if (categoryDesc) {
+                categoryDesc.textContent = translatedDesc;
+              }
+            }
           }
         }
       }
       
-      // 更新当前显示的工具卡片
-      updateCurrentToolCards(locale);
+      // 更新工具名称和分类标题
+      updateToolsAndCategories(locale);
     }
     
     // 语言切换按钮点击
@@ -1103,6 +1292,21 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         // 更新页面文本
         updatePageText(locale);
         
+        // 更新工具和分类文本
+        updateToolsAndCategories(locale);
+        
+        // 如果当前在卡片视图，重新渲染卡片
+        if (!categoryToolsGrid.classList.contains('hidden')) {
+          const currentCategoryBtn = document.querySelector('.category-btn.bg-sakura-50, .category-btn[class*="bg-sakura"]');
+          if (currentCategoryBtn) {
+            const categoryId = currentCategoryBtn.dataset.category;
+            if (categoryId !== 'all') {
+              const categoryTools = window.toolsData.filter(tool => tool.category === categoryId);
+              renderToolCards(categoryTools, locale);
+            }
+          }
+        }
+        
         console.log('Language changed to:', locale);
       });
     });
@@ -1114,13 +1318,71 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
       }
     });
 
-    // 分类切换 (注意：categoryButtons 已在上面定义)
-    document.querySelectorAll('.category-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const categoryId = btn.dataset.category;
-        const category = window.categoriesData.find(cat => cat.id === categoryId);
-        const categoryTools = window.toolsData.filter(tool => tool.category === categoryId);
+    // 渲染工具卡片
+    function renderToolCards(categoryTools, locale) {
+      const t = translations[locale] || translations['en'];
+      
+      if (categoryTools.length === 0) {
+        toolsGrid.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      
+      toolsGrid.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+      
+      toolsGrid.innerHTML = categoryTools.map(tool => {
+        const toolTranslation = t.tools && t.tools[tool.id];
+        const translatedName = toolTranslation ? toolTranslation.name : tool.name;
+        const translatedDesc = toolTranslation ? toolTranslation.description : tool.description;
+        
+        return `
+          <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-id="${tool.id}">
+            <div class="relative overflow-hidden rounded-xl p-6 h-48 bg-gradient-to-br from-sakura-400 to-sakura-600 hover:from-sakura-500 hover:to-sakura-700 transform hover:scale-105 transition-all duration-300 ease-out shadow-lg hover:shadow-xl text-white" style="background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);">
+              <div class="absolute top-0 right-0 opacity-20">
+                <div class="w-32 h-32 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
+              </div>
+              <div class="absolute bottom-0 left-0 opacity-10">
+                <div class="w-24 h-24 rounded-full bg-white transform -translate-x-4 translate-y-4"></div>
+              </div>
+              <div class="relative z-10 h-full flex flex-col">
+                <div class="flex items-start justify-between mb-3 gap-2">
+                  <h3 class="text-xl font-bold line-clamp-2 flex-1 tool-card-name">${translatedName}</h3>
+                  <div class="flex items-center gap-1 flex-shrink-0">
+                    ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full whitespace-nowrap third-party-badge"><span class="third-party-text">${t.third_party_text}</span></span>` : ''}
+                    <svg class="w-4 h-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                  </div>
+                </div>
+                <p class="text-white/90 text-sm line-clamp-3 flex-1 tool-card-desc">${translatedDesc}</p>
+                <div class="flex flex-wrap gap-1 mt-3">
+                  ${tool.tags.slice(0, 2).map(tag => `
+                    <span class="bg-white/20 backdrop-blur-sm text-xs px-2 py-1 rounded-full">${tag}</span>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // 为卡片添加点击事件
+      document.querySelectorAll('.tool-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const url = card.dataset.toolUrl;
+          window.open(url, '_blank');
+        });
+      });
+    }
 
+    // 分类切换
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        console.log('Category button clicked:', btn.dataset.category);
+        const categoryId = btn.dataset.category;
+        const t = translations[currentLocale] || translations['en'];
+        
         // 更新活动状态
         categoryButtons.forEach(b => {
           b.className = b.className.replace(/bg-sakura-\w+|text-sakura-\w+|border-sakura-\w+/g, '');
@@ -1130,93 +1392,51 @@ const defaultTools = tools.filter(tool => tool.category === defaultCategory.id);
         
         btn.className = btn.className.replace('text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700', '');
         btn.className += ' bg-sakura-50 dark:bg-sakura-900/20 text-sakura-600 dark:text-sakura-400 border border-sakura-200 dark:border-sakura-800';
-
-        // 更新标题（使用翻译）
-        const t = translations[currentLocale] || translations['en'];
-        const translatedName = t.categories[categoryId] || category.name;
-        const translatedDesc = t.category_descriptions[categoryId] || category.description;
         
-        categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${category.icon}</span>${translatedName}`;
-        categoryDescription.textContent = translatedDesc;
-        
-        // 更新工具计数文本
-        toolsCount.textContent = categoryTools.length;
-        const toolsCountUnit = document.getElementById('tools-count-unit');
-        if (toolsCountUnit) {
-          toolsCountUnit.textContent = t.tools_count;
-        }
-
-        // 更新工具网格
-        if (categoryTools.length === 0) {
-          toolsGrid.classList.add('hidden');
-          emptyState.classList.remove('hidden');
-        } else {
-          toolsGrid.classList.remove('hidden');
-          emptyState.classList.add('hidden');
+        // 判断是否为"所有工具"
+        if (categoryId === 'all') {
+          // 显示列表视图，隐藏卡片视图
+          allToolsList.classList.remove('hidden');
+          categoryToolsGrid.classList.add('hidden');
+          // 显示介绍section
+          if (introSection) introSection.classList.remove('hidden');
           
-          toolsGrid.innerHTML = categoryTools.map(tool => {
-            // 获取翻译的工具名称和描述
-            const toolTranslation = t.tools && t.tools[tool.id];
-            const translatedName = toolTranslation ? toolTranslation.name : tool.name;
-            const translatedDesc = toolTranslation ? toolTranslation.description : tool.description;
-            
-            return `
-            <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-subdomain="${tool.subdomain}">
-              <div class="relative overflow-hidden rounded-xl p-6 h-50 bg-gradient-to-br from-sakura-400 to-sakura-600 hover:from-sakura-500 hover:to-sakura-700 transform hover:scale-105 transition-all duration-300 ease-out shadow-lg hover:shadow-xl text-white" style="background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);">
-                <div class="absolute top-0 right-0 opacity-20">
-                  <div class="w-32 h-32 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
-                </div>
-                <div class="absolute bottom-0 left-0 opacity-10">
-                  <div class="w-24 h-24 rounded-full bg-white transform -translate-x-4 translate-y-4"></div>
-                </div>
-                <div class="relative z-10 h-full flex flex-col">
-                  <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden relative">
-                      <span class="text-2xl absolute inset-0 flex items-center justify-center">${tool.icon || '🔗'}</span>
-                      <img 
-                        src="${tool.url}favicon.ico"
-                        alt="${translatedName} icon"
-                        class="w-8 h-8 object-contain relative z-10"
-                        loading="eager"
-                        onload="this.style.opacity='1'"
-                        onerror="this.style.opacity='0'"
-                        style="opacity: 0; transition: opacity 0.2s;"
-                      />
-                    </div>
-                    ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full third-party-badge">🔗 <span class="third-party-text">${t.third_party_text}</span></span>` : tool.featured ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full featured-badge">⭐ <span class="featured-text">${t.featured_text}</span></span>` : ''}
-                  </div>
-                  <h3 class="text-xl font-bold mb-2 line-clamp-1">${translatedName}</h3>
-                  <p class="text-white/90 text-sm line-clamp-2 mb-4 flex-1">${translatedDesc}</p>
-                  <div class="flex items-center justify-between">
-                    <div class="flex flex-wrap gap-1">
-                      ${tool.tags.slice(0, 2).map(tag => `
-                        <span class="bg-white/20 backdrop-blur-sm text-xs px-2 py-1 rounded-full">${tag}</span>
-                      `).join('')}
-                    </div>
-                    <div class="flex items-center text-white/80">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            `;
-          }).join('');
+          categoryTitle.innerHTML = `<span class="mr-3 text-3xl">🏠</span>${t.all_tools || 'All Tools'}`;
+          categoryDescription.textContent = t.all_tools_desc || 'Collection of all practical tools to boost your productivity';
+          
+          toolsCount.textContent = window.toolsData.length;
+          const toolsCountUnit = document.getElementById('tools-count-unit');
+          if (toolsCountUnit) {
+            toolsCountUnit.textContent = t.tools_count;
+          }
+        } else {
+          // 显示卡片视图，隐藏列表视图
+          allToolsList.classList.add('hidden');
+          categoryToolsGrid.classList.remove('hidden');
+          // 隐藏介绍section
+          if (introSection) introSection.classList.add('hidden');
+          
+          const category = window.categoriesData.find(cat => cat.id === categoryId);
+          const categoryTools = window.toolsData.filter(tool => tool.category === categoryId);
+
+          // 更新标题（使用翻译）
+          const translatedName = t.categories[categoryId] || category.name;
+          const translatedDesc = t.category_descriptions[categoryId] || category.description;
+          
+          categoryTitle.innerHTML = `<span class="mr-3 text-3xl">${category.icon}</span>${translatedName}`;
+          categoryDescription.textContent = translatedDesc;
+          
+          // 更新工具计数文本
+          toolsCount.textContent = categoryTools.length;
+          const toolsCountUnit = document.getElementById('tools-count-unit');
+          if (toolsCountUnit) {
+            toolsCountUnit.textContent = t.tools_count;
+          }
+          
+          // 渲染卡片
+          renderToolCards(categoryTools, currentLocale);
         }
       });
-    });
-
-    // 工具卡片点击事件
-    document.addEventListener('click', (e) => {
-      const toolCard = e.target.closest('.tool-card');
-      if (toolCard) {
-        const url = toolCard.dataset.toolUrl;
-        if (url) {
-          window.open(url, '_blank', 'noopener,noreferrer');
-        }
-      }
     });
   });
 </script>

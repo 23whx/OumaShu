@@ -89,6 +89,20 @@ export const categories: ToolCategory[] = [
     description: 'File sharing and transfer tools',
     icon: '📁',
     color: '#f59e0b'
+  },
+  {
+    id: 'social',
+    name: 'Social',
+    description: 'Social networking and communication tools',
+    icon: '💬',
+    color: '#3b82f6'
+  },
+  {
+    id: 'games',
+    name: 'Games',
+    description: 'Fun games and interactive entertainment',
+    icon: '🎮',
+    color: '#a855f7'
   }
 ];
 
@@ -205,7 +219,7 @@ export const tools: ToolItem[] = [
     subdomain: 'pansou',
     url: 'https://so.252035.xyz/',
     icon: '🔍',
-    featured: true,
+    featured: false,
     thirdParty: true, // 标记为第三方工具
     updatedAt: '2024-12-01T16:00:00Z',
     category: 'search',
@@ -282,6 +296,60 @@ export const tools: ToolItem[] = [
     isNew: true,
     screenshots: [
       '/og/stealth-novel-1.jpg'
+    ]
+  },
+  {
+    id: 'bedmate',
+    name: 'BedMate 床搭子',
+    description: '健康的床搭子互助平台，帮助用户寻找志同道合的睡眠伙伴，改善睡眠质量',
+    tags: ['社交平台', '睡眠健康', '互助社区', '生活方式', '健康管理'],
+    subdomain: 'bedmate',
+    url: 'https://bedmate.ink/',
+    icon: '🛏️',
+    featured: false,
+    thirdParty: false,
+    updatedAt: '2024-12-01T21:00:00Z',
+    category: 'social',
+    popularity: 88,
+    isNew: true,
+    screenshots: [
+      '/og/bedmate-1.jpg'
+    ]
+  },
+  {
+    id: 'screen-flow',
+    name: 'ScreenFlow 在线录屏',
+    description: '免费在线录屏工具，支持屏幕录制、摄像头录制、音频录制，无需安装任何软件',
+    tags: ['录屏工具', '屏幕录制', '视频录制', '在线工具', '免费录屏'],
+    subdomain: 'screen-flow',
+    url: 'https://screen-flow.oumashu.top/',
+    icon: '🎥',
+    featured: false,
+    thirdParty: false,
+    updatedAt: '2024-12-02T10:00:00Z',
+    category: 'video',
+    popularity: 92,
+    isNew: true,
+    screenshots: [
+      '/og/screen-flow-1.jpg'
+    ]
+  },
+  {
+    id: 'cuisine-chat',
+    name: 'CuisineChat 临时聊天室',
+    description: '免费在线临时聊天工具，无需注册，创建即用，支持实时消息、文件分享，注重隐私保护',
+    tags: ['在线聊天', '临时聊天室', '即时通讯', '隐私保护', '免注册'],
+    subdomain: 'cuisine-chat',
+    url: 'https://cuisine-chat.oumashu.top/',
+    icon: '💬',
+    featured: false,
+    thirdParty: false,
+    updatedAt: '2024-12-02T10:30:00Z',
+    category: 'social',
+    popularity: 90,
+    isNew: true,
+    screenshots: [
+      '/og/cuisine-chat-1.jpg'
     ]
   }
 ];
