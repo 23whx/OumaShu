@@ -254,6 +254,21 @@ export const tools: ToolItem[] = [
     ]
   },
   {
+    id: 'markdown',
+    name: 'Markdown Editor',
+    description: 'Online Markdown editor with live preview and multi-format export (PDF, HTML, Word, JPG, PNG)',
+    tags: ['Markdown', 'Editor', 'Preview', 'PDF', 'HTML', 'Word', 'Export', 'Converter'],
+    subdomain: 'markdown',
+    url: 'https://markdown.oumashu.top/',
+    icon: '📝',
+    featured: false,
+    updatedAt: '2024-11-18T12:00:00Z',
+    category: 'text',
+    popularity: 88,
+    isNew: true,
+    screenshots: []
+  },
+  {
     id: 'p2p-transfer',
     name: 'P2P 端到端传输',
     description: '安全的端到端文件和文字传输工具，数据不经过服务器，保护隐私安全',

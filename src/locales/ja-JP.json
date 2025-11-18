@@ -74,5 +74,7 @@
     "tools": "ツールを読み込み中...",
     "search": "検索中...",
     "general": "読み込み中..."
-  }
+  },
+  "markdown": "Markdown エディター",
+  "markdown_desc": "リアルタイムプレビューと複数形式エクスポート（PDF、HTML、Word、JPG、PNG）対応のオンライン Markdown エディター"
 }

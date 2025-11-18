@@ -74,5 +74,7 @@
     "tools": "Loading tools...",
     "search": "Searching...",
     "general": "Loading..."
-  }
+  },
+  "markdown": "Markdown Editor",
+  "markdown_desc": "Online Markdown editor with live preview and multi-format export (PDF, HTML, Word, JPG, PNG)"
 }

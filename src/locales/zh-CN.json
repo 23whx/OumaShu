@@ -74,5 +74,7 @@
     "tools": "加载工具中...",
     "search": "搜索中...",
     "general": "加载中..."
-  }
+  },
+  "markdown": "Markdown 编辑器",
+  "markdown_desc": "在线 Markdown 编辑器，支持实时预览和多格式导出（PDF、HTML、Word、JPG、PNG）"
 }
