@@ -74,5 +74,7 @@
     "tools": "載入工具中...",
     "search": "搜尋中...",
     "general": "載入中..."
-  }
+  },
+  "markdown": "Markdown 編輯器",
+  "markdown_desc": "線上 Markdown 編輯器，支援即時預覽和多格式匯出（PDF、HTML、Word、JPG、PNG）"
 }

@@ -1440,9 +1440,9 @@ const defaultTools = tools;
       emptyState.classList.add('hidden');
       
       toolsGrid.innerHTML = categoryTools.map(tool => {
-        const toolTranslation = t.tools && t.tools[tool.id];
-        const translatedName = toolTranslation ? toolTranslation.name : tool.name;
-        const translatedDesc = toolTranslation ? toolTranslation.description : tool.description;
+        // 尝试从顶级翻译对象中获取工具翻译
+        const translatedName = t[tool.id] || tool.name;
+        const translatedDesc = t[tool.id + '_desc'] || tool.description;
         
         return `
           <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-id="${tool.id}">

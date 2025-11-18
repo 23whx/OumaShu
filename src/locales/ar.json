@@ -74,5 +74,7 @@
     "tools": "جارٍ تحميل الأدوات...",
     "search": "جارٍ البحث...",
     "general": "جارٍ التحميل..."
-  }
+  },
+  "markdown": "محرر Markdown",
+  "markdown_desc": "محرر Markdown عبر الإنترنت مع معاينة مباشرة وتصدير متعدد الصيغ (PDF، HTML، Word، JPG، PNG)"
 }
