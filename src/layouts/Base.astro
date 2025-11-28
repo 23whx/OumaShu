@@ -38,20 +38,13 @@ const jsonLd = {
   "name": siteName,
   "description": description,
   "url": Astro.url.origin,
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": `${Astro.url.origin}/search?q={search_term_string}`
-    },
-    "query-input": "required name=search_term_string"
-  },
+  "inLanguage": locale,
   "publisher": {
     "@type": "Organization",
     "name": siteName,
     "logo": {
       "@type": "ImageObject", 
-      "url": `${Astro.url.origin}/favicon.svg`
+      "url": `${Astro.url.origin}/logo.png`
     }
   }
 };
