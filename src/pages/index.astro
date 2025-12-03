@@ -187,10 +187,10 @@ const defaultTools = tools;
       <!-- Introduction Section -->
       <section class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-8 py-8" id="intro-section">
         <div class="max-w-4xl">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4" id="intro-title">
             Welcome to OumaShu - Your Ultimate Productivity Hub
           </h2>
-          <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" id="intro-paragraph">
             OumaShu is a carefully curated directory of free online tools designed to boost your productivity 
             and creativity. Whether you're looking for text processing tools, image editors, video converters, 
             or entertainment apps, we've got you covered. All tools are hand-picked for quality, ease of use, 
@@ -200,8 +200,8 @@ const defaultTools = tools;
             <div class="flex items-start space-x-3">
               <span class="text-2xl">🆓</span>
               <div>
-                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">100% Free</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1" id="intro-feature-free-title">100% Free</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400" id="intro-feature-free-desc">
                   All tools are completely free to use with no hidden costs or subscriptions required.
                 </p>
               </div>
@@ -209,8 +209,8 @@ const defaultTools = tools;
             <div class="flex items-start space-x-3">
               <span class="text-2xl">🔒</span>
               <div>
-                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Privacy First</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1" id="intro-feature-privacy-title">Privacy First</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400" id="intro-feature-privacy-desc">
                   Most tools process data locally in your browser, ensuring your privacy and security.
                 </p>
               </div>
@@ -218,8 +218,8 @@ const defaultTools = tools;
             <div class="flex items-start space-x-3">
               <span class="text-2xl">⚡</span>
               <div>
-                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">No Installation</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1" id="intro-feature-noinstall-title">No Installation</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400" id="intro-feature-noinstall-desc">
                   Access all tools directly in your browser without downloading or installing anything.
                 </p>
               </div>
@@ -619,7 +619,7 @@ const defaultTools = tools;
         const nameSpan = btn.querySelector('span.font-medium');
         if (nameSpan) {
           if (categoryId === 'all') {
-            nameSpan.textContent = t.all_tools || '所有工具';
+            nameSpan.textContent = t.all_tools || 'All Tools';
           } else if (t.categories[categoryId]) {
             nameSpan.textContent = t.categories[categoryId];
           }
@@ -661,6 +661,25 @@ const defaultTools = tools;
         el.textContent = t.third_party_text;
       });
       
+      // 更新介绍区文本（仅在所有工具页面显示，但在任何语言切换时都更新文案）
+      const introTitle = document.getElementById('intro-title');
+      const introParagraph = document.getElementById('intro-paragraph');
+      const introFreeTitle = document.getElementById('intro-feature-free-title');
+      const introFreeDesc = document.getElementById('intro-feature-free-desc');
+      const introPrivacyTitle = document.getElementById('intro-feature-privacy-title');
+      const introPrivacyDesc = document.getElementById('intro-feature-privacy-desc');
+      const introNoInstallTitle = document.getElementById('intro-feature-noinstall-title');
+      const introNoInstallDesc = document.getElementById('intro-feature-noinstall-desc');
+
+      if (introTitle && t.intro_title) introTitle.textContent = t.intro_title;
+      if (introParagraph && t.intro_paragraph) introParagraph.textContent = t.intro_paragraph;
+      if (introFreeTitle && t.intro_feature_free_title) introFreeTitle.textContent = t.intro_feature_free_title;
+      if (introFreeDesc && t.intro_feature_free_desc) introFreeDesc.textContent = t.intro_feature_free_desc;
+      if (introPrivacyTitle && t.intro_feature_privacy_title) introPrivacyTitle.textContent = t.intro_feature_privacy_title;
+      if (introPrivacyDesc && t.intro_feature_privacy_desc) introPrivacyDesc.textContent = t.intro_feature_privacy_desc;
+      if (introNoInstallTitle && t.intro_feature_noinstall_title) introNoInstallTitle.textContent = t.intro_feature_noinstall_title;
+      if (introNoInstallDesc && t.intro_feature_noinstall_desc) introNoInstallDesc.textContent = t.intro_feature_noinstall_desc;
+      
       // 更新当前分类描述和标题
       const categoryDesc = document.getElementById('category-description');
       const categoryTitleElem = document.getElementById('category-title');
@@ -672,7 +691,7 @@ const defaultTools = tools;
           if (categoryId === 'all') {
             // 如果是"所有工具"
             if (categoryTitleElem) {
-              categoryTitleElem.innerHTML = `<span class="mr-3 text-3xl">🏠</span>${t.all_tools || 'All Tools'}`;
+              categoryTitleElem.innerHTML = `<img src="/icons/classification/all.png" alt="All Tools" class="mr-3 w-8 h-8 object-contain inline-block" />${t.all_tools || 'All Tools'}`;
             }
             if (categoryDesc) {
               categoryDesc.textContent = t.all_tools_desc || 'Collection of all practical tools to boost your productivity';

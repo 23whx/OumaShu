@@ -126,5 +126,15 @@
   "meme-slicer": "ミームスライスツール",
   "meme-slicer_desc": "ミームスライスツール、画像をアップロードして行列数をカスタマイズ、スライスした画像をZIPで一括エクスポート",
   "youtube-thumbnail": "YouTubeサムネイルダウンローダー",
-  "youtube-thumbnail_desc": "YouTubeビデオサムネイルダウンローダー、YouTubeビデオから高品質サムネイルを取得、複数の解像度対応"
+  "youtube-thumbnail_desc": "YouTubeビデオサムネイルダウンローダー、YouTubeビデオから高品質サムネイルを取得、複数の解像度対応",
+  "all_tools": "すべてのツール",
+  "all_tools_desc": "生産性を高める実用ツールをまとめて閲覧できます",
+  "intro_title": "OumaShu へようこそ —— あなたの究極の生産性ハブ",
+  "intro_paragraph": "OumaShu は、生産性と創造性を高めるために設計された無料オンラインツールを厳選して集めたディレクトリです。テキスト処理ツール、画像編集、動画変換、エンタメ系アプリなど、必要なものはここで見つかります。すべてのツールは、使いやすさ、実用性、プライバシー保護を重視して選定されています。",
+  "intro_feature_free_title": "完全無料",
+  "intro_feature_free_desc": "すべてのツールを無料で利用でき、隠れた料金やサブスクリプションは一切ありません。",
+  "intro_feature_privacy_title": "プライバシー第一",
+  "intro_feature_privacy_desc": "ほとんどのツールはブラウザ内でローカル処理され、可能な限りあなたのプライバシーとセキュリティを守ります。",
+  "intro_feature_noinstall_title": "インストール不要",
+  "intro_feature_noinstall_desc": "ツールはすべてブラウザから直接利用でき、ソフトウェアのダウンロードやインストールは不要です。"
 }

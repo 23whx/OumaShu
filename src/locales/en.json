@@ -126,5 +126,15 @@
   "meme-slicer": "Meme Slicer Tool",
   "meme-slicer_desc": "Meme slicing tool, upload images with custom rows and columns, batch export sliced images as ZIP",
   "youtube-thumbnail": "YouTube Thumbnail Downloader",
-  "youtube-thumbnail_desc": "YouTube video thumbnail downloader, get high-quality thumbnails from YouTube videos, supports multiple resolutions"
+  "youtube-thumbnail_desc": "YouTube video thumbnail downloader, get high-quality thumbnails from YouTube videos, supports multiple resolutions",
+  "all_tools": "All Tools",
+  "all_tools_desc": "Collection of all practical tools to boost your productivity",
+  "intro_title": "Welcome to OumaShu - Your Ultimate Productivity Hub",
+  "intro_paragraph": "OumaShu is a carefully curated directory of free online tools designed to boost your productivity and creativity. Whether you're looking for text processing tools, image editors, video converters, or entertainment apps, we've got you covered. All tools are hand-picked for quality, ease of use, and privacy protection.",
+  "intro_feature_free_title": "100% Free",
+  "intro_feature_free_desc": "All tools are completely free to use with no hidden costs or subscriptions required.",
+  "intro_feature_privacy_title": "Privacy First",
+  "intro_feature_privacy_desc": "Most tools process data locally in your browser, ensuring your privacy and security.",
+  "intro_feature_noinstall_title": "No Installation",
+  "intro_feature_noinstall_desc": "Access all tools directly in your browser without downloading or installing anything."
 }

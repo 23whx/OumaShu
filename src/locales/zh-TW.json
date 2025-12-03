@@ -126,5 +126,15 @@
   "meme-slicer": "表情包切片工具",
   "meme-slicer_desc": "表情包切片工具，上傳圖片自訂行列數，批次匯出切片圖片為ZIP",
   "youtube-thumbnail": "YouTube影片封面下載器",
-  "youtube-thumbnail_desc": "YouTube影片封面下載器，獲取YouTube影片的高清縮圖，支援多種解析度"
+  "youtube-thumbnail_desc": "YouTube影片封面下載器，獲取YouTube影片的高清縮圖，支援多種解析度",
+  "all_tools": "所有工具",
+  "all_tools_desc": "匯集所有實用小工具，全面提升你的效率",
+  "intro_title": "歡迎來到 OumaShu —— 你的終極效率工具箱",
+  "intro_paragraph": "OumaShu 精選收錄了一批免費線上工具，專為提升你的效率和創造力而設計。無論是文字處理、圖片編輯、影片轉換還是娛樂小工具，這裡都能找到。所有工具都經過精挑細選，兼顧易用性、實用性和隱私保護。",
+  "intro_feature_free_title": "完全免費",
+  "intro_feature_free_desc": "所有工具皆可免費使用，沒有任何隱藏費用或訂閱。",
+  "intro_feature_privacy_title": "隱私優先",
+  "intro_feature_privacy_desc": "大部分工具都在你的瀏覽器本地處理資料，盡可能保護你的隱私與安全。",
+  "intro_feature_noinstall_title": "免安裝",
+  "intro_feature_noinstall_desc": "所有工具都可以直接在瀏覽器中使用，無需下載或安裝任何軟體。"
 }
