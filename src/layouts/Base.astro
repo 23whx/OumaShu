@@ -25,12 +25,6 @@ const {
 const textDirection = getTextDirection(locale);
 const siteName = 'OumaShu';
 
-// 构建 hreflang 链接
-const hreflangs = SUPPORTED_LOCALES.map(lang => ({
-  lang: lang,
-  url: lang === 'en' ? Astro.url.origin : `${Astro.url.origin}/${lang}`
-}));
-
 // 结构化数据
 const jsonLd = {
   "@context": "https://schema.org",
@@ -80,10 +74,7 @@ const jsonLd = {
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={new URL(ogImage, Astro.url.origin).href}>
   
-  <!-- Hreflang -->
-  {hreflangs.map(({ lang, url }) => (
-    <link rel="alternate" hreflang={lang} href={url}>
-  ))}
+  <!-- Hreflang（目前只有单一 URL，使用 x-default 指向首页） -->
   <link rel="alternate" hreflang="x-default" href={Astro.url.origin}>
   
   <!-- Favicon -->
