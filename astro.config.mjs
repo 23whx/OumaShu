@@ -12,19 +12,7 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap({
-      i18n: {
-        defaultLocale: 'en',
-        locales: {
-          en: 'en',
-          'zh-CN': 'zh-CN',
-          'zh-TW': 'zh-TW',
-          'ja-JP': 'ja-JP',
-          ar: 'ar',
-          ru: 'ru'
-        }
-      }
-    })
+    sitemap()
   ],
   output: 'static',
   build: {
