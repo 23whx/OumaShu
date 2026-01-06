@@ -260,6 +260,36 @@ export const tools: ToolItem[] = [
     ]
   },
   {
+    id: 'efortunetell',
+    name: '玄学命理博客',
+    description: '专业的中国玄学在线平台，提供八字、奇门遁甲、大六壬等传统占卜服务与命理知识分享',
+    tags: ['玄学', '命理', '占卜', '八字', '奇门遁甲', '大六壬', '传统文化'],
+    url: 'https://efortunetell.blog/',
+    icon: '🔮',
+    featured: false,
+    thirdParty: true,
+    updatedAt: '2026-01-06T10:00:00Z',
+    category: 'entertainment',
+    popularity: 82,
+    isNew: true,
+    screenshots: []
+  },
+  {
+    id: 'acgn-personality-database',
+    name: 'ACGN人格数据库',
+    description: 'ACGN角色人格类型数据库，收录动画、漫画、游戏、小说角色的MBTI人格分类与性格分析',
+    tags: ['ACGN', '人格数据库', 'MBTI', '动漫角色', '性格分析', '二次元'],
+    url: 'https://acgn-personality-database.top/',
+    icon: '🎭',
+    featured: false,
+    thirdParty: true,
+    updatedAt: '2026-01-06T10:00:00Z',
+    category: 'entertainment',
+    popularity: 85,
+    isNew: true,
+    screenshots: []
+  },
+  {
     id: 'video2gif',
     name: 'Video2GIF 转换器',
     description: '在线视频转GIF工具，支持多种视频格式，快速生成高质量GIF动图',
