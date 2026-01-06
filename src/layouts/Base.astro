@@ -210,35 +210,6 @@ const jsonLd = {
     }
   </script>
   -->
-  
-  <!-- 页面性能监控 -->
-  <script is:inline>
-    // 监控 Core Web Vitals
-    function reportWebVitals({name, value, id}) {
-      // 发送到分析服务
-      if (typeof gtag !== 'undefined') {
-        gtag('event', name, {
-          event_category: 'Web Vitals',
-          value: Math.round(name === 'CLS' ? value * 1000 : value),
-          event_label: id,
-          non_interaction: true,
-        });
-      }
-    }
-    
-    // 动态导入 web-vitals 库
-    if (typeof window !== 'undefined') {
-      import('https://unpkg.com/web-vitals@3/dist/web-vitals.js')
-        .then(({onCLS, onFID, onFCP, onLCP, onTTFB}) => {
-          onCLS(reportWebVitals);
-          onFID(reportWebVitals);
-          onFCP(reportWebVitals);
-          onLCP(reportWebVitals);
-          onTTFB(reportWebVitals);
-        })
-        .catch(err => console.log('Web Vitals not loaded:', err));
-    }
-  </script>
 </body>
 </html>
 

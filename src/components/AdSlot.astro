@@ -4,6 +4,7 @@ export interface Props {
   slot?: string;
   format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical';
   responsive?: boolean;
+  client?: string;
   className?: string;
   style?: string;
 }
@@ -12,6 +13,7 @@ const {
   slot = '',
   format = 'auto',
   responsive = true,
+  client = 'ca-pub-4880646654838411',
   className = '',
   style = '' 
 } = Astro.props;
@@ -33,7 +35,7 @@ const adStyle = style || formatStyles[format];
     <ins 
       class="adsbygoogle"
       style={adStyle}
-      data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+      data-ad-client={client}
       data-ad-slot={slot}
       data-ad-format={responsive ? 'auto' : format}
       data-full-width-responsive={responsive ? 'true' : 'false'}
@@ -157,29 +159,70 @@ const adStyle = style || formatStyles[format];
 
 <!-- AdSense 脚本初始化 -->
 <script>
-  // 确保 AdSense 脚本加载后初始化广告
-  function initializeAds() {
-    if (typeof window !== 'undefined' && window.adsbygoogle) {
-      const ads = document.querySelectorAll('.adsbygoogle');
-      ads.forEach(ad => {
-        if (!ad.hasAttribute('data-adsbygoogle-status')) {
-          try {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-          } catch (e) {
-            console.warn('AdSense initialization failed:', e);
-          }
-        }
-      });
+  function loadAdSenseScriptOnce() {
+    if (typeof window === 'undefined') return;
+    const existing = document.querySelector('script[src*="pagead/js/adsbygoogle.js"]');
+    if (existing) return;
+
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4880646654838411';
+    s.crossOrigin = 'anonymous';
+    document.head.appendChild(s);
+  }
+
+  function pushAd(ad) {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      ad.setAttribute('data-adsbygoogle-status', ad.getAttribute('data-adsbygoogle-status') || 'requested');
+    } catch (e) {
+      // 广告被拦截/未加载时不要影响页面渲染
+      console.warn('AdSense initialization failed:', e);
     }
   }
 
-  // 页面加载完成后初始化
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeAds);
-  } else {
-    initializeAds();
+  function initVisibleAds() {
+    if (typeof window === 'undefined') return;
+    const ads = Array.from(document.querySelectorAll('.adsbygoogle'));
+    if (ads.length === 0) return;
+
+    loadAdSenseScriptOnce();
+
+    const schedule = (fn) => {
+      if (typeof requestIdleCallback === 'function') requestIdleCallback(fn, { timeout: 1500 });
+      else setTimeout(fn, 1);
+    };
+
+    // 进入视口再初始化，减少首屏开销
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const ad = entry.target;
+          if (!ad.hasAttribute('data-adsbygoogle-status')) {
+            schedule(() => pushAd(ad));
+          }
+          io.unobserve(ad);
+        }
+      }, { rootMargin: '200px 0px' });
+
+      ads.forEach((ad) => io.observe(ad));
+      return;
+    }
+
+    // 老浏览器兜底：空闲时初始化
+    schedule(() => {
+      ads.forEach((ad) => {
+        if (!ad.hasAttribute('data-adsbygoogle-status')) pushAd(ad);
+      });
+    });
   }
 
-  // 动态内容加载后重新初始化
-  document.addEventListener('astro:page-load', initializeAds);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVisibleAds, { once: true });
+  } else {
+    initVisibleAds();
+  }
+
+  document.addEventListener('astro:page-load', initVisibleAds);
 </script>
