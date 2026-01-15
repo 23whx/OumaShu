@@ -588,8 +588,8 @@ const defaultTools = tools;
         const toolId = link.dataset.toolId;
         const toolNameElem = link.querySelector('.tool-name');
         
-        if (toolNameElem && toolId && t.tools && t.tools[toolId]) {
-          toolNameElem.textContent = t.tools[toolId].name;
+        if (toolNameElem && toolId && t[toolId]) {
+          toolNameElem.textContent = t[toolId];
         }
       });
     }
