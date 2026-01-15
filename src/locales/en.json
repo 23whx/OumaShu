@@ -140,5 +140,13 @@
   "intro_feature_privacy_title": "Privacy First",
   "intro_feature_privacy_desc": "Most tools process data locally in your browser, ensuring your privacy and security.",
   "intro_feature_noinstall_title": "No Installation",
-  "intro_feature_noinstall_desc": "Access all tools directly in your browser without downloading or installing anything."
+  "intro_feature_noinstall_desc": "Access all tools directly in your browser without downloading or installing anything.",
+  "search_placeholder": "Search tools...",
+  "search_no_results": "No tools found",
+  "search_results_found": "Found {{count}} tools",
+  "location_detecting": "Detecting...",
+  "weather_loading": "Loading...",
+  "current_time": "Current Time",
+  "current_location": "Location",
+  "current_weather": "Weather"
 }

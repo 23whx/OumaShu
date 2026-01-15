@@ -140,5 +140,13 @@
   "intro_feature_privacy_title": "Приватность прежде всего",
   "intro_feature_privacy_desc": "Большинство инструментов обрабатывают данные локально в вашем браузере, максимально защищая вашу конфиденциальность и безопасность.",
   "intro_feature_noinstall_title": "Без установки",
-  "intro_feature_noinstall_desc": "Доступ ко всем инструментам прямо из браузера, без скачивания и установки программ."
+  "intro_feature_noinstall_desc": "Доступ ко всем инструментам прямо из браузера, без скачивания и установки программ.",
+  "search_placeholder": "Поиск инструментов...",
+  "search_no_results": "Инструменты не найдены",
+  "search_results_found": "Найдено {{count}} инструментов",
+  "location_detecting": "Определение местоположения...",
+  "weather_loading": "Загрузка...",
+  "current_time": "Текущее время",
+  "current_location": "Текущее местоположение",
+  "current_weather": "Текущая погода"
 }

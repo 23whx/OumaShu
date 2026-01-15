@@ -178,8 +178,29 @@ const defaultTools = tools;
               Collection of all practical tools to boost your productivity
             </p>
           </div>
-          <div class="text-sm text-gray-500 dark:text-gray-400" id="tools-count-text">
-            <span id="tools-count">{defaultTools.length}</span> <span id="tools-count-unit">tools</span>
+          <div class="flex items-center gap-4">
+            <!-- 地点/时间/天气信息 (桌面端显示) -->
+            <div class="hidden lg:flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+              <!-- 地点 -->
+              <div class="flex items-center gap-1" id="location-info">
+                <span>📍</span>
+                <span id="location-text">Loading...</span>
+              </div>
+              <!-- 时间 -->
+              <div class="flex items-center gap-1" id="time-info">
+                <span>🕐</span>
+                <span id="time-text">--:--</span>
+              </div>
+              <!-- 天气 -->
+              <div class="flex items-center gap-1" id="weather-info">
+                <span id="weather-icon">🌤️</span>
+                <span id="weather-text">--°C</span>
+              </div>
+            </div>
+            <!-- 工具计数 -->
+            <div class="text-sm text-gray-500 dark:text-gray-400" id="tools-count-text">
+              <span id="tools-count">{defaultTools.length}</span> <span id="tools-count-unit">tools</span>
+            </div>
           </div>
         </div>
       </header>
@@ -228,6 +249,27 @@ const defaultTools = tools;
         </div>
       </section>
 
+      <!-- 搜索框 -->
+      <section class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-8 py-6" id="search-section">
+        <div class="max-w-2xl mx-auto">
+          <div class="relative">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="搜索工具..."
+              class="w-full px-4 py-3 pl-12 pr-4 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sakura-500 focus:border-transparent outline-none transition-all"
+            />
+            <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <!-- 搜索结果提示 -->
+            <div id="search-results-hint" class="hidden absolute top-full mt-2 left-0 right-0 text-center text-sm text-gray-600 dark:text-gray-400">
+              <span id="search-results-text"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 工具列表视图（所有工具时显示） -->
       <div class="p-4 lg:p-8 bg-gray-50 dark:bg-black" id="all-tools-list">
         {categories.map((category) => {
@@ -254,6 +296,8 @@ const defaultTools = tools;
                       rel="noopener noreferrer"
                       class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group tool-link"
                       data-tool-id={tool.id}
+                      data-tool-desc={tool.description}
+                      title={tool.description}
                     >
                       <span class="text-lg mr-2">{tool.icon || '🔗'}</span>
                       <span class="text-gray-900 dark:text-white text-sm font-medium truncate tool-name">
@@ -583,7 +627,7 @@ const defaultTools = tools;
         }
       });
       
-      // 更新工具名称
+      // 更新工具名称和 tooltip
       document.querySelectorAll('.tool-link').forEach(link => {
         const toolId = link.dataset.toolId;
         const toolNameElem = link.querySelector('.tool-name');
@@ -591,11 +635,200 @@ const defaultTools = tools;
         if (toolNameElem && toolId && t[toolId]) {
           toolNameElem.textContent = t[toolId];
         }
+        
+        // 更新 tooltip (title 属性)
+        if (toolId && t[toolId + '_desc']) {
+          link.title = t[toolId + '_desc'];
+          link.dataset.toolDesc = t[toolId + '_desc'];
+        }
       });
+      
+      // 更新搜索框占位符
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        searchInput.placeholder = t.search_placeholder || 'Search tools...';
+      }
     }
     
     // 初始更新为英文
     updateToolsAndCategories('en');
+
+    // ========== 搜索功能 ==========
+    const searchInput = document.getElementById('search-input');
+    const searchResultsHint = document.getElementById('search-results-hint');
+    const searchResultsText = document.getElementById('search-results-text');
+    let searchTimeout = null;
+
+    // 搜索工具
+    function searchTools(query) {
+      const t = translations[currentLocale] || translations['en'];
+      query = query.toLowerCase().trim();
+      
+      if (!query) {
+        // 如果搜索框为空，显示所有工具
+        document.querySelectorAll('.category-section').forEach(section => {
+          section.style.display = 'block';
+        });
+        document.querySelectorAll('.tool-link').forEach(link => {
+          link.style.display = 'flex';
+        });
+        searchResultsHint.classList.add('hidden');
+        return;
+      }
+      
+      let foundCount = 0;
+      
+      // 遍历所有分类区域
+      document.querySelectorAll('.category-section').forEach(section => {
+        let categoryHasVisibleTools = false;
+        const toolLinks = section.querySelectorAll('.tool-link');
+        
+        toolLinks.forEach(link => {
+          const toolId = link.dataset.toolId;
+          const toolName = link.querySelector('.tool-name')?.textContent.toLowerCase() || '';
+          const toolDesc = (t[toolId + '_desc'] || link.dataset.toolDesc || '').toLowerCase();
+          
+          // 检查是否匹配搜索关键词
+          if (toolName.includes(query) || toolDesc.includes(query)) {
+            link.style.display = 'flex';
+            categoryHasVisibleTools = true;
+            foundCount++;
+          } else {
+            link.style.display = 'none';
+          }
+        });
+        
+        // 如果分类中没有可见的工具，隐藏整个分类
+        section.style.display = categoryHasVisibleTools ? 'block' : 'none';
+      });
+      
+      // 显示搜索结果提示
+      if (foundCount > 0) {
+        const resultsText = (t.search_results_found || 'Found {{count}} tools').replace('{{count}}', foundCount);
+        searchResultsText.textContent = resultsText;
+        searchResultsHint.classList.remove('hidden');
+      } else {
+        searchResultsText.textContent = t.search_no_results || 'No tools found';
+        searchResultsHint.classList.remove('hidden');
+      }
+    }
+
+    // 搜索输入事件
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        // 使用防抖优化性能
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          searchTools(e.target.value);
+        }, 300);
+      });
+      
+      // 更新搜索框占位符
+      function updateSearchPlaceholder() {
+        const t = translations[currentLocale] || translations['en'];
+        if (searchInput) {
+          searchInput.placeholder = t.search_placeholder || 'Search tools...';
+        }
+      }
+      updateSearchPlaceholder();
+    }
+
+    // ========== 地点/时间/天气功能 ==========
+    const locationText = document.getElementById('location-text');
+    const timeText = document.getElementById('time-text');
+    const weatherIcon = document.getElementById('weather-icon');
+    const weatherText = document.getElementById('weather-text');
+
+    // 更新时间显示
+    function updateTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      if (timeText) {
+        timeText.textContent = `${hours}:${minutes}`;
+      }
+    }
+
+    // 初始化时间并每分钟更新一次
+    updateTime();
+    setInterval(updateTime, 60000);
+
+    // 获取地点和天气信息
+    async function fetchLocationAndWeather() {
+      const t = translations[currentLocale] || translations['en'];
+      
+      try {
+        // 获取用户地理位置信息
+        const ipResponse = await fetch('https://ipapi.co/json/');
+        const ipData = await ipResponse.json();
+        
+        // 更新地点显示
+        if (locationText && ipData.city) {
+          locationText.textContent = `${ipData.city}, ${ipData.country_code}`;
+        }
+        
+        // 获取天气信息（使用免费的 Open-Meteo API）
+        if (ipData.latitude && ipData.longitude) {
+          const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true&timezone=auto`
+          );
+          const weatherData = await weatherResponse.json();
+          
+          if (weatherData.current_weather) {
+            const temp = Math.round(weatherData.current_weather.temperature);
+            const weatherCode = weatherData.current_weather.weathercode;
+            
+            // 根据天气代码设置图标
+            const weatherIcons = {
+              0: '☀️',   // Clear sky
+              1: '🌤️',  // Mainly clear
+              2: '⛅',  // Partly cloudy
+              3: '☁️',  // Overcast
+              45: '🌫️', // Fog
+              48: '🌫️', // Depositing rime fog
+              51: '🌦️', // Drizzle: Light
+              53: '🌦️', // Drizzle: moderate
+              55: '🌧️', // Drizzle: dense
+              61: '🌧️', // Rain: Slight
+              63: '🌧️', // Rain: moderate
+              65: '🌧️', // Rain: heavy
+              71: '🌨️', // Snow fall: Slight
+              73: '🌨️', // Snow fall: moderate
+              75: '🌨️', // Snow fall: heavy
+              77: '🌨️', // Snow grains
+              80: '🌦️', // Rain showers: Slight
+              81: '🌧️', // Rain showers: moderate
+              82: '🌧️', // Rain showers: violent
+              85: '🌨️', // Snow showers slight
+              86: '🌨️', // Snow showers heavy
+              95: '⛈️', // Thunderstorm
+              96: '⛈️', // Thunderstorm with slight hail
+              99: '⛈️'  // Thunderstorm with heavy hail
+            };
+            
+            if (weatherIcon) {
+              weatherIcon.textContent = weatherIcons[weatherCode] || '🌤️';
+            }
+            if (weatherText) {
+              weatherText.textContent = `${temp}°C`;
+            }
+          }
+        }
+      } catch (error) {
+        console.log('Failed to fetch location or weather:', error);
+        if (locationText) {
+          locationText.textContent = '--';
+        }
+        if (weatherText) {
+          weatherText.textContent = '--°C';
+        }
+      }
+    }
+
+    // 初始化地点和天气
+    fetchLocationAndWeather();
+    // 每30分钟更新一次天气
+    setInterval(fetchLocationAndWeather, 1800000);
 
     // 更新页面文本的函数
     function updatePageText(locale) {
@@ -745,6 +978,12 @@ const defaultTools = tools;
         // 更新工具和分类文本
         updateToolsAndCategories(locale);
         
+        // 清空搜索框并重置搜索结果
+        if (searchInput) {
+          searchInput.value = '';
+          searchTools('');
+        }
+        
         // 如果当前在卡片视图，重新渲染卡片
         if (!categoryToolsGrid.classList.contains('hidden')) {
           const currentCategoryBtn = document.querySelector('.category-btn.bg-sakura-50, .category-btn[class*="bg-sakura"]');
@@ -787,7 +1026,7 @@ const defaultTools = tools;
         const translatedDesc = t[tool.id + '_desc'] || tool.description;
         
         return `
-          <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-id="${tool.id}">
+          <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-id="${tool.id}" title="${translatedDesc}">
             <div class="relative overflow-hidden rounded-xl p-6 h-48 bg-gradient-to-br from-sakura-400 to-sakura-600 hover:from-sakura-500 hover:to-sakura-700 transform hover:scale-105 transition-all duration-300 ease-out shadow-lg hover:shadow-xl text-white" style="background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);">
               <div class="absolute top-0 right-0 opacity-20">
                 <div class="w-32 h-32 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>

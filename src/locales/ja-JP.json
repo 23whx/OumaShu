@@ -140,5 +140,13 @@
   "intro_feature_privacy_title": "プライバシー第一",
   "intro_feature_privacy_desc": "ほとんどのツールはブラウザ内でローカル処理され、可能な限りあなたのプライバシーとセキュリティを守ります。",
   "intro_feature_noinstall_title": "インストール不要",
-  "intro_feature_noinstall_desc": "ツールはすべてブラウザから直接利用でき、ソフトウェアのダウンロードやインストールは不要です。"
+  "intro_feature_noinstall_desc": "ツールはすべてブラウザから直接利用でき、ソフトウェアのダウンロードやインストールは不要です。",
+  "search_placeholder": "ツールを検索...",
+  "search_no_results": "ツールが見つかりません",
+  "search_results_found": "{{count}} 件のツールが見つかりました",
+  "location_detecting": "位置情報取得中...",
+  "weather_loading": "読み込み中...",
+  "current_time": "現在時刻",
+  "current_location": "現在地",
+  "current_weather": "現在の天気"
 }

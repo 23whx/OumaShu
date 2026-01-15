@@ -140,5 +140,13 @@
   "intro_feature_privacy_title": "الخصوصية أولاً",
   "intro_feature_privacy_desc": "تتم معالجة معظم البيانات محلياً في متصفحك، مما يضمن حماية خصوصيتك وأمانك.",
   "intro_feature_noinstall_title": "بدون تثبيت",
-  "intro_feature_noinstall_desc": "يمكنك الوصول إلى جميع الأدوات مباشرة من المتصفح دون تنزيل أو تثبيت أي برامج."
+  "intro_feature_noinstall_desc": "يمكنك الوصول إلى جميع الأدوات مباشرة من المتصفح دون تنزيل أو تثبيت أي برامج.",
+  "search_placeholder": "البحث عن الأدوات...",
+  "search_no_results": "لم يتم العثور على أدوات",
+  "search_results_found": "تم العثور على {{count}} أداة",
+  "location_detecting": "جاري تحديد الموقع...",
+  "weather_loading": "جاري التحميل...",
+  "current_time": "الوقت الحالي",
+  "current_location": "الموقع الحالي",
+  "current_weather": "الطقس الحالي"
 }

@@ -140,5 +140,13 @@
   "intro_feature_privacy_title": "隱私優先",
   "intro_feature_privacy_desc": "大部分工具都在你的瀏覽器本地處理資料，盡可能保護你的隱私與安全。",
   "intro_feature_noinstall_title": "免安裝",
-  "intro_feature_noinstall_desc": "所有工具都可以直接在瀏覽器中使用，無需下載或安裝任何軟體。"
+  "intro_feature_noinstall_desc": "所有工具都可以直接在瀏覽器中使用，無需下載或安裝任何軟體。",
+  "search_placeholder": "搜尋工具...",
+  "search_no_results": "未找到相關工具",
+  "search_results_found": "找到 {{count}} 個工具",
+  "location_detecting": "定位中...",
+  "weather_loading": "載入中...",
+  "current_time": "當前時間",
+  "current_location": "當前位置",
+  "current_weather": "當前天氣"
 }
