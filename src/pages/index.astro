@@ -1026,7 +1026,7 @@ const defaultTools = tools;
         const translatedDesc = t[tool.id + '_desc'] || tool.description;
         
         return `
-          <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-id="${tool.id}" title="${translatedDesc}">
+          <div class="group cursor-pointer tool-card" data-tool-url="${tool.url}" data-tool-id="${tool.id}">
             <div class="relative overflow-hidden rounded-xl p-6 h-48 bg-gradient-to-br from-sakura-400 to-sakura-600 hover:from-sakura-500 hover:to-sakura-700 transform hover:scale-105 transition-all duration-300 ease-out shadow-lg hover:shadow-xl text-white" style="background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);">
               <div class="absolute top-0 right-0 opacity-20">
                 <div class="w-32 h-32 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
@@ -1038,7 +1038,7 @@ const defaultTools = tools;
                 <div class="flex items-start justify-between mb-3 gap-2">
                   <h3 class="text-xl font-bold line-clamp-2 flex-1 tool-card-name">${translatedName}</h3>
                   <div class="flex items-center gap-1 flex-shrink-0">
-                    ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full whitespace-nowrap third-party-badge"><span class="third-party-text">${t.third_party_text}</span></span>` : ''}
+                    ${tool.thirdParty ? `<span class="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full whitespace-nowrap third-party-badge"><span class="third-party-text">${t.third_party || '第三方'}</span></span>` : ''}
                     <svg class="w-4 h-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                     </svg>

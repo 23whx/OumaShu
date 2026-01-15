@@ -148,5 +148,6 @@
   "weather_loading": "読み込み中...",
   "current_time": "現在時刻",
   "current_location": "現在地",
-  "current_weather": "現在の天気"
+  "current_weather": "現在の天気",
+  "third_party": "サードパーティ"
 }

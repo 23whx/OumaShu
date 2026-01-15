@@ -148,5 +148,6 @@
   "weather_loading": "Загрузка...",
   "current_time": "Текущее время",
   "current_location": "Текущее местоположение",
-  "current_weather": "Текущая погода"
+  "current_weather": "Текущая погода",
+  "third_party": "Сторонний"
 }

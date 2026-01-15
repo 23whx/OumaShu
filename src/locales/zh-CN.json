@@ -148,5 +148,6 @@
   "weather_loading": "加载中...",
   "current_time": "当前时间",
   "current_location": "当前位置",
-  "current_weather": "当前天气"
+  "current_weather": "当前天气",
+  "third_party": "第三方"
 }

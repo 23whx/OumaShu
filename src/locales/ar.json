@@ -148,5 +148,6 @@
   "weather_loading": "جاري التحميل...",
   "current_time": "الوقت الحالي",
   "current_location": "الموقع الحالي",
-  "current_weather": "الطقس الحالي"
+  "current_weather": "الطقس الحالي",
+  "third_party": "طرف ثالث"
 }

@@ -148,5 +148,6 @@
   "weather_loading": "Loading...",
   "current_time": "Current Time",
   "current_location": "Location",
-  "current_weather": "Weather"
+  "current_weather": "Weather",
+  "third_party": "3rd Party"
 }
