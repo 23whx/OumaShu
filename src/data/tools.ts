@@ -116,6 +116,22 @@ export const categories: ToolCategory[] = [
 // 真实项目数据
 export const tools: ToolItem[] = [
   {
+    id: 'ebook-translate',
+    name: 'eBook Translator',
+    description: 'AI 驱动的 EPUB 电子书翻译工具，支持多语言翻译，保留原书格式与排版',
+    tags: ['电子书翻译', 'EPUB', 'AI翻译', '多语言', '格式保留', '在线工具'],
+    subdomain: 'ebook-translate',
+    url: 'https://ebook-translate.oumashu.top/',
+    icon: '📚',
+    featured: false,
+    thirdParty: false,
+    updatedAt: '2026-03-31T10:00:00Z',
+    category: 'education',
+    popularity: 88,
+    isNew: true,
+    screenshots: []
+  },
+  {
     id: 'learn-languages',
     name: 'Learn Languages',
     description: 'AI 对话练习与 PDF 问答训练，提升外语能力的完整解决方案',

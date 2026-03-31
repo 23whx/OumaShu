@@ -79,6 +79,8 @@
     "search": "搜索中...",
     "general": "加载中..."
   },
+  "ebook-translate": "电子书翻译器",
+  "ebook-translate_desc": "AI 驱动的 EPUB 电子书翻译工具，支持多语言翻译，保留原书格式与排版",
   "learn-languages": "Learn Languages 语言学习",
   "learn-languages_desc": "AI 对话练习与 PDF 问答训练，提升外语能力的完整解决方案",
   "subtitle-screenshot": "字幕截图生成器",

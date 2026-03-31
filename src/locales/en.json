@@ -79,6 +79,8 @@
     "search": "Searching...",
     "general": "Loading..."
   },
+  "ebook-translate": "eBook Translator",
+  "ebook-translate_desc": "AI-powered EPUB e-book translation tool, supports multi-language translation while preserving original formatting and layout",
   "learn-languages": "Learn Languages",
   "learn-languages_desc": "AI conversation practice and PDF Q&A training, complete solution for improving foreign language skills",
   "subtitle-screenshot": "Subtitle Screenshot Generator",

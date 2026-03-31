@@ -79,6 +79,8 @@
     "search": "検索中...",
     "general": "読み込み中..."
   },
+  "ebook-translate": "電子書籍翻訳ツール",
+  "ebook-translate_desc": "AI駆動のEPUB電子書籍翻訳ツール、多言語翻訳対応、元のフォーマットとレイアウトを保持",
   "learn-languages": "Learn Languages 語学学習",
   "learn-languages_desc": "AI会話練習とPDF Q&Aトレーニング、外国語能力向上のための完全なソリューション",
   "subtitle-screenshot": "字幕スクリーンショット生成器",
