@@ -1,0 +1,58 @@
+---
+// 工具卡片：首頁與分類頁共用（樣式在 src/styles/site.css）
+import fs from 'node:fs';
+import path from 'node:path';
+import type { ToolItem } from '../data/tools';
+import { hostOf } from '../data/lines';
+import { dict, fill, type Locale } from '../i18n/routes';
+import { UI } from '../i18n/ui';
+
+export interface Props {
+  tool: ToolItem;
+  code: string;   // 站號，例如 "IM 03"
+  lineId: string;
+  /** 首屏以外的卡片延遲載入截圖 */
+  eager?: boolean;
+  locale?: Locale;
+}
+
+const { tool, code, lineId, eager = false, locale = 'en' } = Astro.props;
+const t = dict(locale);
+const name = t[tool.id] ?? tool.name;
+const desc = t[`${tool.id}_desc`] ?? tool.description;
+const hasShot = fs.existsSync(path.join(process.cwd(), 'public', 'shots', `${tool.id}.webp`));
+---
+
+<article class="tcard" id={`tool-${tool.id}`} data-tool-id={tool.id} data-line={lineId}>
+  <a class="tcard__link" href={tool.url} target="_blank" rel="noopener">
+    <div class="tcard__shot">
+      {hasShot ? (
+        <img
+          src={`/shots/${tool.id}.webp`}
+          alt={fill(UI[locale].shotAlt, { name })}
+          width="960"
+          height="600"
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      ) : (
+        <div class="tcard__plate"><span>{name}</span></div>
+      )}
+    </div>
+    <div class="tcard__body">
+      <div class="tcard__title">
+        <span class="badge tcard__code"><span>{code.replace(' ', ' ')}</span></span>
+        <h3 class="tcard__name" data-i18n-tool={tool.id}>{name}</h3>
+      </div>
+      <p class="tcard__desc" data-i18n-desc={tool.id}>{desc}</p>
+      <div class="tcard__meta">
+        <span class="tcard__host mono">{hostOf(tool.url)}</span>
+        {tool.thirdParty && <span class="tcard__tag third-party-text">{t.third_party}</span>}
+        <span class="tcard__open">
+          <span class="open-label">{t.open_tool}</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+        </span>
+      </div>
+    </div>
+  </a>
+</article>

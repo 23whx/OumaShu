@@ -1,0 +1,1253 @@
+---
+// 首頁：各語言版本共用（/、/zh-cn/、/ja/…），文字在構建時按語言直接寫進 HTML
+import Base from '../../layouts/Base.astro';
+import ToolCard from '../ToolCard.astro';
+import SiteFooter from '../SiteFooter.astro';
+import LangMenu from '../LangMenu.astro';
+import { tools } from '../../data/tools';
+import { getLines } from '../../data/lines';
+import { SITE_URL, ids, toolListNode } from '../../utils/schema';
+import { homeSeo } from '../../data/seo';
+import { dict, fill, localePath, type Locale } from '../../i18n/routes';
+import { UI } from '../../i18n/ui';
+
+export interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = dict(locale);
+const seo = homeSeo(locale);
+const lines = getLines();
+const home = localePath(locale, '/');
+
+// 結構化數據：首頁的主體是按線路排序的全部工具
+const homeUrl = `${SITE_URL}${home}`;
+const orderedTools = lines.flatMap((line) => line.stations.map((s) => s.tool));
+const homeSchema = [toolListNode(homeUrl, UI[locale].toolListName, orderedTools, t)];
+
+// 長線路在路線圖上折成多行，每行最多 7 站
+const STATIONS_PER_ROW = 7;
+const chunk = <T,>(items: T[], size: number): T[][] =>
+  Array.from({ length: Math.ceil(items.length / size) }, (_, i) => items.slice(i * size, (i + 1) * size));
+const themeLabels = { label: t.theme_label, ...t.theme };
+---
+
+<Base
+  title={seo.title}
+  description={seo.description}
+  keywords={seo.keywords}
+  locale={locale}
+  alternatePath="/"
+  canonicalUrl={homeUrl}
+  pageType="CollectionPage"
+  schema={homeSchema}
+  mainEntityId={ids.toolList(homeUrl)}
+>
+  <!-- 站牌頂欄 -->
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href={home} aria-label="OumaShu">
+        <span class="seal" aria-hidden="true" lang="ja">櫻</span>
+        <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
+      </a>
+
+      <div class="search" role="search">
+        <svg class="search__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
+        <label class="sr-only" for="search-input">{t.nav.search}</label>
+        <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder={t.search_placeholder} />
+        <kbd class="search__kbd" aria-hidden="true" id="search-kbd">/</kbd>
+      </div>
+
+      <div class="status">
+        <span class="status__item" id="location-text"></span>
+        <span class="status__item mono" id="time-text">--:--</span>
+        <span class="status__item" id="weather-info">
+          <svg class="wx" data-wx="clear" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" /></svg>
+          <svg class="wx" data-wx="cloud" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M7 18h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.1 11 3.5 3.5 0 0 0 7 18Z" /></svg>
+          <svg class="wx" data-wx="rain" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M7 15h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.1 8 3.5 3.5 0 0 0 7 15ZM9 18l-1 2.5M13 18l-1 2.5M17 18l-1 2.5" /></svg>
+          <svg class="wx" data-wx="snow" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M7 14h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.1 7 3.5 3.5 0 0 0 7 14ZM8 18h.01M12 19h.01M16 18h.01M10 21h.01M14 21h.01" /></svg>
+          <svg class="wx" data-wx="storm" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M7 14h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.1 7 3.5 3.5 0 0 0 7 14ZM13 15l-2.5 3.5H14L11.5 22" /></svg>
+          <svg class="wx" data-wx="fog" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M4 9h16M6 13h12M4 17h16" /></svg>
+          <span class="mono" id="weather-text">--°</span>
+        </span>
+      </div>
+
+      <div class="controls">
+        <LangMenu locale={locale} path="/" />
+        <button id="theme-toggle-btn" class="ctrl" type="button" data-mode="system" aria-label={t.theme_label} data-labels={JSON.stringify(themeLabels)}>
+          <svg class="i-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" /></svg>
+          <svg class="i-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10Z" /></svg>
+          <svg class="i-system" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="1.5" /><path d="M9 20h6M12 16.5V20" /></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- 駅名標 + 標題 -->
+    <section class="hero">
+      <div class="hero__copy">
+        <h1 id="hero-title">{t.hero_title}</h1>
+        <p id="hero-sub" data-tpl-tools={tools.length} data-tpl-lines={lines.length}>
+          {fill(t.hero_sub, { tools: tools.length, lines: lines.length })}
+        </p>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg><span id="intro-feature-free-title">{t.intro_feature_free_title}</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2" /><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" /></svg><span id="intro-feature-privacy-title">{t.intro_feature_privacy_title}</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5.5 13.5H12L11 21l7.5-10.5H12L13 3Z" /></svg><span id="intro-feature-noinstall-title">{t.intro_feature_noinstall_title}</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" /><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0M4 4l16 16" /></svg><span id="fact-nosignup">{t.fact_nosignup}</span></li>
+        </ul>
+      </div>
+
+      <div class="ekimei">
+        <div class="ekimei__top">
+          <span class="seal seal--lg" aria-hidden="true" lang="ja">櫻</span>
+          <div class="ekimei__name" aria-hidden="true">
+            <span class="ekimei__kanji" lang="ja">櫻滿集</span>
+            <span class="ekimei__roman">Ōmashū</span>
+          </div>
+        </div>
+        <nav class="ekimei__band" aria-label={t.map_label}>
+          <a href={`#line-${lines[0].id}`} class="ekimei__next" style={`--c:${lines[0].meta.color}`}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" /></svg>
+            <span class="mono">{lines[0].meta.code}</span>
+            <span data-cat={lines[0].id}>{t.categories[lines[0].id] ?? lines[0].name}</span>
+          </a>
+          <a href={`#line-${lines[lines.length - 1].id}`} class="ekimei__next ekimei__next--r" style={`--c:${lines[lines.length - 1].meta.color}`}>
+            <span data-cat={lines[lines.length - 1].id}>{t.categories[lines[lines.length - 1].id] ?? lines[lines.length - 1].name}</span>
+            <span class="mono">{lines[lines.length - 1].meta.code}</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 線路圖 -->
+    <section class="map" aria-labelledby="map-title">
+      <h2 id="map-title" class="sr-only">{t.map_label}</h2>
+      <ol class="map__lines">
+        {lines.map((line, i) => (
+          <li class:list={['mline', { 'mline--wide': line.stations.length > 3 }]} data-line={line.id} style={`--c:${line.meta.color};--i:${i}`}>
+            <button type="button" class="mline__label" data-filter={line.id} aria-pressed="false">
+              <span class="badge"><span>{line.meta.code}</span></span>
+              <span class="mline__name">
+                <span data-cat={line.id}>{t.categories[line.id] ?? line.name}</span>
+                <span class="ja" lang="ja">{line.meta.ja}</span>
+              </span>
+            </button>
+            <div class="mline__tracks">
+              {chunk(line.stations, STATIONS_PER_ROW).map((row) => (
+                <ol class="mline__track" style={`--n:${row.length}`}>
+                  {row.map((s) => (
+                    <li>
+                      <a class="stn" href={`#tool-${s.tool.id}`} data-station={s.tool.id}>
+                        <span class="stn__dot"></span>
+                        <span class="stn__name" data-i18n-tool={s.tool.id}>{t[s.tool.id] ?? s.tool.name}</span>
+                        <span class="stn__code mono">{s.code}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- 線路篩選 -->
+    <nav class="rail" aria-label={t.map_label}>
+      <div class="rail__inner">
+        <div class="rail__chips">
+          <button type="button" class="chip is-on" data-filter="all" aria-pressed="true">
+            <span id="all-lines-label">{t.all_lines}</span><span class="chip__n mono">{tools.length}</span>
+          </button>
+          {lines.map((line) => (
+            <button type="button" class="chip" data-filter={line.id} aria-pressed="false" style={`--c:${line.meta.color}`}>
+              <span class="chip__code mono">{line.meta.code}</span>
+              <span data-cat={line.id}>{t.categories[line.id] ?? line.name}</span>
+              <span class="chip__n mono">{line.stations.length}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <!-- 各線路的站 -->
+    <div class="dir" id="directory" data-found={t.search_results_found} data-found-one={t.search_results_found_one}>
+      <p id="search-status" class="dir__status" aria-live="polite"></p>
+      {lines.map((line) => (
+        <section class="dline" data-line={line.id} id={`line-${line.id}`} style={`--c:${line.meta.color}`} aria-labelledby={`line-title-${line.id}`}>
+          <header class="dline__head">
+            <span class="badge badge--lg"><span>{line.meta.code}</span></span>
+            <h2 id={`line-title-${line.id}`}>
+              <a class="dline__link" href={localePath(locale, `/categories/${line.id}/`)}>
+                <span data-cat={line.id}>{t.categories[line.id] ?? line.name}</span>
+                <span class="ja" lang="ja">{line.meta.ja}</span>
+              </a>
+            </h2>
+            <span class="dline__count mono" data-count={line.stations.length}>
+              {line.stations.length === 1 ? t.stations_count_one : fill(t.stations_count, { count: line.stations.length })}
+            </span>
+          </header>
+          <div class="dline__grid">
+            {line.stations.map((s) => (
+              <ToolCard tool={s.tool} code={s.code} lineId={line.id} locale={locale} />
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <div id="empty-state" class="empty" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5M8.5 11h5" /></svg>
+        <p id="empty-text">{t.search_no_results}</p>
+        <button type="button" id="clear-search" class="empty__btn">{t.clear_search}</button>
+      </div>
+    </div>
+  </main>
+
+  <SiteFooter locale={locale} />
+
+</Base>
+
+<script>
+  // 頁面文字已按語言寫進 HTML；這裡只負責篩選、搜索、主題與天氣
+  import { tools } from '../../data/tools';
+
+  const fill = (tpl: string, vals: Record<string, string | number>) =>
+    tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => String(vals[k] ?? ''));
+  const $ = <T extends Element = HTMLElement>(sel: string) => document.querySelector<T>(sel);
+  const $$ = <T extends Element = HTMLElement>(sel: string) => Array.from(document.querySelectorAll<T>(sel));
+
+  const toolById = new Map(tools.map((tool) => [tool.id, tool]));
+  const cards = $$<HTMLElement>('.tcard');
+  const sections = $$<HTMLElement>('.dline');
+  const stations = $$<HTMLAnchorElement>('.stn');
+  const mapLines = $$<HTMLElement>('.mline');
+  const filterButtons = $$<HTMLButtonElement>('[data-filter]');
+  const searchInput = $<HTMLInputElement>('#search-input')!;
+  const searchStatus = $('#search-status')!;
+  const emptyState = $('#empty-state')!;
+  const directory = $('#directory')!;
+
+  let filter = 'all';
+  let query = '';
+
+  // ---------- 搜索索引：本頁語言的名稱與描述 + 英文原名、描述與標籤（任何語言都能用英文搜）----------
+  const haystack = new Map<string, string>();
+  for (const card of cards) {
+    const id = card.dataset.toolId!;
+    const tool = toolById.get(id);
+    const lineName = card.closest('.dline')?.querySelector('h2')?.textContent ?? '';
+    const parts = [card.textContent ?? '', lineName];
+    if (tool) parts.push(tool.name, tool.description, ...(tool.tags || []));
+    haystack.set(id, parts.join(' ').replace(/\s+/g, ' ').toLowerCase());
+  }
+
+  // ---------- 篩選 / 搜索 ----------
+  function apply() {
+    const q = query.trim().toLowerCase();
+    let shown = 0;
+    const visible = new Set<string>();
+
+    for (const card of cards) {
+      const id = card.dataset.toolId!;
+      const lineOk = filter === 'all' || card.dataset.line === filter;
+      const queryOk = !q || (haystack.get(id) || '').includes(q);
+      const on = lineOk && queryOk;
+      card.hidden = !on;
+      if (on) {
+        shown++;
+        visible.add(id);
+      }
+    }
+    for (const section of sections) {
+      section.hidden = !section.querySelector('.tcard:not([hidden])');
+    }
+    for (const stn of stations) {
+      stn.classList.toggle('is-dim', !visible.has(stn.dataset.station!));
+    }
+    for (const line of mapLines) {
+      line.classList.toggle('is-dim', !line.querySelector('.stn:not(.is-dim)'));
+    }
+    for (const btn of filterButtons) {
+      const on = btn.dataset.filter === filter;
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', String(on));
+    }
+
+    emptyState.hidden = shown > 0;
+    searchStatus.textContent = q && shown > 0
+      ? shown === 1 && directory.dataset.foundOne
+        ? directory.dataset.foundOne
+        : fill(directory.dataset.found || 'Found {{count}} tools', { count: shown })
+      : '';
+  }
+
+  let searchTimer: number | undefined;
+  searchInput.addEventListener('input', () => {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => {
+      query = searchInput.value;
+      apply();
+    }, 120);
+  });
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      searchInput.value = '';
+      query = '';
+      apply();
+      searchInput.blur();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    const target = e.target as HTMLElement;
+    const typing = target.closest('input, textarea, select, [contenteditable="true"]');
+    if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+  });
+
+  $('#clear-search')!.addEventListener('click', () => {
+    searchInput.value = '';
+    query = '';
+    filter = 'all';
+    apply();
+    searchInput.focus();
+  });
+
+  for (const btn of filterButtons) {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.filter!;
+      filter = id === filter && id !== 'all' ? 'all' : id;
+      apply();
+      // 從線路圖點擊時，乘車到目錄
+      if (btn.classList.contains('mline__label')) {
+        directory.scrollIntoView({ block: 'start' });
+      }
+    });
+  }
+
+  // ---------- 站點 ↔ 卡片 ----------
+  for (const stn of stations) {
+    stn.addEventListener('click', (e) => {
+      const id = stn.dataset.station!;
+      const card = document.getElementById(`tool-${id}`);
+      if (!card) return;
+      e.preventDefault();
+      if (card.hidden) {
+        filter = 'all';
+        query = '';
+        searchInput.value = '';
+        apply();
+      }
+      card.scrollIntoView({ block: 'center' });
+      card.classList.remove('is-arrive');
+      void card.offsetWidth;
+      card.classList.add('is-arrive');
+      card.querySelector<HTMLAnchorElement>('.tcard__link')?.focus({ preventScroll: true });
+    });
+  }
+  for (const card of cards) {
+    const stn = document.querySelector(`.stn[data-station="${card.dataset.toolId}"]`);
+    const on = () => stn?.classList.add('is-hover');
+    const off = () => stn?.classList.remove('is-hover');
+    card.addEventListener('pointerenter', on);
+    card.addEventListener('pointerleave', off);
+    card.addEventListener('focusin', on);
+    card.addEventListener('focusout', off);
+    card.addEventListener('animationend', () => card.classList.remove('is-arrive'));
+  }
+
+  // ---------- 主題 ----------
+  const themeBtn = $<HTMLButtonElement>('#theme-toggle-btn')!;
+  const themeLabels: Record<string, string> = JSON.parse(themeBtn.dataset.labels || '{}');
+  let themeMode = 'system';
+  try { themeMode = localStorage.getItem('theme') || 'system'; } catch {}
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function applyTheme(mode: string) {
+    themeMode = mode;
+    const actual = mode === 'system' ? (media.matches ? 'dark' : 'light') : mode;
+    document.documentElement.setAttribute('data-theme', actual);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', actual === 'dark' ? '#0c0c0d' : '#ffffff');
+    themeBtn.dataset.mode = mode;
+    themeBtn.setAttribute('aria-label', `${themeLabels.label || 'Theme'}: ${themeLabels[mode] || mode}`);
+  }
+  themeBtn.addEventListener('click', () => {
+    const order = ['light', 'dark', 'system'];
+    const next = order[(order.indexOf(themeMode) + 1) % order.length];
+    try { localStorage.setItem('theme', next); } catch {}
+    applyTheme(next);
+  });
+  media.addEventListener('change', () => themeMode === 'system' && applyTheme('system'));
+  applyTheme(themeMode);
+
+  // ---------- 時間 / 地點 / 天氣 ----------
+  const timeText = $('#time-text')!;
+  function tick() {
+    const now = new Date();
+    timeText.textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  }
+  tick();
+  window.setInterval(tick, 30000);
+
+  function weatherKind(code: number) {
+    if (code <= 1) return 'clear';
+    if (code <= 3) return 'cloud';
+    if (code === 45 || code === 48) return 'fog';
+    if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 'snow';
+    if (code >= 95) return 'storm';
+    return 'rain';
+  }
+
+  const geo: Promise<Record<string, any> | null> = fetch('https://ipapi.co/json/')
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null);
+
+  async function loadWeather() {
+    const data = await geo;
+    if (!data) return;
+    if (data.city) $('#location-text')!.textContent = `${data.city}, ${data.country_code}`;
+    if (data.latitude == null || data.longitude == null) return;
+    try {
+      const res = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${data.latitude}&longitude=${data.longitude}&current_weather=true&timezone=auto`
+      );
+      const w = (await res.json()).current_weather;
+      if (!w) return;
+      $('#weather-text')!.textContent = `${Math.round(w.temperature)}°C`;
+      const kind = weatherKind(w.weathercode);
+      for (const icon of $$<SVGElement>('.wx')) {
+        if (icon.dataset.wx === kind) icon.removeAttribute('hidden');
+        else icon.setAttribute('hidden', '');
+      }
+    } catch {}
+  }
+  loadWeather();
+  window.setInterval(loadWeather, 1800000);
+
+  // ?q= 站內搜索（schema.org SearchAction 與分類頁搜索框的入口）
+  const initialQuery = new URLSearchParams(location.search).get('q');
+  if (initialQuery) {
+    searchInput.value = initialQuery;
+    query = initialQuery;
+    apply();
+    directory.scrollIntoView({ block: 'start' });
+  }
+</script>
+
+<style>
+  svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ---------- 頂欄：半透明 + 細線 + 朱印 ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+    color: var(--color-fg);
+    border-bottom: 1px solid var(--hairline);
+  }
+  :global([data-theme='dark']) .topbar {
+    background: rgba(12, 12, 13, 0.7);
+  }
+  .topbar__inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    height: 64px;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .search {
+    position: relative;
+    flex: 1;
+    max-width: 560px;
+  }
+  .search__icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    pointer-events: none;
+  }
+  .search input {
+    width: 100%;
+    height: 38px;
+    padding: 0 44px 0 40px;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    background: var(--wash);
+    color: var(--color-fg);
+    font: 500 15px/1 var(--font-sans);
+    outline: none;
+    transition: box-shadow var(--transition-normal), border-color var(--transition-normal), background var(--transition-normal);
+  }
+  .search input::placeholder {
+    color: var(--color-muted);
+  }
+  .search input::-webkit-search-cancel-button {
+    display: none;
+  }
+  .search input:focus {
+    background: var(--color-card);
+    border-color: var(--shu);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--shu) 22%, transparent);
+  }
+  .search__kbd {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    min-width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 6px;
+    color: var(--color-muted);
+    font: 600 12px/1 var(--font-mono);
+  }
+  .search:focus-within .search__kbd {
+    opacity: 0;
+  }
+  /* 狀態膠囊：地點 | 時間 | 天氣 */
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-left: auto;
+    padding: 4px 4px 4px 4px;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    background: var(--wash);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .status__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 9px;
+  }
+  .status__item + .status__item {
+    border-left: 1px solid var(--hairline-strong);
+  }
+  .status__item:empty {
+    display: none;
+  }
+  #time-text {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+  .wx {
+    width: 15px;
+    height: 15px;
+  }
+  .controls {
+    display: flex;
+    gap: 4px;
+    flex: none;
+  }
+  .ctrl {
+    height: 38px;
+    min-width: 38px;
+    padding: 0 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: 700 13px/1 var(--font-sans);
+    cursor: pointer;
+    transition: background var(--transition-normal);
+  }
+  .ctrl:hover {
+    background: var(--wash-strong);
+  }
+  .ctrl svg {
+    width: 19px;
+    height: 19px;
+  }
+  .ctrl .i-light,
+  .ctrl .i-dark,
+  .ctrl .i-system {
+    display: none;
+  }
+  .ctrl[data-mode='light'] .i-light,
+  .ctrl[data-mode='dark'] .i-dark,
+  .ctrl[data-mode='system'] .i-system {
+    display: block;
+  }
+  /* ---------- 駅名標 + 標題 ---------- */
+  .hero {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 52px 32px 40px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 56px;
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 1.4rem + 3.2vw, 4rem);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    max-width: 15ch;
+  }
+  :global(html[lang='zh-CN']) .hero h1,
+  :global(html[lang='zh-TW']) .hero h1,
+  :global(html[lang='ja-JP']) .hero h1 {
+    font-family: var(--font-cjk), sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.1rem, 1.1rem + 2.6vw, 3.4rem);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    max-width: 13em;
+  }
+  :global(html[lang='ja-JP']) .hero h1,
+  :global(html[lang='ja-JP']) .hero p,
+  :global(html[lang='ja-JP']) .stn__name {
+    word-break: auto-phrase;
+    line-break: strict;
+  }
+  /* 中文：優先在中英文之間的空格處換行，放不下時才斷字 */
+  :global(html[lang='zh-CN']) .stn__name,
+  :global(html[lang='zh-TW']) .stn__name {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    line-break: strict;
+  }
+  /* 日文介面時，站牌上的日文副名與主名重複，隱藏 */
+  :global(html[lang='ja-JP']) .ja {
+    display: none;
+  }
+  .hero p {
+    margin: 18px 0 0;
+    max-width: 54ch;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 26px;
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .facts li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .facts svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-brand-ink);
+    stroke-width: 2.2;
+  }
+  .ekimei {
+    width: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+  }
+  .ekimei__top {
+    position: relative;
+    padding: 30px 28px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ekimei__top .seal {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+  }
+  .ekimei__name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ekimei__kanji {
+    font-family: var(--font-ja);
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 1.1;
+    letter-spacing: 0.14em;
+    margin-right: -0.14em;
+  }
+  .ekimei__roman {
+    margin-top: 4px;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.32em;
+    margin-right: -0.32em;
+    color: var(--color-muted);
+  }
+  .ekimei__band {
+    display: flex;
+    justify-content: space-between;
+    background: var(--shu);
+  }
+  .ekimei__next {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 16px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .ekimei__next:hover > span:not(.mono) {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .ekimei__next svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.4;
+  }
+  .ekimei__next .mono {
+    padding: 2px 5px 1px;
+    border: 2px solid var(--c);
+    border-radius: 5px;
+    background: #fff;
+    color: #18181b;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* ---------- 線路圖 ---------- */
+  .map {
+    background: var(--color-panel);
+    border-block: 1px solid var(--color-border);
+  }
+  .map__lines {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 22px 32px 18px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 48px;
+    row-gap: 4px;
+  }
+  .mline--wide {
+    grid-column: 1 / -1;
+  }
+  .mline {
+    display: grid;
+    grid-template-columns: 192px minmax(0, 1fr);
+    align-items: start;
+    min-height: 64px;
+    transition: opacity var(--transition-normal);
+  }
+  .mline__label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 3px 12px 3px 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  .mline__name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .mline__name .ja {
+    font-size: 12px;
+  }
+  .mline__label:hover .mline__name > span:first-child,
+  .mline__label[aria-pressed='true'] .mline__name > span:first-child {
+    text-decoration: underline;
+    text-decoration-color: var(--c);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.25em;
+  }
+  .mline__tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .mline__track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    width: min(100%, calc(var(--n) * 150px));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mline__track::before {
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 0;
+    right: calc(100% / var(--n) / 2);
+    height: 6px;
+    border-radius: 3px;
+    background: var(--c);
+    transition: background var(--transition-normal);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mline__track::before {
+      animation: draw 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: calc(var(--i) * 60ms + 120ms);
+    }
+  }
+  @keyframes draw {
+    from { clip-path: inset(-16px 100% -16px -16px); }
+    to { clip-path: inset(-16px -16px -16px -16px); }
+  }
+  /* 折行的線路：上一行延伸到邊緣，表示線路繼續 */
+  .mline__track:not(:last-child)::before {
+    right: 0;
+  }
+  .mline__track + .mline__track::before {
+    left: 0;
+  }
+  .mline.is-dim .mline__track::before {
+    background: var(--color-border);
+  }
+  .mline.is-dim .mline__label {
+    opacity: 0.4;
+  }
+  .stn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 9px 4px 6px;
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 8px;
+    transition: opacity var(--transition-normal);
+  }
+  .stn__dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-card);
+    border: 4.5px solid var(--c);
+    transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), background 160ms;
+  }
+  .stn__name {
+    margin-top: 3px;
+    max-width: 146px;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-wrap: balance;
+    max-height: calc(1.25em * 3);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .stn__code {
+    font-size: 10.5px;
+    color: var(--color-muted);
+  }
+  .stn:hover .stn__dot,
+  .stn.is-hover .stn__dot,
+  .stn:focus-visible .stn__dot {
+    transform: scale(1.3);
+    background: var(--c);
+  }
+  .stn.is-dim {
+    opacity: 0.3;
+  }
+  .stn.is-dim .stn__dot {
+    border-color: var(--color-muted);
+  }
+
+  /* ---------- 夜間：發光的站牌 ---------- */
+  :global([data-theme='dark']) .mline__track::before {
+    box-shadow: 0 0 12px -1px color-mix(in srgb, var(--c) 75%, transparent);
+  }
+  :global([data-theme='dark']) .stn__dot {
+    background: var(--color-bg);
+    box-shadow: 0 0 10px -1px color-mix(in srgb, var(--c) 80%, transparent);
+  }
+  :global([data-theme='dark']) .stn__name {
+    color: #fff;
+  }
+  :global([data-theme='dark']) .mline.is-dim .mline__track::before,
+  :global([data-theme='dark']) .stn.is-dim .stn__dot {
+    box-shadow: none;
+  }
+  :global([data-theme='dark']) .ekimei {
+    background: #f7f7f7;
+    color: #18181b;
+    border-color: transparent;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 48px -10px color-mix(in srgb, var(--color-brand) 55%, transparent), 0 18px 40px -18px rgba(0, 0, 0, 0.8);
+  }
+  :global([data-theme='dark']) .ekimei__roman {
+    color: #5f5f66;
+  }
+
+
+  /* ---------- 篩選軌 ---------- */
+  .rail {
+    position: sticky;
+    top: 64px;
+    z-index: 30;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .rail__inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .rail__chips {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent);
+    padding: 2px 48px 2px 2px;
+    margin: -2px;
+  }
+  .rail__chips::-webkit-scrollbar {
+    display: none;
+  }
+  .chip {
+    --c: var(--sign);
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 34px;
+    padding: 0 12px 0 6px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-card);
+    color: var(--color-fg);
+    font: 600 13.5px/1 var(--font-sans);
+    cursor: pointer;
+    transition: border-color var(--transition-normal), background var(--transition-normal), color var(--transition-normal);
+  }
+  .chip[data-filter='all'] {
+    padding-left: 13px;
+  }
+  .chip:hover {
+    border-color: var(--c);
+  }
+  .chip__code {
+    padding: 3px 5px 2px;
+    border: 2px solid var(--c);
+    border-radius: 6px;
+    background: #fff;
+    color: #18181b;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .chip__n {
+    font-size: 11.5px;
+    color: var(--color-muted);
+  }
+  .chip.is-on {
+    background: var(--sign);
+    border-color: var(--sign);
+    color: var(--sign-ink);
+  }
+  :global([data-theme='dark']) .chip.is-on {
+    background: var(--sign-ink);
+    border-color: var(--sign-ink);
+    color: var(--sign);
+  }
+  .chip.is-on .chip__n {
+    color: inherit;
+    opacity: 0.7;
+  }
+  /* ---------- 目錄 ---------- */
+  .dir {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 44px 32px 88px;
+  }
+  .dir__status {
+    margin: 0 0 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+  .dir__status:empty {
+    display: none;
+  }
+  .dline + .dline {
+    margin-top: 64px;
+  }
+  .dline__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 14px;
+    margin-bottom: 24px;
+    border-bottom: 3px solid var(--c);
+  }
+  .dline__head h2 {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+  .dline__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .dline__link:hover > span:first-child {
+    text-decoration: underline;
+    text-decoration-color: var(--c);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.2em;
+  }
+  .dline__head h2 .ja {
+    font-size: 15px;
+  }
+  .dline__count {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 72px 0;
+    text-align: center;
+    color: var(--color-muted);
+  }
+  .empty[hidden] {
+    display: none;
+  }
+  .empty svg {
+    width: 40px;
+    height: 40px;
+  }
+  .empty p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-fg);
+  }
+  .empty__btn {
+    margin-top: 6px;
+    height: 38px;
+    padding: 0 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: var(--color-card);
+    color: var(--color-fg);
+    font: 700 14px/1 var(--font-sans);
+    cursor: pointer;
+  }
+  .empty__btn:hover {
+    border-color: var(--color-brand);
+  }
+
+  /* ---------- 響應式 ---------- */
+  @media (max-width: 1180px) {
+    .ekimei {
+      width: 340px;
+    }
+    .ekimei__kanji {
+      font-size: 52px;
+    }
+  }
+  @media (max-width: 960px) {
+    .search {
+      margin-left: auto;
+    }
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .ekimei {
+      width: 100%;
+      max-width: 400px;
+    }
+    .map__lines {
+      grid-template-columns: 1fr;
+    }
+    .mline {
+      grid-template-columns: 170px minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 760px) {
+    :global(html) {
+      scroll-padding-top: 72px;
+    }
+    .topbar {
+      position: static;
+    }
+    .topbar__inner {
+      height: auto;
+      padding: 12px 16px;
+      flex-wrap: wrap;
+      gap: 10px 12px;
+    }
+    .status {
+      order: 4;
+      flex: none;
+      margin: 0;
+      font-size: 11.5px;
+    }
+    .controls {
+      margin-left: auto;
+    }
+    .search {
+      order: 3;
+      flex-basis: 100%;
+      max-width: none;
+      margin-left: 0;
+    }
+    .search__kbd {
+      display: none;
+    }
+    .hero {
+      padding: 32px 16px 28px;
+    }
+    .hero p {
+      font-size: 17px;
+    }
+    .ekimei {
+      display: none;
+    }
+    .map__lines {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 14px;
+      row-gap: 10px;
+      padding: 16px 16px 14px;
+    }
+    .mline,
+    .mline--wide {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .mline__label {
+      gap: 7px;
+    }
+    .mline__label .badge {
+      width: 26px;
+      height: 26px;
+      padding: 2px;
+      border-radius: 6px;
+    }
+    .mline__label .badge > span {
+      font-size: 10px;
+      border-radius: 4px;
+    }
+    .mline__name {
+      font-size: 13px;
+    }
+    .mline__name .ja {
+      display: none;
+    }
+    .mline__track {
+      width: min(100%, calc(var(--n) * 46px));
+      margin-top: 2px;
+    }
+    .mline__track::before {
+      top: 13px;
+      left: 0;
+      height: 4px;
+    }
+    .stn {
+      padding: 6px 0 2px;
+      gap: 1px;
+    }
+    .stn__dot {
+      width: 16px;
+      height: 16px;
+      border-width: 3.5px;
+    }
+    .stn__name {
+      display: none;
+    }
+    .stn__code {
+      font-size: 9px;
+      white-space: nowrap;
+    }
+    .rail {
+      top: 0;
+    }
+
+    .rail__inner {
+      padding: 10px 16px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+    }
+    .dir {
+      padding: 28px 16px 64px;
+    }
+    .dline + .dline {
+      margin-top: 44px;
+    }
+    .dline__head h2 {
+      font-size: 22px;
+      flex-wrap: wrap;
+    }
+  }
+</style>

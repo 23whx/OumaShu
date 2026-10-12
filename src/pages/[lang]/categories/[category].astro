@@ -1,0 +1,16 @@
+---
+// 其他語言的分類頁：/zh-cn/categories/image/ …
+import CategoryPage from '../../../components/pages/CategoryPage.astro';
+import { getLines } from '../../../data/lines';
+import { PREFIXED, localeFromPrefix } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return PREFIXED.flatMap((l) =>
+    getLines().map((line) => ({ params: { lang: l.prefix, category: line.id } }))
+  );
+}
+
+const locale = localeFromPrefix(Astro.params.lang);
+---
+
+<CategoryPage locale={locale} category={Astro.params.category!} />

@@ -164,5 +164,22 @@
   "theme_label": "主題",
   "language_label": "語言",
   "fact_nosignup": "無需註冊",
-  "search_results_found_one": "找到 1 個工具"
+  "search_results_found_one": "找到 1 個工具",
+  "online-drawing": "線上繪圖與圖片編輯器",
+  "online-drawing_desc": "在瀏覽器中繪圖和編輯圖片：畫筆、文字、形狀、圖層、裁切與調色，可儲存專案並匯出圖片",
+  "wiggle-studio": "Wiggle 抖動動畫工作室",
+  "wiggle-studio_desc": "塗抹需要動的區域，預覽彈性抖動效果，匯出 GIF、WebM 或 MP4，全程在瀏覽器內完成",
+  "image-enhancer": "AI 圖片增強",
+  "image-enhancer_desc": "本地 AI 增強並放大低解析度圖片，支援原尺寸、2× 與 4× 輸出和對比檢視，使用 WebGPU 或 CPU，不上傳圖片",
+  "watermark-adder": "加入浮水印",
+  "watermark-adder_desc": "加入文字或圖片浮水印，可調整大小、角度、透明度與平鋪，在瀏覽器本地處理",
+  "ai-watermark-remover": "AI 去浮水印（實驗）",
+  "ai-watermark-remover_desc": "實驗性本地 AI 重建，修復圖片上的可見浮水印與痕跡，使用 WebGPU 或 CPU，可匯出 WebP",
+  "image-ocr": "線上 OCR 文字辨識",
+  "image-ocr_desc": "本地 GPU 加速辨識圖片中的中文、英文和日文，支援長圖與區域辨識，可編輯並匯出 TXT",
+  "full-page-screenshot": "網頁長截圖",
+  "full-page-screenshot_desc": "捲動任意網頁自動拼接成一張長圖，固定標題只保留一次，也可擷取螢幕，不上傳任何內容",
+  "yifang": "弈方 · 棋類與魔術方塊",
+  "yifang_desc": "從零學習魔術方塊、西洋棋、中國象棋、將棋、圍棋、麻將、德州撲克與百家樂，再用互動棋具練習，無需註冊",
+  "stations_count_one": "1 站"
 }

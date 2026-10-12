@@ -164,5 +164,22 @@
   "theme_label": "テーマ",
   "language_label": "言語",
   "fact_nosignup": "登録不要",
-  "search_results_found_one": "1 件のツールが見つかりました"
+  "search_results_found_one": "1 件のツールが見つかりました",
+  "online-drawing": "オンラインお絵かき・画像エディター",
+  "online-drawing_desc": "ブラウザで描画と画像編集：ブラシ、テキスト、図形、レイヤー、トリミング、色調整。プロジェクト保存と画像書き出しに対応",
+  "wiggle-studio": "Wiggle Studio ぷるぷるアニメ",
+  "wiggle-studio_desc": "動かしたい部分を塗ってぷるぷる揺れる動きをプレビューし、GIF・WebM・MP4 で書き出し。すべてブラウザ内で完結",
+  "image-enhancer": "AI 画像高画質化",
+  "image-enhancer_desc": "低解像度の画像をローカル AI で高画質化・拡大。等倍・2倍・4倍出力と比較表示、WebGPU または CPU、アップロード不要",
+  "watermark-adder": "透かし追加",
+  "watermark-adder_desc": "テキストや画像の透かしを追加。サイズ・角度・不透明度・タイル配置を調整でき、ブラウザ内で処理",
+  "ai-watermark-remover": "AI 透かし除去（実験版）",
+  "ai-watermark-remover_desc": "ローカル AI による実験的な再構成で、画像の目に見える透かしや跡を修復。WebGPU または CPU、WebP 書き出し対応",
+  "image-ocr": "オンライン OCR",
+  "image-ocr_desc": "画像から中国語・英語・日本語の文字をローカル GPU で認識。長い画像や範囲指定、テキスト編集と TXT 書き出しに対応",
+  "full-page-screenshot": "フルページスクリーンショット",
+  "full-page-screenshot_desc": "ページをスクロールして1枚の縦長画像に自動結合。固定ヘッダーは一度だけ残し、画面キャプチャも可能。アップロードなし",
+  "yifang": "弈方 ボードゲームとキューブ",
+  "yifang_desc": "ルービックキューブ、チェス、シャンチー、将棋、囲碁、麻雀、テキサスホールデム、バカラをゼロから学び、対話型の盤で練習。登録不要",
+  "stations_count_one": "1 駅"
 }

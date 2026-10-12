@@ -1,0 +1,52 @@
+---
+// 終點站：全站頁尾（樣式在 src/styles/site.css）
+// 「按線路瀏覽」連到每個分類頁，讓分類頁獲得站內連結
+import { getLines } from '../data/lines';
+import { dict, localePath, type Locale } from '../i18n/routes';
+import { UI } from '../i18n/ui';
+
+export interface Props {
+  locale?: Locale;
+}
+const { locale = 'en' } = Astro.props;
+const t = dict(locale);
+const lines = getLines();
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="foot__stripe" aria-hidden="true">
+    {lines.map((line) => <i style={`--c:${line.meta.color}`}></i>)}
+  </div>
+  <div class="foot__inner">
+    <div class="foot__about">
+      <a class="brand" href={localePath(locale, '/')} aria-label="OumaShu home">
+        <span class="seal" aria-hidden="true" lang="ja">櫻</span>
+        <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
+      </a>
+      <h2 id="footer-about-title">{t.footer_about_title}</h2>
+      <p id="intro-paragraph">{t.intro_paragraph}</p>
+    </div>
+    <nav class="foot__col foot__lines" aria-label={UI[locale].browseByCat}>
+      <span class="foot__label" id="foot-lines">{t.all_lines}</span>
+      <ul>
+        {lines.map((line) => (
+          <li>
+            <a href={localePath(locale, `/categories/${line.id}/`)} style={`--c:${line.meta.color}`}>
+              <span class="foot__code mono">{line.meta.code}</span>
+              <span data-cat={line.id}>{t.categories[line.id] ?? line.name}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="foot__col">
+      <span class="foot__label" id="foot-contact">{t.footer.contact}</span>
+      <a href="mailto:wanghongxiang23@gmail.com">wanghongxiang23@gmail.com</a>
+      <a href="https://x.com/Rollkey4" target="_blank" rel="noopener">@Rollkey4 on X</a>
+      <a href="/about/" id="foot-about">{t.footer.about}</a>
+      <a href="/privacy/" id="foot-privacy">{t.footer.privacy}</a>
+    </div>
+  </div>
+  <div class="foot__base mono">© {year} OumaShu · oumashu.top</div>
+</footer>

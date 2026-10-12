@@ -1,0 +1,146 @@
+---
+// 語言選單：每個選項都是指向該語言網址的真實連結（爬蟲可跟隨），選擇時記住偏好
+import { LOCALES, localePath, dict, type Locale } from '../i18n/routes';
+
+export interface Props {
+  locale: Locale;
+  /** 語言無關的路徑，例如 "/" 或 "/categories/image/" */
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = dict(locale);
+const current = LOCALES.find((l) => l.id === locale)!;
+---
+
+<div class="lang" data-lang-menu>
+  <button class="ctrl" type="button" aria-haspopup="true" aria-expanded="false" aria-label={t.language_label} data-lang-btn>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5S9.6 5.9 12 3.5Z" /></svg>
+    <span>{current.short}</span>
+  </button>
+  <ul class="lang__menu" hidden data-lang-list>
+    {LOCALES.map((loc) => (
+      <li>
+        <a
+          class:list={['language-option', { 'is-current': loc.id === locale }]}
+          href={localePath(loc.id, path)}
+          hreflang={loc.hreflang[0]}
+          lang={loc.id}
+          data-locale={loc.id}
+          aria-current={loc.id === locale ? 'page' : undefined}
+        >
+          {loc.label}
+          <svg class="lang__check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  for (const menu of document.querySelectorAll<HTMLElement>('[data-lang-menu]')) {
+    const btn = menu.querySelector<HTMLButtonElement>('[data-lang-btn]')!;
+    const list = menu.querySelector<HTMLElement>('[data-lang-list]')!;
+    const close = () => {
+      list.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    };
+    btn.addEventListener('click', () => {
+      const open = list.hidden;
+      list.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      if (open) list.querySelector<HTMLAnchorElement>('.is-current, .language-option')?.focus();
+    });
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target as Node)) close();
+    });
+    list.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        close();
+        btn.focus();
+      }
+    });
+    for (const link of list.querySelectorAll<HTMLAnchorElement>('[data-locale]')) {
+      link.addEventListener('click', () => {
+        try { localStorage.setItem('locale', link.dataset.locale!); } catch {}
+      });
+    }
+  }
+</script>
+
+<style>
+  svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .lang {
+    position: relative;
+  }
+  .ctrl {
+    height: 38px;
+    min-width: 38px;
+    padding: 0 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: 700 13px/1 var(--font-sans);
+    cursor: pointer;
+    transition: background var(--transition-normal);
+  }
+  .ctrl:hover {
+    background: var(--wash-strong);
+  }
+  .ctrl svg {
+    width: 19px;
+    height: 19px;
+  }
+  .lang__menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 50;
+    min-width: 176px;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: var(--color-card);
+    color: var(--color-fg);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: var(--shadow-lift);
+  }
+  .language-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    border-radius: 6px;
+    color: inherit;
+    font: 500 14px/1.2 var(--font-sans);
+    text-decoration: none;
+  }
+  .language-option:hover {
+    background: var(--color-panel);
+  }
+  .lang__check {
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    color: var(--color-brand-ink);
+  }
+  .language-option.is-current {
+    font-weight: 700;
+  }
+  .language-option.is-current .lang__check {
+    opacity: 1;
+  }
+</style>

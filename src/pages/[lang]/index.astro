@@ -1,0 +1,13 @@
+---
+// 其他語言的首頁：/zh-cn/、/zh-tw/、/ja/、/ar/、/ru/
+import HomePage from '../../components/pages/HomePage.astro';
+import { PREFIXED, localeFromPrefix } from '../../i18n/routes';
+
+export function getStaticPaths() {
+  return PREFIXED.map((l) => ({ params: { lang: l.prefix } }));
+}
+
+const locale = localeFromPrefix(Astro.params.lang);
+---
+
+<HomePage locale={locale} />

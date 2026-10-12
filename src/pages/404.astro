@@ -1,0 +1,132 @@
+---
+// 404：迷路的乘客 —— 提供搜索與所有線路，讓訪客留在站內
+import Base from '../layouts/Base.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { getLines } from '../data/lines';
+import { CATEGORY_SEO } from '../data/seo';
+
+const lines = getLines();
+---
+
+<Base
+  title="Page not found | OumaShu"
+  description="This stop does not exist. Search OumaShu's free online tools or pick a line to continue."
+  noindex
+>
+  <main id="main-content" class="lost">
+    <a class="brand" href="/" aria-label="OumaShu home">
+      <span class="seal" aria-hidden="true" lang="ja">櫻</span>
+      <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
+    </a>
+    <p class="lost__code mono">404 · STATION NOT FOUND</p>
+    <h1>This stop isn’t on the map.</h1>
+    <p class="lost__lead">The page may have moved. Search the tools or take one of the lines below.</p>
+
+    <form class="lost__search" action="/" method="get" role="search">
+      <label class="sr-only" for="lost-q">Search all tools</label>
+      <input id="lost-q" name="q" type="search" placeholder="Search tools… e.g. “compress image”, “gif”" autocomplete="off" />
+      <button type="submit">Search</button>
+    </form>
+
+    <ul class="lost__lines">
+      {lines.map((line) => (
+        <li>
+          <a href={`/categories/${line.id}/`} style={`--c:${line.meta.color}`}>
+            <span class="lost__badge mono">{line.meta.code}</span>
+            {CATEGORY_SEO[line.id]?.h1 ?? line.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .lost {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+  .lost__code {
+    margin: 48px 0 0;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--color-brand-ink);
+  }
+  .lost h1 {
+    margin: 10px 0 0;
+    font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .lost__lead {
+    margin: 14px 0 0;
+    font-size: 18px;
+    color: var(--color-muted);
+  }
+  .lost__search {
+    display: flex;
+    gap: 8px;
+    margin-top: 28px;
+  }
+  .lost__search input {
+    flex: 1;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-card);
+    color: var(--color-fg);
+    font: 500 16px/1 var(--font-sans);
+    outline: none;
+  }
+  .lost__search input:focus {
+    border-color: var(--shu);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--shu) 22%, transparent);
+  }
+  .lost__search button {
+    height: 44px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--sign);
+    color: var(--sign-ink);
+    font: 700 15px/1 var(--font-sans);
+    cursor: pointer;
+  }
+  .lost__lines {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+    gap: 8px;
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lost__lines a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .lost__lines a:hover {
+    border-color: var(--c);
+  }
+  .lost__badge {
+    padding: 3px 5px 2px;
+    border: 2px solid var(--c);
+    border-radius: 6px;
+    background: #fff;
+    color: #18181b;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+  }
+</style>

@@ -23,7 +23,7 @@ A single owner's personal, hand-made collection presented with a Japanese sensib
 
 ## Capabilities and Constraints
 Must keep (confirmed 2026-10-12):
-- Six-language UI switching: en (default), zh-CN, zh-TW, ja-JP, ar, ru — with IP-based auto-detection and persistence. The layout stays LTR for every locale, including Arabic (existing behavior, kept on purpose) (`src/locales/*.json`).
+- Six languages, each on its own URL: English at `/`, then `/zh-cn/`, `/zh-tw/`, `/ja/`, `/ar/`, `/ru/` (home + every category page), linked with hreflang. Text is rendered at build time (`src/i18n/`, `src/locales/*.json`, `src/data/seo.i18n.ts`). The language menu is real links; a chosen language is remembered and English pages forward to it. First-time visitors whose browser language differs get a dismissible prompt, never an automatic redirect. The layout stays LTR for every locale, including Arabic (kept on purpose).
 - Location / local time / weather widget (ipapi.co + open-meteo).
 - Light/dark mode with manual toggle and no flash on load.
 - AdSense ad slots.

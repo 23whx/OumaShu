@@ -1,0 +1,5 @@
+# OumaShu 櫻滿集 — https://oumashu.top
+User-agent: *
+Allow: /
+
+Sitemap: https://oumashu.top/sitemap-index.xml

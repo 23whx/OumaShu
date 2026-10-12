@@ -19,7 +19,7 @@ export const LINE_META: Record<string, LineMeta> = {
   entertainment:     { code: 'EN', color: '#b4498a', ja: 'エンタメ' },
   social:            { code: 'SO', color: '#d4a90a', ja: 'ソーシャル' },
   'file-transfer':   { code: 'FT', color: '#5a6b80', ja: 'ファイル転送' },
-  games:             { code: 'GM', color: '#3f4a5c', ja: 'ゲーム' },
+  games:             { code: 'GM', color: '#86b31b', ja: 'ゲーム' },
 };
 
 // 線路在地圖上的順序：最大、最常用的線路在前

@@ -1,0 +1,150 @@
+---
+// 語言提示條：瀏覽器語言與本頁不同、且有對應語言版本時，在底部提示一次（不自動跳轉）
+import { UI } from '../i18n/ui';
+import type { Locale } from '../i18n/routes';
+
+export interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const strings = Object.fromEntries(
+  Object.entries(UI).map(([id, u]) => [id, { text: u.suggest, go: u.suggestGo, dismiss: u.dismiss }])
+);
+---
+
+<div class="suggest" id="lang-suggest" data-page-locale={locale} role="region" aria-live="polite" hidden>
+  <p class="suggest__text"></p>
+  <a class="suggest__go" href="/"></a>
+  <button class="suggest__x" type="button">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+  </button>
+</div>
+
+<script is:inline define:vars={{ strings }}>
+  (function () {
+    var box = document.getElementById('lang-suggest');
+    if (!box) return;
+    try {
+      if (localStorage.getItem('locale') || localStorage.getItem('lang-suggest-dismissed')) return;
+    } catch (e) { return; }
+
+    function pick(tag) {
+      tag = String(tag || '').toLowerCase();
+      if (/^zh-(tw|hk|mo)|^zh-hant/.test(tag)) return 'zh-TW';
+      if (tag.indexOf('zh') === 0) return 'zh-CN';
+      if (tag.indexOf('ja') === 0) return 'ja-JP';
+      if (tag.indexOf('ar') === 0) return 'ar';
+      if (tag.indexOf('ru') === 0) return 'ru';
+      if (tag.indexOf('en') === 0) return 'en';
+      return null;
+    }
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+    var want = null;
+    for (var i = 0; i < langs.length && !want; i++) want = pick(langs[i]);
+    if (!want || want === box.dataset.pageLocale) return;
+    var link = document.querySelector('link[rel="alternate"][data-locale="' + want + '"]');
+    var s = strings[want];
+    if (!link || !s) return;
+
+    box.lang = want;
+    box.querySelector('.suggest__text').textContent = s.text;
+    var go = box.querySelector('.suggest__go');
+    go.textContent = s.go;
+    go.href = new URL(link.href).pathname + location.search;
+    go.hreflang = want;
+    go.addEventListener('click', function () {
+      try { localStorage.setItem('locale', want); } catch (e) {}
+    });
+    var x = box.querySelector('.suggest__x');
+    x.setAttribute('aria-label', s.dismiss);
+    x.addEventListener('click', function () {
+      box.hidden = true;
+      try { localStorage.setItem('lang-suggest-dismissed', '1'); } catch (e) {}
+    });
+    box.hidden = false;
+  })();
+</script>
+
+<style>
+  .suggest {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: max-content;
+    max-width: calc(100% - 32px);
+    padding: 8px 8px 8px 16px;
+    transform: translateX(-50%);
+    border-radius: 12px;
+    background: var(--sign);
+    color: var(--sign-ink);
+    box-shadow: var(--shadow-lift);
+    font-size: 14px;
+    animation: suggest-in 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .suggest[hidden] {
+    display: none;
+  }
+  .suggest__text {
+    margin: 0;
+  }
+  .suggest__go {
+    flex: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--shu);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .suggest__go:hover {
+    filter: brightness(1.08);
+  }
+  .suggest__x {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--sign-mute);
+    cursor: pointer;
+  }
+  .suggest__x:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--sign-ink);
+  }
+  .suggest__x svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  @keyframes suggest-in {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 12px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .suggest {
+      animation: none;
+    }
+  }
+  @media (max-width: 520px) {
+    .suggest {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .suggest__text {
+      flex: 1 1 calc(100% - 50px);
+    }
+  }
+</style>

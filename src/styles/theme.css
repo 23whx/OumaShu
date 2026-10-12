@@ -3,12 +3,12 @@
 :root {
   /* 主要颜色 */
   --color-bg: #ffffff;           /* 樱花白背景 */
-  --color-fg: #121826;           /* 主文本色 */
+  --color-fg: #18181b;           /* 主文本色 */
   --color-card: #ffffff;         /* 卡片背景 */
-  --color-brand: #e5608a;        /* 樱花红主色 */
+  --color-brand: #c8372d;        /* 樱花红主色 */
   --color-accent: #4ade80;       /* 樱叶绿点缀色 */
-  --color-border: #e2e5eb;       /* 分割线 */
-  --color-muted: #586174;        /* 次要文本 */
+  --color-border: #e5e5e5;       /* 分割线 */
+  --color-muted: #5f5f66;        /* 次要文本 */
   
   /* 状态颜色 */
   --color-success: #10b981;
@@ -26,7 +26,7 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   
   /* 字体系统 */
-  --font-sans: 'Overpass', 'Zen Kaku Gothic New', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-sans: 'Overpass', var(--font-cjk, 'Zen Kaku Gothic New'), 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'Overpass Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
   
   /* 间距系统 (8pt grid) */
@@ -55,13 +55,13 @@
 
 /* 深色主题 - 纯黑色 */
 :root[data-theme='dark'] {
-  --color-bg: #0a1120;           /* 纯黑色背景 */
-  --color-fg: #e8ecf3;           /* 深色主文本 */
-  --color-card: #111c31;         /* 深色卡片 */
-  --color-brand: #f07ba0;        /* 深色下增亮的樱花红 */
+  --color-bg: #0c0c0d;           /* 纯黑色背景 */
+  --color-fg: #ededed;           /* 深色主文本 */
+  --color-card: #18181a;         /* 深色卡片 */
+  --color-brand: #e0574b;        /* 深色下增亮的樱花红 */
   --color-accent: #34d399;       /* 深色下调整的樱叶绿 */
-  --color-border: #22304b;       /* 深色分割线 */
-  --color-muted: #9aa6bb;        /* 深色次要文本 */
+  --color-border: #2a2a2d;       /* 深色分割线 */
+  --color-muted: #a1a1a6;        /* 深色次要文本 */
   
   /* 深色下的状态颜色 */
   --color-success: #059669;
