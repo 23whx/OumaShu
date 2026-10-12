@@ -6,7 +6,7 @@
   },
   "nav": {
     "home": "ホーム",
-    "categories": "カテゴリー", 
+    "categories": "カテゴリー",
     "about": "概要",
     "search": "検索"
   },
@@ -18,7 +18,7 @@
   },
   "theme": {
     "light": "ライト",
-    "dark": "ダーク", 
+    "dark": "ダーク",
     "system": "システムに従う"
   },
   "search": {
@@ -151,5 +151,18 @@
   "current_time": "現在時刻",
   "current_location": "現在地",
   "current_weather": "現在の天気",
-  "third_party": "サードパーティ"
+  "third_party": "サードパーティ",
+  "hero_title": "無料ツールは、どれも一駅先に。",
+  "hero_sub": "{{lines}} 路線に {{tools}} のブラウザツール。画像、動画、テキスト、そしてちょっとしたサボりに。",
+  "all_lines": "全路線",
+  "stations_count": "{{count}} 駅",
+  "open_tool": "開く",
+  "clear_search": "検索をクリア",
+  "map_label": "路線図",
+  "footer_about_title": "櫻滿集について",
+  "search_hint": "/ で検索",
+  "theme_label": "テーマ",
+  "language_label": "言語",
+  "fact_nosignup": "登録不要",
+  "search_results_found_one": "1 件のツールが見つかりました"
 }

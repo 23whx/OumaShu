@@ -6,7 +6,7 @@
   },
   "nav": {
     "home": "首頁",
-    "categories": "分類", 
+    "categories": "分類",
     "about": "關於",
     "search": "搜尋"
   },
@@ -18,7 +18,7 @@
   },
   "theme": {
     "light": "淺色",
-    "dark": "深色", 
+    "dark": "深色",
     "system": "跟隨系統"
   },
   "search": {
@@ -151,5 +151,18 @@
   "current_time": "當前時間",
   "current_location": "當前位置",
   "current_weather": "當前天氣",
-  "third_party": "第三方"
+  "third_party": "第三方",
+  "hero_title": "每個免費工具，都只差一站。",
+  "hero_sub": "{{tools}} 個瀏覽器小工具，分布在 {{lines}} 條路線上——圖片、影片、文字，還有一點摸魚。",
+  "all_lines": "全部路線",
+  "stations_count": "{{count}} 站",
+  "open_tool": "開啟",
+  "clear_search": "清除搜尋",
+  "map_label": "路線圖",
+  "footer_about_title": "關於櫻滿集",
+  "search_hint": "按 / 搜尋",
+  "theme_label": "主題",
+  "language_label": "語言",
+  "fact_nosignup": "無需註冊",
+  "search_results_found_one": "找到 1 個工具"
 }

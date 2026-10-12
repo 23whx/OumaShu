@@ -6,7 +6,7 @@
   },
   "nav": {
     "home": "首页",
-    "categories": "分类", 
+    "categories": "分类",
     "about": "关于",
     "search": "搜索"
   },
@@ -18,7 +18,7 @@
   },
   "theme": {
     "light": "浅色",
-    "dark": "深色", 
+    "dark": "深色",
     "system": "跟随系统"
   },
   "search": {
@@ -151,5 +151,18 @@
   "current_time": "当前时间",
   "current_location": "当前位置",
   "current_weather": "当前天气",
-  "third_party": "第三方"
+  "third_party": "第三方",
+  "hero_title": "每个免费工具，都只差一站。",
+  "hero_sub": "{{tools}} 个浏览器小工具，分布在 {{lines}} 条线路上——图片、视频、文字，还有一点摸鱼。",
+  "all_lines": "全部线路",
+  "stations_count": "{{count}} 站",
+  "open_tool": "打开",
+  "clear_search": "清除搜索",
+  "map_label": "线路图",
+  "footer_about_title": "关于櫻滿集",
+  "search_hint": "按 / 搜索",
+  "theme_label": "主题",
+  "language_label": "语言",
+  "fact_nosignup": "无需注册",
+  "search_results_found_one": "找到 1 个工具"
 }

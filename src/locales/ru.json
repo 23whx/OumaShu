@@ -6,7 +6,7 @@
   },
   "nav": {
     "home": "Главная",
-    "categories": "Категории", 
+    "categories": "Категории",
     "about": "О проекте",
     "search": "Поиск"
   },
@@ -18,7 +18,7 @@
   },
   "theme": {
     "light": "Светлая",
-    "dark": "Тёмная", 
+    "dark": "Тёмная",
     "system": "Системная"
   },
   "search": {
@@ -151,5 +151,18 @@
   "current_time": "Текущее время",
   "current_location": "Текущее местоположение",
   "current_weather": "Текущая погода",
-  "third_party": "Сторонний"
+  "third_party": "Сторонний",
+  "hero_title": "Каждый бесплатный инструмент — в одной остановке.",
+  "hero_sub": "{{tools}} небольших браузерных инструментов на {{lines}} линиях — для картинок, видео, текста и немного отдыха от работы.",
+  "all_lines": "Все линии",
+  "stations_count": "Станций: {{count}}",
+  "open_tool": "Открыть",
+  "clear_search": "Очистить поиск",
+  "map_label": "Схема линий",
+  "footer_about_title": "Об OumaShu",
+  "search_hint": "Нажмите / для поиска",
+  "theme_label": "Тема",
+  "language_label": "Язык",
+  "fact_nosignup": "Без регистрации",
+  "search_results_found_one": "Найден 1 инструмент"
 }

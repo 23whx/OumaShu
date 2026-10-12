@@ -6,7 +6,7 @@
   },
   "nav": {
     "home": "Home",
-    "categories": "Categories", 
+    "categories": "Categories",
     "about": "About",
     "search": "Search"
   },
@@ -18,7 +18,7 @@
   },
   "theme": {
     "light": "Light",
-    "dark": "Dark", 
+    "dark": "Dark",
     "system": "System"
   },
   "search": {
@@ -151,5 +151,18 @@
   "current_time": "Current Time",
   "current_location": "Location",
   "current_weather": "Weather",
-  "third_party": "3rd Party"
+  "third_party": "3rd Party",
+  "hero_title": "Every free tool, one stop away.",
+  "hero_sub": "{{tools}} small browser tools on {{lines}} lines — for images, video, text and a little slacking off.",
+  "all_lines": "All lines",
+  "stations_count": "{{count}} stations",
+  "open_tool": "Open",
+  "clear_search": "Clear search",
+  "map_label": "Route map",
+  "footer_about_title": "About OumaShu",
+  "search_hint": "Press / to search",
+  "theme_label": "Theme",
+  "language_label": "Language",
+  "fact_nosignup": "No sign-up",
+  "search_results_found_one": "Found 1 tool"
 }

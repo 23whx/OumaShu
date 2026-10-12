@@ -1,0 +1,837 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-12T11:37:04.803Z",
+  "title": "Design System: OumaShu",
+  "extensions": {
+    "colorMeta": {
+      "sign-navy": {
+        "role": "primary",
+        "displayName": "Sign Navy",
+        "canonical": "oklch(25.6% 0.058 263.4)",
+        "tonalRamp": [
+          "oklch(15% 0.029 263.4)",
+          "oklch(26% 0.050 263.4)",
+          "oklch(37% 0.058 263.4)",
+          "oklch(48% 0.058 263.4)",
+          "oklch(60% 0.058 263.4)",
+          "oklch(71% 0.056 263.4)",
+          "oklch(83% 0.033 263.4)",
+          "oklch(95% 0.020 263.4)"
+        ]
+      },
+      "sign-navy-raised": {
+        "role": "primary",
+        "displayName": "Sign Navy Raised",
+        "canonical": "oklch(30.3% 0.071 264.0)",
+        "tonalRamp": [
+          "oklch(15% 0.035 264.0)",
+          "oklch(26% 0.061 264.0)",
+          "oklch(37% 0.071 264.0)",
+          "oklch(48% 0.071 264.0)",
+          "oklch(60% 0.071 264.0)",
+          "oklch(71% 0.068 264.0)",
+          "oklch(83% 0.040 264.0)",
+          "oklch(95% 0.025 264.0)"
+        ]
+      },
+      "sign-ink": {
+        "role": "primary",
+        "displayName": "Sign Ink",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(37% 0.000 89.9)",
+          "oklch(48% 0.000 89.9)",
+          "oklch(60% 0.000 89.9)",
+          "oklch(71% 0.000 89.9)",
+          "oklch(83% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "sign-mute": {
+        "role": "primary",
+        "displayName": "Sign Mute",
+        "canonical": "oklch(77.4% 0.034 262.7)",
+        "tonalRamp": [
+          "oklch(15% 0.017 262.7)",
+          "oklch(26% 0.030 262.7)",
+          "oklch(37% 0.034 262.7)",
+          "oklch(48% 0.034 262.7)",
+          "oklch(60% 0.034 262.7)",
+          "oklch(71% 0.033 262.7)",
+          "oklch(83% 0.019 262.7)",
+          "oklch(95% 0.012 262.7)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(37% 0.000 89.9)",
+          "oklch(48% 0.000 89.9)",
+          "oklch(60% 0.000 89.9)",
+          "oklch(71% 0.000 89.9)",
+          "oklch(83% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "platform-panel": {
+        "role": "neutral",
+        "displayName": "Platform Panel",
+        "canonical": "oklch(97.0% 0.004 271.4)",
+        "tonalRamp": [
+          "oklch(15% 0.002 271.4)",
+          "oklch(26% 0.004 271.4)",
+          "oklch(37% 0.004 271.4)",
+          "oklch(48% 0.004 271.4)",
+          "oklch(60% 0.004 271.4)",
+          "oklch(71% 0.004 271.4)",
+          "oklch(83% 0.002 271.4)",
+          "oklch(95% 0.001 271.4)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(21.0% 0.029 266.1)",
+        "tonalRamp": [
+          "oklch(15% 0.015 266.1)",
+          "oklch(26% 0.025 266.1)",
+          "oklch(37% 0.029 266.1)",
+          "oklch(48% 0.029 266.1)",
+          "oklch(60% 0.029 266.1)",
+          "oklch(71% 0.028 266.1)",
+          "oklch(83% 0.017 266.1)",
+          "oklch(95% 0.010 266.1)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(37% 0.000 89.9)",
+          "oklch(48% 0.000 89.9)",
+          "oklch(60% 0.000 89.9)",
+          "oklch(71% 0.000 89.9)",
+          "oklch(83% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "sakura": {
+        "role": "secondary",
+        "displayName": "Sakura",
+        "canonical": "oklch(66.7% 0.169 3.1)",
+        "tonalRamp": [
+          "oklch(15% 0.085 3.1)",
+          "oklch(26% 0.147 3.1)",
+          "oklch(37% 0.169 3.1)",
+          "oklch(48% 0.169 3.1)",
+          "oklch(60% 0.169 3.1)",
+          "oklch(71% 0.164 3.1)",
+          "oklch(83% 0.096 3.1)",
+          "oklch(95% 0.059 3.1)"
+        ]
+      },
+      "sakura-ink": {
+        "role": "secondary",
+        "displayName": "Sakura Ink",
+        "canonical": "oklch(56.4% 0.169 3.6)",
+        "tonalRamp": [
+          "oklch(15% 0.084 3.6)",
+          "oklch(26% 0.146 3.6)",
+          "oklch(37% 0.169 3.6)",
+          "oklch(48% 0.169 3.6)",
+          "oklch(60% 0.169 3.6)",
+          "oklch(71% 0.163 3.6)",
+          "oklch(83% 0.096 3.6)",
+          "oklch(95% 0.059 3.6)"
+        ]
+      },
+      "rule-grey": {
+        "role": "neutral",
+        "displayName": "Rule Grey",
+        "canonical": "oklch(92.1% 0.009 264.5)",
+        "tonalRamp": [
+          "oklch(15% 0.004 264.5)",
+          "oklch(26% 0.008 264.5)",
+          "oklch(37% 0.009 264.5)",
+          "oklch(48% 0.009 264.5)",
+          "oklch(60% 0.009 264.5)",
+          "oklch(71% 0.008 264.5)",
+          "oklch(83% 0.005 264.5)",
+          "oklch(95% 0.003 264.5)"
+        ]
+      },
+      "muted-slate": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "oklch(49.2% 0.032 265.2)",
+        "tonalRamp": [
+          "oklch(15% 0.016 265.2)",
+          "oklch(26% 0.028 265.2)",
+          "oklch(37% 0.032 265.2)",
+          "oklch(48% 0.032 265.2)",
+          "oklch(60% 0.032 265.2)",
+          "oklch(71% 0.031 265.2)",
+          "oklch(83% 0.018 265.2)",
+          "oklch(95% 0.011 265.2)"
+        ]
+      },
+      "sign-navy-night": {
+        "role": "primary",
+        "displayName": "Sign Navy (night)",
+        "canonical": "oklch(20.8% 0.044 263.7)",
+        "tonalRamp": [
+          "oklch(15% 0.022 263.7)",
+          "oklch(26% 0.039 263.7)",
+          "oklch(37% 0.044 263.7)",
+          "oklch(48% 0.044 263.7)",
+          "oklch(60% 0.044 263.7)",
+          "oklch(71% 0.043 263.7)",
+          "oklch(83% 0.025 263.7)",
+          "oklch(95% 0.016 263.7)"
+        ]
+      },
+      "sign-navy-raised-night": {
+        "role": "primary",
+        "displayName": "Sign Navy Raised (night)",
+        "canonical": "oklch(26.0% 0.056 264.1)",
+        "tonalRamp": [
+          "oklch(15% 0.028 264.1)",
+          "oklch(26% 0.048 264.1)",
+          "oklch(37% 0.056 264.1)",
+          "oklch(48% 0.056 264.1)",
+          "oklch(60% 0.056 264.1)",
+          "oklch(71% 0.054 264.1)",
+          "oklch(83% 0.032 264.1)",
+          "oklch(95% 0.020 264.1)"
+        ]
+      },
+      "sign-ink-night": {
+        "role": "primary",
+        "displayName": "Sign Ink (night)",
+        "canonical": "oklch(96.9% 0.007 260.7)",
+        "tonalRamp": [
+          "oklch(15% 0.004 260.7)",
+          "oklch(26% 0.006 260.7)",
+          "oklch(37% 0.007 260.7)",
+          "oklch(48% 0.007 260.7)",
+          "oklch(60% 0.007 260.7)",
+          "oklch(71% 0.007 260.7)",
+          "oklch(83% 0.004 260.7)",
+          "oklch(95% 0.003 260.7)"
+        ]
+      },
+      "sign-mute-night": {
+        "role": "primary",
+        "displayName": "Sign Mute (night)",
+        "canonical": "oklch(69.1% 0.040 263.5)",
+        "tonalRamp": [
+          "oklch(15% 0.020 263.5)",
+          "oklch(26% 0.034 263.5)",
+          "oklch(37% 0.040 263.5)",
+          "oklch(48% 0.040 263.5)",
+          "oklch(60% 0.040 263.5)",
+          "oklch(71% 0.038 263.5)",
+          "oklch(83% 0.023 263.5)",
+          "oklch(95% 0.014 263.5)"
+        ]
+      },
+      "paper-night": {
+        "role": "neutral",
+        "displayName": "Paper (night)",
+        "canonical": "oklch(17.9% 0.033 264.3)",
+        "tonalRamp": [
+          "oklch(15% 0.016 264.3)",
+          "oklch(26% 0.029 264.3)",
+          "oklch(37% 0.033 264.3)",
+          "oklch(48% 0.033 264.3)",
+          "oklch(60% 0.033 264.3)",
+          "oklch(71% 0.032 264.3)",
+          "oklch(83% 0.019 264.3)",
+          "oklch(95% 0.012 264.3)"
+        ]
+      },
+      "platform-panel-night": {
+        "role": "neutral",
+        "displayName": "Platform Panel (night)",
+        "canonical": "oklch(22.0% 0.042 263.2)",
+        "tonalRamp": [
+          "oklch(15% 0.021 263.2)",
+          "oklch(26% 0.036 263.2)",
+          "oklch(37% 0.042 263.2)",
+          "oklch(48% 0.042 263.2)",
+          "oklch(60% 0.042 263.2)",
+          "oklch(71% 0.041 263.2)",
+          "oklch(83% 0.024 263.2)",
+          "oklch(95% 0.015 263.2)"
+        ]
+      },
+      "ink-night": {
+        "role": "neutral",
+        "displayName": "Ink (night)",
+        "canonical": "oklch(94.2% 0.010 261.8)",
+        "tonalRamp": [
+          "oklch(15% 0.005 261.8)",
+          "oklch(26% 0.009 261.8)",
+          "oklch(37% 0.010 261.8)",
+          "oklch(48% 0.010 261.8)",
+          "oklch(60% 0.010 261.8)",
+          "oklch(71% 0.010 261.8)",
+          "oklch(83% 0.006 261.8)",
+          "oklch(95% 0.004 261.8)"
+        ]
+      },
+      "card-night": {
+        "role": "neutral",
+        "displayName": "Card (night)",
+        "canonical": "oklch(22.8% 0.044 262.4)",
+        "tonalRamp": [
+          "oklch(15% 0.022 262.4)",
+          "oklch(26% 0.038 262.4)",
+          "oklch(37% 0.044 262.4)",
+          "oklch(48% 0.044 262.4)",
+          "oklch(60% 0.044 262.4)",
+          "oklch(71% 0.043 262.4)",
+          "oklch(83% 0.025 262.4)",
+          "oklch(95% 0.015 262.4)"
+        ]
+      },
+      "sakura-night": {
+        "role": "secondary",
+        "displayName": "Sakura (night)",
+        "canonical": "oklch(72.5% 0.148 1.4)",
+        "tonalRamp": [
+          "oklch(15% 0.074 1.4)",
+          "oklch(26% 0.128 1.4)",
+          "oklch(37% 0.148 1.4)",
+          "oklch(48% 0.148 1.4)",
+          "oklch(60% 0.148 1.4)",
+          "oklch(71% 0.143 1.4)",
+          "oklch(83% 0.084 1.4)",
+          "oklch(95% 0.052 1.4)"
+        ]
+      },
+      "sakura-ink-night": {
+        "role": "secondary",
+        "displayName": "Sakura Ink (night)",
+        "canonical": "oklch(78.6% 0.114 359.5)",
+        "tonalRamp": [
+          "oklch(15% 0.057 359.5)",
+          "oklch(26% 0.099 359.5)",
+          "oklch(37% 0.114 359.5)",
+          "oklch(48% 0.114 359.5)",
+          "oklch(60% 0.114 359.5)",
+          "oklch(71% 0.110 359.5)",
+          "oklch(83% 0.064 359.5)",
+          "oklch(95% 0.040 359.5)"
+        ]
+      },
+      "rule-grey-night": {
+        "role": "neutral",
+        "displayName": "Rule Grey (night)",
+        "canonical": "oklch(31.0% 0.052 262.8)",
+        "tonalRamp": [
+          "oklch(15% 0.026 262.8)",
+          "oklch(26% 0.045 262.8)",
+          "oklch(37% 0.052 262.8)",
+          "oklch(48% 0.052 262.8)",
+          "oklch(60% 0.052 262.8)",
+          "oklch(71% 0.051 262.8)",
+          "oklch(83% 0.030 262.8)",
+          "oklch(95% 0.018 262.8)"
+        ]
+      },
+      "muted-slate-night": {
+        "role": "neutral",
+        "displayName": "Muted Slate (night)",
+        "canonical": "oklch(72.3% 0.033 261.7)",
+        "tonalRamp": [
+          "oklch(15% 0.017 261.7)",
+          "oklch(26% 0.029 261.7)",
+          "oklch(37% 0.033 261.7)",
+          "oklch(48% 0.033 261.7)",
+          "oklch(60% 0.033 261.7)",
+          "oklch(71% 0.032 261.7)",
+          "oklch(83% 0.019 261.7)",
+          "oklch(95% 0.012 261.7)"
+        ]
+      },
+      "line-im-image": {
+        "role": "tertiary",
+        "displayName": "IM Image Line",
+        "canonical": "oklch(66.7% 0.169 3.1)",
+        "tonalRamp": [
+          "oklch(15% 0.085 3.1)",
+          "oklch(26% 0.147 3.1)",
+          "oklch(37% 0.169 3.1)",
+          "oklch(48% 0.169 3.1)",
+          "oklch(60% 0.169 3.1)",
+          "oklch(71% 0.164 3.1)",
+          "oklch(83% 0.096 3.1)",
+          "oklch(95% 0.059 3.1)"
+        ]
+      },
+      "line-vd-video": {
+        "role": "tertiary",
+        "displayName": "VD Video Line",
+        "canonical": "oklch(56.6% 0.136 247.1)",
+        "tonalRamp": [
+          "oklch(15% 0.068 247.1)",
+          "oklch(26% 0.118 247.1)",
+          "oklch(37% 0.136 247.1)",
+          "oklch(48% 0.136 247.1)",
+          "oklch(60% 0.136 247.1)",
+          "oklch(71% 0.131 247.1)",
+          "oklch(83% 0.077 247.1)",
+          "oklch(95% 0.047 247.1)"
+        ]
+      },
+      "line-au-audio": {
+        "role": "tertiary",
+        "displayName": "AU Audio Line",
+        "canonical": "oklch(57.7% 0.167 302.9)",
+        "tonalRamp": [
+          "oklch(15% 0.083 302.9)",
+          "oklch(26% 0.145 302.9)",
+          "oklch(37% 0.167 302.9)",
+          "oklch(48% 0.167 302.9)",
+          "oklch(60% 0.167 302.9)",
+          "oklch(71% 0.161 302.9)",
+          "oklch(83% 0.095 302.9)",
+          "oklch(95% 0.058 302.9)"
+        ]
+      },
+      "line-tx-text": {
+        "role": "tertiary",
+        "displayName": "TX Text Line",
+        "canonical": "oklch(60.2% 0.138 154.5)",
+        "tonalRamp": [
+          "oklch(15% 0.069 154.5)",
+          "oklch(26% 0.119 154.5)",
+          "oklch(37% 0.138 154.5)",
+          "oklch(48% 0.138 154.5)",
+          "oklch(60% 0.138 154.5)",
+          "oklch(71% 0.133 154.5)",
+          "oklch(83% 0.078 154.5)",
+          "oklch(95% 0.048 154.5)"
+        ]
+      },
+      "line-ed-education": {
+        "role": "tertiary",
+        "displayName": "ED Education Line",
+        "canonical": "oklch(75.6% 0.159 68.8)",
+        "tonalRamp": [
+          "oklch(15% 0.080 68.8)",
+          "oklch(26% 0.138 68.8)",
+          "oklch(37% 0.159 68.8)",
+          "oklch(48% 0.159 68.8)",
+          "oklch(60% 0.159 68.8)",
+          "oklch(71% 0.154 68.8)",
+          "oklch(83% 0.090 68.8)",
+          "oklch(95% 0.056 68.8)"
+        ]
+      },
+      "line-ws-workplace-slack": {
+        "role": "tertiary",
+        "displayName": "WS Workplace Slack Line",
+        "canonical": "oklch(64.9% 0.110 197.1)",
+        "tonalRamp": [
+          "oklch(15% 0.055 197.1)",
+          "oklch(26% 0.096 197.1)",
+          "oklch(37% 0.110 197.1)",
+          "oklch(48% 0.110 197.1)",
+          "oklch(60% 0.110 197.1)",
+          "oklch(71% 0.107 197.1)",
+          "oklch(83% 0.063 197.1)",
+          "oklch(95% 0.039 197.1)"
+        ]
+      },
+      "line-sr-search": {
+        "role": "tertiary",
+        "displayName": "SR Search Line",
+        "canonical": "oklch(59.6% 0.187 27.7)",
+        "tonalRamp": [
+          "oklch(15% 0.094 27.7)",
+          "oklch(26% 0.162 27.7)",
+          "oklch(37% 0.187 27.7)",
+          "oklch(48% 0.187 27.7)",
+          "oklch(60% 0.187 27.7)",
+          "oklch(71% 0.181 27.7)",
+          "oklch(83% 0.106 27.7)",
+          "oklch(95% 0.066 27.7)"
+        ]
+      },
+      "line-rs-resources": {
+        "role": "tertiary",
+        "displayName": "RS Resources Line",
+        "canonical": "oklch(60.6% 0.106 83.8)",
+        "tonalRamp": [
+          "oklch(15% 0.053 83.8)",
+          "oklch(26% 0.092 83.8)",
+          "oklch(37% 0.106 83.8)",
+          "oklch(48% 0.106 83.8)",
+          "oklch(60% 0.106 83.8)",
+          "oklch(71% 0.102 83.8)",
+          "oklch(83% 0.060 83.8)",
+          "oklch(95% 0.037 83.8)"
+        ]
+      },
+      "line-en-entertainment": {
+        "role": "tertiary",
+        "displayName": "EN Entertainment Line",
+        "canonical": "oklch(56.7% 0.157 345.8)",
+        "tonalRamp": [
+          "oklch(15% 0.078 345.8)",
+          "oklch(26% 0.136 345.8)",
+          "oklch(37% 0.157 345.8)",
+          "oklch(48% 0.157 345.8)",
+          "oklch(60% 0.157 345.8)",
+          "oklch(71% 0.152 345.8)",
+          "oklch(83% 0.089 345.8)",
+          "oklch(95% 0.055 345.8)"
+        ]
+      },
+      "line-so-social": {
+        "role": "tertiary",
+        "displayName": "SO Social Line",
+        "canonical": "oklch(75.3% 0.152 90.1)",
+        "tonalRamp": [
+          "oklch(15% 0.076 90.1)",
+          "oklch(26% 0.132 90.1)",
+          "oklch(37% 0.152 90.1)",
+          "oklch(48% 0.152 90.1)",
+          "oklch(60% 0.152 90.1)",
+          "oklch(71% 0.147 90.1)",
+          "oklch(83% 0.086 90.1)",
+          "oklch(95% 0.053 90.1)"
+        ]
+      },
+      "line-ft-file-transfer": {
+        "role": "tertiary",
+        "displayName": "FT File Transfer Line",
+        "canonical": "oklch(52.2% 0.039 253.9)",
+        "tonalRamp": [
+          "oklch(15% 0.020 253.9)",
+          "oklch(26% 0.034 253.9)",
+          "oklch(37% 0.039 253.9)",
+          "oklch(48% 0.039 253.9)",
+          "oklch(60% 0.039 253.9)",
+          "oklch(71% 0.038 253.9)",
+          "oklch(83% 0.022 253.9)",
+          "oklch(95% 0.014 253.9)"
+        ]
+      },
+      "line-gm-games": {
+        "role": "tertiary",
+        "displayName": "GM Games Line (reserved)",
+        "canonical": "oklch(40.7% 0.034 260.2)",
+        "tonalRamp": [
+          "oklch(15% 0.017 260.2)",
+          "oklch(26% 0.029 260.2)",
+          "oklch(37% 0.034 260.2)",
+          "oklch(48% 0.034 260.2)",
+          "oklch(60% 0.034 260.2)",
+          "oklch(71% 0.032 260.2)",
+          "oklch(83% 0.019 260.2)",
+          "oklch(95% 0.012 260.2)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The single hero headline, Latin UI."
+      },
+      "display-cjk": {
+        "displayName": "Display CJK",
+        "purpose": "Hero headline when the UI is zh-CN, zh-TW or ja-JP."
+      },
+      "station-name": {
+        "displayName": "Station Name",
+        "purpose": "Kanji on the station-name sign (52px at <=1180px), with a 17px/600 romanisation tracked +0.32em."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Line headings in the directory (22px on phones)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Tool card names (15.5px on phones)."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Hero sub-line, muted, max 54ch (17px on phones)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Card descriptions clamped to two lines; footer copy at 1.65."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Chip labels."
+      },
+      "station-label": {
+        "displayName": "Station Label",
+        "purpose": "Station names on the route map, clamped to three lines; hidden on phones."
+      },
+      "badge-code": {
+        "displayName": "Badge Code",
+        "purpose": "Codes on station badges (15px large, 10-11px compact and inline)."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Codes, times, temperatures, counts and domains only; tabular numerals."
+      },
+      "ja-subname": {
+        "displayName": "Japanese Sub-name",
+        "purpose": "Muted Japanese line name; hidden when the UI is Japanese."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 1px 2px rgba(20,34,63,.06), 0 6px 18px -8px rgba(20,34,63,.18)",
+        "purpose": "Resting cards and the station-name sign (light)."
+      },
+      {
+        "name": "card-night",
+        "value": "0 1px 2px rgba(0,0,0,.4), 0 8px 22px -10px rgba(0,0,0,.6)",
+        "purpose": "Resting cards (dark)."
+      },
+      {
+        "name": "lift",
+        "value": "0 2px 4px rgba(20,34,63,.08), 0 18px 36px -14px rgba(20,34,63,.32)",
+        "purpose": "Hovered cards and the language menu (light)."
+      },
+      {
+        "name": "lift-night",
+        "value": "0 2px 6px rgba(0,0,0,.45), 0 22px 40px -16px rgba(0,0,0,.75)",
+        "purpose": "Hovered cards and the language menu (dark)."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 3px color-mix(in srgb, var(--color-brand) 35%, transparent)",
+        "purpose": "Search field focus."
+      },
+      {
+        "name": "track-glow-night",
+        "value": "0 0 12px -1px color-mix(in srgb, var(--c) 75%, transparent)",
+        "purpose": "Lit-board glow on route tracks; removed when the line is dimmed."
+      },
+      {
+        "name": "dot-glow-night",
+        "value": "0 0 10px -1px color-mix(in srgb, var(--c) 80%, transparent)",
+        "purpose": "Lit-board glow on station dots; removed when the station is dimmed."
+      },
+      {
+        "name": "sign-halo-night",
+        "value": "0 0 0 1px rgba(255,255,255,.08), 0 0 48px -10px color-mix(in srgb, var(--color-brand) 55%, transparent), 0 18px 40px -18px rgba(0,0,0,.8)",
+        "purpose": "Station-name sign at night: paper plate with a sakura halo."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-signal",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "House ease for every transition and keyframe."
+      },
+      {
+        "name": "transition-normal",
+        "value": "200ms cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Colour, border, opacity and background state changes."
+      },
+      {
+        "name": "track-draw",
+        "value": "draw 1.1s cubic-bezier(.16,1,.3,1) both; delay calc(var(--i) * 60ms + 120ms); clip-path inset(-16px 100% -16px -16px) to inset(-16px)",
+        "purpose": "Route tracks draw in left to right on load, staggered per line; only under prefers-reduced-motion: no-preference."
+      },
+      {
+        "name": "station-light",
+        "value": "transform 260ms cubic-bezier(.16,1,.3,1), background 160ms; scale(1.3)",
+        "purpose": "Station dot fills and grows on hover, on focus, or while its card is hovered or focused."
+      },
+      {
+        "name": "card-lift",
+        "value": "transform and box-shadow 420ms cubic-bezier(.16,1,.3,1); translateY(-3px)",
+        "purpose": "Card hover rise; disabled at <=760px."
+      },
+      {
+        "name": "shot-zoom",
+        "value": "transform 700ms cubic-bezier(.16,1,.3,1); scale(1.035)",
+        "purpose": "Screenshot zoom on card hover."
+      },
+      {
+        "name": "open-nudge",
+        "value": "transform 300ms cubic-bezier(.16,1,.3,1); translate(2px,-2px)",
+        "purpose": "Open arrow nudge on card hover."
+      },
+      {
+        "name": "arrive-pulse",
+        "value": "arrive 1.6s cubic-bezier(.16,1,.3,1); 0% 0 0 0 0 var(--c) + lift, 18% 0 0 0 5px var(--c) + lift, 100% transparent + card",
+        "purpose": "Card arrival after a station click; class removed on animationend."
+      },
+      {
+        "name": "search-debounce",
+        "value": "120ms",
+        "purpose": "Delay before a search re-filters the map and directory."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sign-narrow",
+        "value": "1180px"
+      },
+      {
+        "name": "stack",
+        "value": "960px"
+      },
+      {
+        "name": "phone",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Station Badge",
+      "kind": "custom",
+      "refersTo": "station-badge",
+      "description": "Line or tool code on a white plate inside a line-coloured rounded-square frame; never inverts.",
+      "html": "<span class=\"ds-badge\" style=\"--c:#1f7bc1\"><span>VD</span></span> <span class=\"ds-badge ds-badge--lg\" style=\"--c:#e5608a\"><span>IM</span></span> <span class=\"ds-badge ds-badge--inline\" style=\"--c:#24985a\"><span>TX 02</span></span>",
+      "css": ".ds-badge{display:inline-grid;place-items:center;width:34px;height:34px;padding:3px;border-radius:8px;background:var(--c,var(--color-brand));vertical-align:middle}.ds-badge>span{display:grid;place-items:center;width:100%;height:100%;border-radius:5px;background:#fff;color:#121826;font:800 12px/1 var(--font-sans);letter-spacing:.02em}.ds-badge--lg{width:44px;height:44px;padding:4px;border-radius:10px}.ds-badge--lg>span{font-size:15px;border-radius:6px}.ds-badge--inline{width:auto;height:26px;padding:2.5px;border-radius:6px}.ds-badge--inline>span{padding:0 6px;border-radius:4px;font-size:11px;white-space:nowrap}"
+    },
+    {
+      "name": "Route Map Line",
+      "kind": "custom",
+      "refersTo": "station-dot",
+      "description": "Track of numbered stations: draws in on load, a station lights on hover or focus, unmatched stations dim.",
+      "html": "<ol class=\"ds-track\" style=\"--c:#1f7bc1;--n:3\"><li><a class=\"ds-stn\" href=\"#\"><span class=\"ds-dot\"></span><span class=\"ds-name\">Video2GIF Converter</span><span class=\"ds-code\">VD 01</span></a></li><li><a class=\"ds-stn\" href=\"#\"><span class=\"ds-dot\"></span><span class=\"ds-name\">ScreenFlow Recorder</span><span class=\"ds-code\">VD 02</span></a></li><li><a class=\"ds-stn is-dim\" href=\"#\"><span class=\"ds-dot\"></span><span class=\"ds-name\">Dimmed station</span><span class=\"ds-code\">VD 03</span></a></li></ol>",
+      "css": ".ds-track{position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));width:min(100%,calc(var(--n)*150px));margin:0;padding:0;list-style:none;color:var(--color-fg)}.ds-track::before{content:\"\";position:absolute;top:17px;left:0;right:calc(100%/var(--n)/2);height:6px;border-radius:3px;background:var(--c);animation:ds-draw 1.1s cubic-bezier(.16,1,.3,1) both}@keyframes ds-draw{from{clip-path:inset(-16px 100% -16px -16px)}to{clip-path:inset(-16px)}}.ds-stn{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px 6px;color:inherit;text-decoration:none;text-align:center;border-radius:8px;transition:opacity 200ms cubic-bezier(.16,1,.3,1)}.ds-dot{width:22px;height:22px;border-radius:50%;background:var(--color-card);border:4.5px solid var(--c);transition:transform 260ms cubic-bezier(.16,1,.3,1),background 160ms}.ds-name{margin-top:3px;max-width:146px;font:700 12.5px/1.25 var(--font-sans)}.ds-code{font:500 10.5px/1 var(--font-mono);color:var(--color-muted)}.ds-stn:hover .ds-dot,.ds-stn:focus-visible .ds-dot{transform:scale(1.3);background:var(--c)}.ds-stn:focus-visible{outline:2px solid var(--color-brand);outline-offset:3px}.ds-stn.is-dim{opacity:.3}.ds-stn.is-dim .ds-dot{border-color:var(--color-muted)}@media (prefers-reduced-motion:reduce){.ds-track::before{animation:none}}"
+    },
+    {
+      "name": "Line Chip",
+      "kind": "chip",
+      "refersTo": "line-chip",
+      "description": "Single-row filter rail chip with code plate, name and mono count; sign navy when on.",
+      "html": "<button class=\"ds-chip ds-chip--on\" aria-pressed=\"true\">All lines <span class=\"ds-chip__n\">27</span></button> <button class=\"ds-chip\" style=\"--c:#8e5bc9\" aria-pressed=\"false\"><span class=\"ds-chip__code\">AU</span>Audio <span class=\"ds-chip__n\">1</span></button>",
+      "css": ".ds-chip{--c:var(--sign);display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 12px 0 6px;border:1px solid var(--color-border);border-radius:999px;background:var(--color-card);color:var(--color-fg);font:600 13.5px/1 var(--font-sans);cursor:pointer;transition:border-color 200ms cubic-bezier(.16,1,.3,1),background 200ms cubic-bezier(.16,1,.3,1),color 200ms cubic-bezier(.16,1,.3,1)}.ds-chip:hover{border-color:var(--c)}.ds-chip:focus-visible{outline:2px solid var(--color-brand);outline-offset:3px}.ds-chip__code{padding:3px 5px 2px;border:2px solid var(--c);border-radius:6px;background:#fff;color:#121826;font:600 11px/1 var(--font-mono)}.ds-chip__n{font:500 11.5px/1 var(--font-mono);color:var(--color-muted);font-variant-numeric:tabular-nums}.ds-chip--on{padding-left:13px;background:var(--sign);border-color:var(--sign);color:var(--sign-ink)}.ds-chip--on .ds-chip__n{color:inherit;opacity:.7}"
+    },
+    {
+      "name": "Station Card",
+      "kind": "card",
+      "refersTo": "station-card",
+      "description": "Tool card: real screenshot (or typographic plate), inline badge and name, two-line description, domain and Open.",
+      "html": "<a class=\"ds-card\" href=\"#\" style=\"--c:#8e5bc9\"><div class=\"ds-card__shot\"><div class=\"ds-card__plate\">MediaTrim</div></div><div class=\"ds-card__body\"><div class=\"ds-card__title\"><span class=\"ds-card__code\"><span>AU 01</span></span><h3>MediaTrim</h3></div><p>Trim audio and video clips right in the browser, nothing uploaded.</p><div class=\"ds-card__meta\"><span class=\"ds-card__host\">oumashu.top</span><span class=\"ds-card__open\">Open<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\"><path d=\"M7 17 17 7M9 7h8v8\"/></svg></span></div></div></a>",
+      "css": ".ds-card{display:flex;flex-direction:column;max-width:320px;overflow:hidden;border:1px solid var(--color-border);border-radius:12px;background:var(--color-card);color:var(--color-fg);text-decoration:none;box-shadow:var(--shadow-card);transition:transform 420ms cubic-bezier(.16,1,.3,1),box-shadow 420ms cubic-bezier(.16,1,.3,1),border-color 200ms}.ds-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift);border-color:color-mix(in srgb,var(--c) 45%,var(--color-border))}.ds-card:focus-visible{outline:2px solid var(--color-brand);outline-offset:3px}.ds-card__shot{aspect-ratio:16/10;background:var(--color-panel);border-bottom:1px solid var(--color-border)}.ds-card__plate{height:100%;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,var(--color-panel));color:color-mix(in srgb,var(--c) 70%,var(--color-fg));font:900 30px/1.2 var(--font-ja)}.ds-card__body{padding:16px 18px}.ds-card__title{display:flex;align-items:flex-start;gap:10px}.ds-card__title h3{margin:0;font:800 17px/1.25 var(--font-sans);letter-spacing:-.01em}.ds-card__code{display:inline-grid;height:26px;margin-top:-2px;padding:2.5px;border-radius:6px;background:var(--c)}.ds-card__code>span{display:grid;place-items:center;padding:0 6px;border-radius:4px;background:#fff;color:#121826;font:800 11px/1 var(--font-sans);white-space:nowrap}.ds-card p{margin:6px 0 16px;font-size:14px;line-height:1.5;color:var(--color-muted)}.ds-card__meta{display:flex;align-items:center;gap:8px}.ds-card__host{font:500 12px/1 var(--font-mono);color:var(--color-muted)}.ds-card__open{margin-left:auto;display:inline-flex;align-items:center;gap:3px;font:800 13px/1 var(--font-sans);color:var(--color-brand-ink)}.ds-card__open svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.2;transition:transform 300ms cubic-bezier(.16,1,.3,1)}.ds-card:hover .ds-card__open svg{transform:translate(2px,-2px)}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "White field on the navy sign band with a stroke icon and a / key hint that hides on focus.",
+      "html": "<div class=\"ds-band\"><div class=\"ds-search\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\"><circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"m16 16 4.5 4.5\"/></svg><input type=\"search\" placeholder=\"Search tools...\"><kbd>/</kbd></div></div>",
+      "css": ".ds-band{background:var(--sign);padding:12px 16px}.ds-search{position:relative;max-width:560px}.ds-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#6b7488;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}.ds-search input{width:100%;height:40px;padding:0 44px 0 40px;border:1px solid transparent;border-radius:8px;background:#fff;color:#121826;font:500 15px/1 var(--font-sans);outline:none;transition:box-shadow 200ms cubic-bezier(.16,1,.3,1),border-color 200ms cubic-bezier(.16,1,.3,1)}.ds-search input:focus{border-color:var(--color-brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--color-brand) 35%,transparent)}.ds-search kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);min-width:22px;height:22px;display:grid;place-items:center;border:1px solid #d5d9e2;border-radius:5px;background:#f4f5f8;color:#6b7488;font:600 12px/1 var(--font-mono)}.ds-search:focus-within kbd{opacity:0}"
+    },
+    {
+      "name": "Sign Band Control",
+      "kind": "nav",
+      "refersTo": "sign-control",
+      "description": "Transparent icon control on the navy band (language, theme); fills sign-navy-raised on hover.",
+      "html": "<div class=\"ds-band2\"><button class=\"ds-ctrl\"><svg viewBox=\"0 0 24 24\" width=\"19\" height=\"19\"><circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5S9.6 5.9 12 3.5Z\"/></svg>EN</button></div>",
+      "css": ".ds-band2{background:var(--sign);padding:12px 16px}.ds-ctrl{height:38px;min-width:38px;padding:0 9px;display:inline-flex;align-items:center;gap:6px;border:0;border-radius:8px;background:transparent;color:var(--sign-ink);font:700 13px/1 var(--font-sans);cursor:pointer;transition:background 200ms cubic-bezier(.16,1,.3,1)}.ds-ctrl svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}.ds-ctrl:hover{background:var(--sign-2)}.ds-ctrl:focus-visible{outline:2px solid var(--color-brand);outline-offset:3px}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "quiet-button",
+      "description": "Outlined card-ground button (empty state \"Clear search\"); border turns sakura on hover.",
+      "html": "<button class=\"ds-quiet\">Clear search</button>",
+      "css": ".ds-quiet{height:38px;padding:0 16px;border:1px solid var(--color-border);border-radius:8px;background:var(--color-card);color:var(--color-fg);font:700 14px/1 var(--font-sans);cursor:pointer}.ds-quiet:hover{border-color:var(--color-brand)}.ds-quiet:focus-visible{outline:2px solid var(--color-brand);outline-offset:3px}"
+    },
+    {
+      "name": "Line Heading",
+      "kind": "custom",
+      "refersTo": "station-badge-lg",
+      "description": "Directory line heading: large badge, name, Japanese sub-name, mono count, 3px line-colour rule.",
+      "html": "<header class=\"ds-dhead\" style=\"--c:#24985a\"><span class=\"ds-dhead__b\"><span>TX</span></span><h2>Text <span class=\"ds-ja\">テキスト</span></h2><span class=\"ds-dhead__n\">2 stations</span></header>",
+      "css": ".ds-dhead{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:3px solid var(--c);color:var(--color-fg)}.ds-dhead__b{display:inline-grid;width:44px;height:44px;padding:4px;border-radius:10px;background:var(--c)}.ds-dhead__b>span{display:grid;place-items:center;border-radius:6px;background:#fff;color:#121826;font:800 15px/1 var(--font-sans)}.ds-dhead h2{margin:0;display:flex;align-items:baseline;gap:10px;font:800 26px/1.1 var(--font-sans);letter-spacing:-.015em}.ds-ja{font:500 15px/1 var(--font-ja);color:var(--color-muted)}.ds-dhead__n{margin-left:auto;font:500 13px/1 var(--font-mono);color:var(--color-muted)}"
+    },
+    {
+      "name": "Terminus Stripe",
+      "kind": "custom",
+      "refersTo": "sign-navy",
+      "description": "Footer top edge: a 6px stripe of every shipped line colour in map order over the navy band.",
+      "html": "<div class=\"ds-stripe\"><i style=\"--c:#e5608a\"></i><i style=\"--c:#1f7bc1\"></i><i style=\"--c:#8e5bc9\"></i><i style=\"--c:#24985a\"></i><i style=\"--c:#f09a1a\"></i><i style=\"--c:#00a3a6\"></i><i style=\"--c:#d8433a\"></i><i style=\"--c:#a07c2c\"></i><i style=\"--c:#b4498a\"></i><i style=\"--c:#d4a90a\"></i><i style=\"--c:#5a6b80\"></i></div><div class=\"ds-foot\">© OumaShu · oumashu.top</div>",
+      "css": ".ds-stripe{display:flex;height:6px}.ds-stripe i{flex:1;background:var(--c)}.ds-foot{background:var(--sign);color:var(--sign-mute);padding:18px 32px;font:500 12px/1 var(--font-mono)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Station Board",
+    "overview": "OumaShu is drawn as a railway network posted on a Japanese station wall. Every category is a line with one saturated colour and a two-letter code; every tool is a numbered station (IM 03). Navy sign bands frame the page top and bottom, white plates carry the codes, and the map itself is the filter: searching or picking a line lights the stations that match and dims the rest. Wayfinding replaces the menu.\n\nThe system is dense but legible, like real signage: bold Overpass for names, Overpass Mono only for codes and numbers, Zen Kaku Gothic New for Japanese. Surfaces are flat white and pale platform grey with soft navy-tinted shadows; colour comes from the lines, never from gradients. At night the board is lit: deep navy ground, the lines glow, and the sign plates stay paper-white.\n\nThis world replaces the earlier sakura-gradient look entirely. Sakura (#e5608a) survives as the brand line and the Image line, not as a wash.",
+    "keyCharacteristics": [
+      "One colour per line, applied to badge frame, track, station ring, heading rule, chip code and card focus pulse.",
+      "Station-number badges: coloured rounded-square frame around a white plate with dark bold code, identical in both themes.",
+      "Navy sign bands (top bar, footer, active chip) bracket the white page.",
+      "Overpass Mono is reserved for codes, times, counts and domains.",
+      "The route map dims instead of hiding; the directory filters.",
+      "Night mode is a lit board, not an inverted page."
+    ],
+    "rules": [
+      {
+        "name": "The One Line, One Colour Rule",
+        "body": "A line colour appears only on things that belong to that line: its badge frame, track, station rings, the 3px rule under its directory heading, its chip code frame, its card hover border (45% mixed into rule grey) and its arrive pulse. Sakura is the single shared value, worn by the house line and the Image line it leads.",
+        "section": "colors"
+      },
+      {
+        "name": "The White Plate Rule",
+        "body": "Codes always sit as Ink (#121826) on a white plate inside a coloured frame, in both themes. Badges, chip codes and the sign-band codes never invert.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sign Band Rule",
+        "body": "Sign Navy is a band, not a fill: top bar, footer, active chip. Content panels stay paper, platform grey or card.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono Is For Numbers Rule",
+        "body": "Overpass Mono sets only codes, times, temperatures, counts and domains. Names and sentences never use it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Japanese Sub-name Rule",
+        "body": "Line names carry their Japanese name in Zen Kaku 500, muted, beside or under the local name. When the UI is Japanese, the sub-name is hidden because it would repeat, and Japanese text uses `word-break: auto-phrase` with strict line breaking.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lit Board Rule",
+        "body": "In dark mode the page is a lit sign, not an inverted one. The ground goes deep navy (paper-night). Tracks and station rings glow in their line colour, station dots get a navy centre and station names go pure white. The station-name sign stays a paper plate (#f4f6fa) with a soft sakura halo. The active chip inverts to a white plate with navy text. Screenshots dim to `brightness(.78) saturate(.9)` and come back to full on hover. Sakura band text turns dark (#1a0d14).",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do give every new category a code, one colour from the line palette and a Japanese name in `src/data/lines.ts`, and drive its UI through `--c`.",
+      "Do put codes on white plates with Ink text inside a coloured frame, in both themes.",
+      "Do keep Overpass Mono for codes, times, counts and domains only, with tabular numerals.",
+      "Do dim map stations (.3) and lines (.4, grey track) instead of removing them; hide only directory cards.",
+      "Do guard decorative motion with `prefers-reduced-motion` and use the house ease `cubic-bezier(.16, 1, .3, 1)` (200ms for state changes).",
+      "Do make dark mode a lit board: glowing line colours, white sign plates, dimmed screenshots that brighten on hover.",
+      "Do draw icons as inline SVG with a 1.8px round stroke."
+    ],
+    "donts": [
+      "Don't bring back sakura gradients, the leaf-green accent or animated gradient fills; this world replaced them.",
+      "Don't use line colours for running text or fills behind text; they are frames, tracks and rings.",
+      "Don't give two categories the same line colour (sakura's shared use by the house line and Image is the only exception).",
+      "Don't put Sign Navy behind content panels; it is reserved for bands and the active chip.",
+      "Don't set small white text on sakura (#e5608a gives 3.3:1); use sakura-ink or dark text instead.",
+      "Don't use emoji or icon-font glyphs for icons."
+    ]
+  }
+}

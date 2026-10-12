@@ -2,13 +2,13 @@
 
 :root {
   /* 主要颜色 */
-  --color-bg: #fff5f7;           /* 樱花白背景 */
-  --color-fg: #111827;           /* 主文本色 */
+  --color-bg: #ffffff;           /* 樱花白背景 */
+  --color-fg: #121826;           /* 主文本色 */
   --color-card: #ffffff;         /* 卡片背景 */
-  --color-brand: #e91e63;        /* 樱花红主色 */
+  --color-brand: #e5608a;        /* 樱花红主色 */
   --color-accent: #4ade80;       /* 樱叶绿点缀色 */
-  --color-border: #e5e7eb;       /* 分割线 */
-  --color-muted: #6b7280;        /* 次要文本 */
+  --color-border: #e2e5eb;       /* 分割线 */
+  --color-muted: #586174;        /* 次要文本 */
   
   /* 状态颜色 */
   --color-success: #10b981;
@@ -26,8 +26,8 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   
   /* 字体系统 */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Hiragino Sans GB', sans-serif;
-  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  --font-sans: 'Overpass', 'Zen Kaku Gothic New', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Overpass Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
   
   /* 间距系统 (8pt grid) */
   --space-1: 0.25rem;   /* 4px */
@@ -49,19 +49,19 @@
   
   /* 过渡动画 */
   --transition-fast: 150ms ease;
-  --transition-normal: 250ms ease;
+  --transition-normal: 200ms cubic-bezier(.16, 1, .3, 1);
   --transition-slow: 350ms ease;
 }
 
 /* 深色主题 - 纯黑色 */
 :root[data-theme='dark'] {
-  --color-bg: #000000;           /* 纯黑色背景 */
-  --color-fg: #e5e7eb;           /* 深色主文本 */
-  --color-card: #111111;         /* 深色卡片 */
-  --color-brand: #ff5c8a;        /* 深色下增亮的樱花红 */
+  --color-bg: #0a1120;           /* 纯黑色背景 */
+  --color-fg: #e8ecf3;           /* 深色主文本 */
+  --color-card: #111c31;         /* 深色卡片 */
+  --color-brand: #f07ba0;        /* 深色下增亮的樱花红 */
   --color-accent: #34d399;       /* 深色下调整的樱叶绿 */
-  --color-border: #2a2a2a;       /* 深色分割线 */
-  --color-muted: #9ca3af;        /* 深色次要文本 */
+  --color-border: #22304b;       /* 深色分割线 */
+  --color-muted: #9aa6bb;        /* 深色次要文本 */
   
   /* 深色下的状态颜色 */
   --color-success: #059669;

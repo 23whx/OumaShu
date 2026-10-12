@@ -1,0 +1,94 @@
+{
+  "title": "選擇櫻滿集的視覺世界",
+  "question": "抽籤指定了「駅弁・掛紙」方向。保留它、換成備選，或重新抽。",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "駅弁・掛紙（車站便當）",
+      "kicker": "THE ROLL",
+      "lineage": "日本鐵道駅弁：印刷包裝紙（掛紙）＋漆盒分格（仕切り）",
+      "thesis": "整個收藏是一盒親手裝好的車站便當：上面一張印刷包裝紙說明這是什麼，下面漆盒的分格裡，每個分類是一格，每個工具是一份。",
+      "palette": ["#1a1210", "#c8322b", "#f2b6c2", "#f3e9e8", "#221b19"],
+      "materials": ["漆器黑紅", "掛紙印刷雙線框", "朱色驛站印章", "可見的分格隔板"],
+      "viewport": "頂欄：Logo＋全寬搜索（/ 快捷鍵）＋東京時間/天氣/語言/主題。下方是一張掛紙：直排「櫻滿集」朱字、大標題「Free web tools, packed by hand.」、旋轉的朱色驛站印章（27 TOOLS）。一條黑色綁帶上是分類篩選膠囊。再下面是黑漆便當盒：隔板可見，各分類大小不一的格子裡放著帶網站截圖的工具卡。",
+      "risk": "漆黑＋朱紅若用太滿會顯得厚重、像餐廳菜單；淺色模式要靠淡櫻灰而不是奶油色撐住。",
+      "raised": [
+        {"from": "challenger-variable-font", "raise": "層級只靠字號對比：工具名大而重，元數據是極小的等寬標籤，不用 emoji 圖示塊。"},
+        {"from": "challenger-boarding-pass", "raise": "每張工具卡帶一條帶標籤的分段代碼條（IMG·01 · FREE · LOCAL），像票據一樣可掃讀。"},
+        {"from": "challenger-crouwel", "raise": "網格本身就是可見的骨架：隔板是畫出來的，不是靠留白暗示。"}
+      ],
+      "html": ".impeccable/mocks/decision/assigned.html"
+    },
+    {
+      "id": "model-pick",
+      "label": "電車路線圖（駅ナンバリング）",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "東京地鐵/JR 站點編號與路線色",
+      "thesis": "每個分類是一條有顏色和兩字母代碼的線路，每個工具是一個編號車站（IM 03）——海外訪客一眼就懂的日本導視系統。",
+      "palette": ["#14223f", "#ffffff", "#e5608a", "#2f80c8", "#2e9e5b"],
+      "materials": ["站名標牌", "路線色帶", "站點編號方框"],
+      "viewport": "深藍頂欄＋搜索；左側大標題「Every free tool, one stop away.」；下方是按分類展開的彩色路線，站點即工具。",
+      "risk": "東京地鐵圖是很多網站都用過的「日本元素」，容易顯得熟悉甚至像 cosplay；路線圖放不下截圖，工具的樣子要靠點進去才看到。",
+      "html": ".impeccable/mocks/decision/model-pick.html"
+    },
+    {
+      "id": "challenger-mono",
+      "label": "單色產品展示",
+      "verdict": "competitive",
+      "lineage": "現代軟件官網：中性灰階＋一個克制的強調色＋大截圖",
+      "thesis": "幾乎沒有顏色，每個工具都用一張截圖證明自己。",
+      "palette": ["#fafafa", "#0a0a0a", "#777777", "#d94f7a"],
+      "materials": ["柔和徑向底", "截圖卡片"],
+      "viewport": "左大標題＋右說明，分類膠囊，三列截圖卡。",
+      "case": "融合順暢、截圖讓產品一目了然（贏在清晰度）；但完全看不出「日式／櫻滿集」，在受眾認同上輸。",
+      "risk": "和參考站點幾乎一樣，沒有自己的辨識度。",
+      "html": ".impeccable/mocks/decision/challenger-mono.html",
+      "hero": "https://impeccable.style/worlds/cards/digital-design-canon-monochrome-product-marketing-hero.webp"
+    },
+    {
+      "id": "challenger-variable-font",
+      "label": "可變字體樣張",
+      "verdict": "declined",
+      "lineage": "字體鑄造廠樣張頁",
+      "palette": ["#f7f7f5", "#111111"],
+      "materials": ["巨型字母", "軸滑桿"],
+      "case": "工具目錄不是在賣字體，訪客找不到工具。",
+      "kept": "層級只靠字號對比。",
+      "hero": "https://impeccable.style/worlds/cards/variable-font-specimen-hero.webp"
+    },
+    {
+      "id": "challenger-boarding-pass",
+      "label": "登機牌與航班看板",
+      "verdict": "declined",
+      "lineage": "機場票據與閘口看板",
+      "palette": ["#111111", "#f5f5f5", "#f2a33a"],
+      "materials": ["分段票據", "等寬數字"],
+      "case": "按時間排名的看板不符合「按用途找工具」。",
+      "kept": "帶標籤的分段代碼條。",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-boarding-pass-and-gate-board-hero.webp"
+    },
+    {
+      "id": "challenger-crouwel",
+      "label": "Crouwel 網格樣張",
+      "verdict": "declined",
+      "lineage": "Wim Crouwel 網格海報",
+      "palette": ["#ffffff", "#2b59c3"],
+      "materials": ["構造網格線"],
+      "case": "海報式字母構造搶走了工具本身。",
+      "kept": "可見的網格骨架。",
+      "hero": "https://impeccable.style/worlds/cards/crouwel-grid-specimen-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "canon": true,
+  "canonCard": {
+    "label": "類別標準（curated.design 式）",
+    "thesis": "這類目錄站通常的樣子，做到最好。",
+    "palette": ["#ffffff", "#111111", "#f3f3f3"],
+    "materials": ["居中襯線大標題", "分類膠囊", "三列截圖網格"],
+    "viewport": "居中大標題＋副標，分類膠囊，三列截圖卡片。",
+    "risk": "和其他目錄站沒有區別，丟掉了日式身份。",
+    "html": ".impeccable/mocks/decision/canon.html"
+  },
+  "steer": true
+}

@@ -6,7 +6,7 @@
   },
   "nav": {
     "home": "الرئيسية",
-    "categories": "الفئات", 
+    "categories": "الفئات",
     "about": "حول",
     "search": "بحث"
   },
@@ -18,7 +18,7 @@
   },
   "theme": {
     "light": "فاتح",
-    "dark": "داكن", 
+    "dark": "داكن",
     "system": "تابع النظام"
   },
   "search": {
@@ -151,5 +151,18 @@
   "current_time": "الوقت الحالي",
   "current_location": "الموقع الحالي",
   "current_weather": "الطقس الحالي",
-  "third_party": "طرف ثالث"
+  "third_party": "طرف ثالث",
+  "hero_title": "كل أداة مجانية على بُعد محطة واحدة.",
+  "hero_sub": "{{tools}} أداة صغيرة في المتصفح على {{lines}} خطًا — للصور والفيديو والنصوص وقليل من الاستراحة.",
+  "all_lines": "كل الخطوط",
+  "stations_count": "{{count}} محطات",
+  "open_tool": "فتح",
+  "clear_search": "مسح البحث",
+  "map_label": "خريطة الخطوط",
+  "footer_about_title": "عن OumaShu",
+  "search_hint": "اضغط / للبحث",
+  "theme_label": "المظهر",
+  "language_label": "اللغة",
+  "fact_nosignup": "بدون تسجيل",
+  "search_results_found_one": "تم العثور على أداة واحدة"
 }
