@@ -1,0 +1,92 @@
+---
+// 常見問題：問句標題 + 自成一段的答案（搜索引擎與 AI 可以直接引用）
+import { FAQ } from '../i18n/faq';
+import { fill, type Locale } from '../i18n/routes';
+import { factValues, latestUpdate } from '../data/stats';
+
+export interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = FAQ[locale];
+const iso = latestUpdate();
+const vals = factValues(locale, iso);
+---
+
+<section class="faq" aria-labelledby="faq-title">
+  <div class="faq__inner">
+    <header class="faq__head">
+      <h2 id="faq-title">{copy.title}</h2>
+      {iso && <p class="faq__date mono"><time datetime={iso.slice(0, 10)}>{fill(copy.updated, vals)}</time></p>}
+    </header>
+    <div class="faq__list">
+      {copy.items.map(([q, a]) => (
+        <article class="faq__item">
+          <h3>{q}</h3>
+          <p>{fill(a, vals)}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-panel);
+  }
+  .faq__inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 64px 32px 72px;
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    gap: 32px 56px;
+  }
+  .faq__head h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .faq__date {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+  .faq__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 40px;
+  }
+  .faq__item h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .faq__item p {
+    margin: 8px 0 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+  @media (max-width: 960px) {
+    .faq__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 760px) {
+    .faq__inner {
+      padding: 44px 16px 52px;
+      gap: 24px;
+    }
+    .faq__list {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+  }
+</style>

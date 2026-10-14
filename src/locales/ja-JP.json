@@ -153,7 +153,7 @@
   "current_weather": "現在の天気",
   "third_party": "サードパーティ",
   "hero_title": "無料ツールは、どれも一駅先に。",
-  "hero_sub": "{{lines}} 路線に {{tools}} のブラウザツール。画像、動画、テキスト、そしてちょっとしたサボりに。",
+  "hero_sub": "OumaShu（櫻滿集）は無料オンラインツールを厳選したディレクトリです。{{lines}} 路線に {{tools}} のブラウザツール。画像、動画、テキスト、そしてちょっとしたサボりに。",
   "all_lines": "全路線",
   "stations_count": "{{count}} 駅",
   "open_tool": "開く",

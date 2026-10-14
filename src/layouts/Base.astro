@@ -25,6 +25,8 @@ export interface Props {
   schema?: object[];
   mainEntityId?: string;
   breadcrumbId?: string;
+  /** 內容最後更新時間（ISO），寫進結構化數據 */
+  dateModified?: string;
 }
 
 const {
@@ -42,6 +44,7 @@ const {
   schema = [],
   mainEntityId,
   breadcrumbId,
+  dateModified,
 } = Astro.props;
 
 // 版面固定 LTR（阿拉伯文只換文字，不鏡像版面）
@@ -81,7 +84,7 @@ const CJK_SHEETS: Record<string, string> = {
 // 結構化數據：網站與組織 + 當前頁 + 頁面自帶的節點
 const jsonLd = graph([
   ...siteNodes(),
-  pageNode({ url: canonicalUrl, type: pageType, name: title, description, mainEntityId, breadcrumbId, inLanguage: locale }),
+  pageNode({ url: canonicalUrl, type: pageType, name: title, description, mainEntityId, breadcrumbId, inLanguage: locale, dateModified }),
   ...schema,
 ]);
 ---

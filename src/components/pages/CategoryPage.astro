@@ -10,6 +10,8 @@ import { categorySeo } from '../../data/seo';
 import { SITE_URL, ids, toolListNode, breadcrumbNode } from '../../utils/schema';
 import { dict, fill, localePath, type Locale } from '../../i18n/routes';
 import { UI } from '../../i18n/ui';
+import { FAQ } from '../../i18n/faq';
+import { latestUpdate, formatDate } from '../../data/stats';
 
 export interface Props {
   locale: Locale;
@@ -26,6 +28,7 @@ const seo = categorySeo(locale, line.id, line.name);
 const lineTools = line.stations.map((s) => s.tool);
 const others = lines.filter((l) => l.id !== line.id);
 const home = localePath(locale, '/');
+const updated = latestUpdate(lineTools);
 const path = `/categories/${line.id}/`;
 
 const pageUrl = `${SITE_URL}${localePath(locale, path)}`;
@@ -44,6 +47,7 @@ const categorySchema = [
   keywords={seo.keywords}
   locale={locale}
   alternatePath={path}
+  dateModified={updated}
   canonicalUrl={pageUrl}
   pageType="CollectionPage"
   schema={categorySchema}
@@ -52,7 +56,7 @@ const categorySchema = [
 >
   <header class="cbar">
     <div class="cbar__inner">
-      <a class="brand" href={home} aria-label="OumaShu home">
+      <a class="brand" href={home}>
         <span class="seal" aria-hidden="true" lang="ja">櫻</span>
         <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
       </a>
@@ -80,6 +84,7 @@ const categorySchema = [
         <p class="chero__intro">{seo.intro}</p>
         <p class="chero__meta mono">
           {lineTools.length === 1 ? ui.toolsOne : fill(ui.toolsCount, { count: lineTools.length })} · {fill(ui.lineName, { name: lineLabel })} <span lang="ja">{line.meta.ja}</span>
+          {updated && <> · <time datetime={updated.slice(0, 10)}>{fill(FAQ[locale].updated, { date: formatDate(updated, locale) })}</time></>}
         </p>
       </div>
     </section>

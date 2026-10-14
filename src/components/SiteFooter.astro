@@ -4,6 +4,9 @@
 import { getLines } from '../data/lines';
 import { dict, localePath, type Locale } from '../i18n/routes';
 import { UI } from '../i18n/ui';
+import { FAQ } from '../i18n/faq';
+import { factValues } from '../data/stats';
+import { fill } from '../i18n/routes';
 
 export interface Props {
   locale?: Locale;
@@ -20,12 +23,12 @@ const year = new Date().getFullYear();
   </div>
   <div class="foot__inner">
     <div class="foot__about">
-      <a class="brand" href={localePath(locale, '/')} aria-label="OumaShu home">
+      <a class="brand" href={localePath(locale, '/')}>
         <span class="seal" aria-hidden="true" lang="ja">櫻</span>
         <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
       </a>
       <h2 id="footer-about-title">{t.footer_about_title}</h2>
-      <p id="intro-paragraph">{t.intro_paragraph}</p>
+      <p id="intro-paragraph">{fill(FAQ[locale].items[0][1], factValues(locale))}</p>
     </div>
     <nav class="foot__col foot__lines" aria-label={UI[locale].browseByCat}>
       <span class="foot__label" id="foot-lines">{t.all_lines}</span>

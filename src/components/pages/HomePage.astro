@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import ToolCard from '../ToolCard.astro';
 import SiteFooter from '../SiteFooter.astro';
 import LangMenu from '../LangMenu.astro';
+import FaqSection from '../FaqSection.astro';
+import { latestUpdate } from '../../data/stats';
 import { tools } from '../../data/tools';
 import { getLines } from '../../data/lines';
 import { SITE_URL, ids, toolListNode } from '../../utils/schema';
@@ -38,6 +40,7 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   keywords={seo.keywords}
   locale={locale}
   alternatePath="/"
+  dateModified={latestUpdate()}
   canonicalUrl={homeUrl}
   pageType="CollectionPage"
   schema={homeSchema}
@@ -204,6 +207,8 @@ const themeLabels = { label: t.theme_label, ...t.theme };
         <button type="button" id="clear-search" class="empty__btn">{t.clear_search}</button>
       </div>
     </div>
+
+    <FaqSection locale={locale} />
   </main>
 
   <SiteFooter locale={locale} />

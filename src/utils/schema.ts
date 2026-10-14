@@ -14,6 +14,7 @@ const t = en as Dict;
 
 export const ids = {
   organization: `${SITE_URL}/#organization`,
+  founder: `${SITE_URL}/#rollkey`,
   website: `${SITE_URL}/#website`,
   logo: `${SITE_URL}/#logo`,
   ogImage: `${SITE_URL}/#og-image`,
@@ -58,6 +59,18 @@ export function siteNodes() {
         caption: SITE_NAME,
       },
       image: { '@id': ids.ogImage },
+      email: 'wanghongxiang23@gmail.com',
+      sameAs: ['https://x.com/Rollkey4'],
+      founder: { '@id': ids.founder },
+    },
+    {
+      '@type': 'Person',
+      '@id': ids.founder,
+      name: 'Rollkey',
+      url: `${SITE_URL}/about/`,
+      image: `${SITE_URL}/admin_img.jpg`,
+      jobTitle: 'Independent developer',
+      description: 'Creator and maintainer of OumaShu and most of the tools it lists.',
       email: 'wanghongxiang23@gmail.com',
       sameAs: ['https://x.com/Rollkey4'],
     },
@@ -165,6 +178,7 @@ export function pageNode(opts: {
   mainEntityId?: string;
   breadcrumbId?: string;
   inLanguage?: string;
+  dateModified?: string;
 }) {
   return {
     '@type': opts.type ?? 'WebPage',
@@ -176,6 +190,7 @@ export function pageNode(opts: {
     about: { '@id': ids.organization },
     primaryImageOfPage: { '@id': ids.ogImage },
     inLanguage: opts.inLanguage ?? 'en',
+    ...(opts.dateModified && { dateModified: opts.dateModified }),
     ...(opts.mainEntityId && { mainEntity: { '@id': opts.mainEntityId } }),
     ...(opts.breadcrumbId && { breadcrumb: { '@id': opts.breadcrumbId } }),
   };
