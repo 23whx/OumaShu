@@ -105,13 +105,13 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
     keywords: 'fmhy, free media heck yeah, wotaku, free resources directory, anime manga index',
   },
   entertainment: {
-    title: 'Free MBTI Personality Test & Character Database | OumaShu',
+    title: 'Free MBTI Test, Character Database & BaZi Calculator | OumaShu',
     description:
-      'Take a free 68-question MBTI personality test, browse MBTI types of anime, manga and game characters, or read about Chinese metaphysics and fortune telling.',
+      'Take a free 68-question MBTI test, browse MBTI types of anime and game characters, or calculate your BaZi chart and Chinese zodiac. Free, no sign-up.',
     h1: 'Personality Tests & Fun Sites',
     intro:
-      'A free 68-question MBTI test, a database of MBTI types for anime, comic, game and novel characters, and a blog about Chinese metaphysics.',
-    keywords: 'free mbti test, mbti personality test online, anime character mbti database, acgn personality database',
+      'A free 68-question MBTI test, a database of MBTI types for anime, comic, game and novel characters, and 旭通命理小站, with a free BaZi (Four Pillars) calculator, Qimen Dunjia and Da Liu Ren charts, a Chinese almanac and articles on Chinese astrology.',
+    keywords: 'free mbti test, mbti personality test online, anime character mbti database, free bazi calculator, chinese astrology, four pillars of destiny',
   },
   social: {
     title: 'Free Anonymous Chat Room, No Registration | OumaShu',

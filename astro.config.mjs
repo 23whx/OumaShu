@@ -64,7 +64,11 @@ export default defineConfig({
         // 去掉語言前綴後再判斷頁面類型
         const path = new URL(item.url).pathname.replace(/^\/(zh-cn|zh-tw|ja|ar|ru)(?=\/)/, '');
         const cat = path.match(/^\/categories\/([^/]+)\/$/);
-        const list = path === '/' ? tools : cat ? tools.filter((t) => t.category === cat[1]) : [];
+        const guide = path.match(/^\/tools\/([^/]+)\/$/);
+        const list = path === '/' ? tools
+          : cat ? tools.filter((t) => t.category === cat[1])
+          : guide ? tools.filter((t) => t.id === guide[1])
+          : [];
         const lastmod = latest(list);
         if (lastmod) item.lastmod = lastmod;
         return item;

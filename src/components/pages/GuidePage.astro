@@ -1,0 +1,479 @@
+---
+// 工具介紹頁：功能、使用步驟（配截圖）、限制、隱私、常見問題、相關工具
+// 各語言共用：/tools/image-ocr/、/zh-cn/tools/image-ocr/ …
+import Base from '../../layouts/Base.astro';
+import PageBar from '../PageBar.astro';
+import Crumbs from '../Crumbs.astro';
+import ToolCard from '../ToolCard.astro';
+import SiteFooter from '../SiteFooter.astro';
+import { tools } from '../../data/tools';
+import { getLines, hostOf } from '../../data/lines';
+import { categorySeo } from '../../data/seo';
+import { guideFor, guideMeta, guidePath, toolEntry } from '../../data/guides';
+import { formatDate } from '../../data/stats';
+import { SITE_URL, ids, toolNode, breadcrumbNode } from '../../utils/schema';
+import { dict, fill, localePath, type Locale } from '../../i18n/routes';
+import { UI } from '../../i18n/ui';
+import { FAQ } from '../../i18n/faq';
+
+export interface Props {
+  locale: Locale;
+  toolId: string;
+}
+
+const { locale, toolId } = Astro.props;
+const t = dict(locale);
+const ui = UI[locale];
+const g = ui.guide;
+const tool = tools.find((x) => x.id === toolId)!;
+const guide = guideFor(toolId, locale)!;
+const meta = guideMeta(toolId);
+const line = getLines().find((l) => l.id === tool.category)!;
+const station = line.stations.find((s) => s.tool.id === toolId)!;
+const name: string = t[toolId] ?? tool.name;
+const entry = toolEntry(toolId, locale, tool.url);
+const home = localePath(locale, '/');
+const path = guidePath(toolId);
+const pageUrl = `${SITE_URL}${localePath(locale, path)}`;
+const lineSeo = categorySeo(locale, line.id, line.name);
+const lineUrl = localePath(locale, `/categories/${line.id}/`);
+const related = meta.related.map((id) => tools.find((x) => x.id === id)).filter(Boolean) as typeof tools;
+const relatedStation = (id: string) => {
+  for (const l of getLines()) {
+    const s = l.stations.find((st) => st.tool.id === id);
+    if (s) return { code: s.code, lineId: l.id, color: l.meta.color };
+  }
+  return { code: '', lineId: '', color: line.meta.color };
+};
+
+// 標題：工具名 + 功能、使用方法與限制；描述：摘要的第一句起，截到 155 字元以內
+const title = `${name}: ${g.titleSuffix} | OumaShu`;
+const sentences = guide.summary.split(/(?<=[.。！？!?])\s*/);
+let description = '';
+for (const s of sentences) {
+  if ((description + s).length > 155) break;
+  description += (description && !/[。！？]$/.test(description) ? ' ' : '') + s;
+}
+if (!description) description = guide.summary.slice(0, 152) + '…';
+
+const updated = tool.updatedAt;
+const heroShot = `/shots/${toolId}.webp`;
+// 阿拉伯文：版面保持 LTR，正文段落用 RTL，標點才會落在正確的一側
+const textDir = locale === 'ar' ? 'rtl' : undefined;
+
+const schema = [
+  toolNode(tool, t),
+  {
+    '@type': 'HowTo',
+    '@id': `${pageUrl}#howto`,
+    name: `${g.steps}: ${name}`,
+    inLanguage: locale,
+    tool: { '@id': ids.tool(toolId) },
+    step: guide.steps.map((text, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: fill(g.step, { n: i + 1 }),
+      text,
+      url: `${pageUrl}#step-${i + 1}`,
+      ...(meta.shots[i] && { image: `${SITE_URL}${meta.shots[i]}` }),
+    })),
+  },
+  breadcrumbNode(pageUrl, [
+    { name: 'OumaShu', url: `${SITE_URL}${home}` },
+    { name: lineSeo.h1, url: `${SITE_URL}${lineUrl}` },
+    { name, url: pageUrl },
+  ]),
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  keywords={`${name}, ${lineSeo.keywords}`}
+  locale={locale}
+  alternatePath={path}
+  canonicalUrl={pageUrl}
+  dateModified={updated}
+  schema={schema}
+  mainEntityId={ids.tool(toolId)}
+  breadcrumbId={ids.breadcrumb(pageUrl)}
+>
+  <PageBar locale={locale} path={path} />
+
+  <main id="main-content" class="gpage" style={`--c:${line.meta.color}`}>
+    <Crumbs locale={locale} trail={[{ name: 'OumaShu', href: home }, { name: lineSeo.h1, href: lineUrl }, { name }]} />
+
+    <section class="ghero">
+      <div class="ghero__text">
+        <span class="badge tcard__code ghero__code"><span>{station.code.replace(' ', ' ')}</span></span>
+        <h1 dir={textDir}>{name}</h1>
+        <p class="ghero__lead" dir={textDir}>{guide.summary}</p>
+        <div class="ghero__actions">
+          <a class="ghero__open" href={entry} target="_blank" rel="noopener">
+            {fill(g.open, { name })}
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </a>
+          <p class="ghero__meta mono">
+            {g.free} · {hostOf(entry)}
+            {updated && <> · <time datetime={updated.slice(0, 10)}>{fill(FAQ[locale].updated, { date: formatDate(updated, locale) })}</time></>}
+          </p>
+        </div>
+      </div>
+      <figure class="ghero__shot">
+        <img src={heroShot} alt={fill(ui.shotAlt, { name })} width="960" height="600" loading="eager" fetchpriority="high" decoding="async" />
+      </figure>
+    </section>
+
+    <section class="gsec" aria-labelledby="features">
+      <h2 id="features">{g.features}</h2>
+      <ul class="gfeat">
+        {guide.features.map((f) => (
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg><span dir={textDir}>{f}</span></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="gsec" aria-labelledby="how-to">
+      <h2 id="how-to">{g.steps}</h2>
+      <ol class="gsteps">
+        {guide.steps.map((step, i) => (
+          <li class="gstep" id={`step-${i + 1}`}>
+            <div class="gstep__text">
+              <span class="gstep__n mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="sr-only">{fill(g.step, { n: i + 1 })}</h3>
+              <p dir={textDir}>{step}</p>
+            </div>
+            {meta.shots[i] && (
+              <figure class="gstep__shot">
+                <img src={meta.shots[i]} alt={fill(g.stepShot, { name, n: i + 1 })} width="1200" height="750" loading="lazy" decoding="async" />
+              </figure>
+            )}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <div class="gnotes">
+      <section class="gsec gsec--box" aria-labelledby="limits">
+        <h2 id="limits">{g.limits}</h2>
+        <ul class="glist">
+          {guide.limits.map((l) => <li dir={textDir}>{l}</li>)}
+        </ul>
+      </section>
+      <section class="gsec gsec--box" aria-labelledby="privacy">
+        <h2 id="privacy">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2" /><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" /></svg>
+          {g.privacy}
+        </h2>
+        <p dir={textDir}>{guide.privacy}</p>
+      </section>
+    </div>
+
+    <section class="gsec" aria-labelledby="faq">
+      <h2 id="faq">{g.faq}</h2>
+      <div class="gfaq">
+        {guide.faq.map(([q, a]) => (
+          <article>
+            <h3 dir={textDir}>{q}</h3>
+            <p dir={textDir}>{a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="gsec" aria-labelledby="related">
+      <h2 id="related">{g.related}</h2>
+      <div class="dline__grid">
+        {related.map((r) => {
+          const st = relatedStation(r.id);
+          return (
+            <div style={`--c:${st.color}`}>
+              <ToolCard tool={r} code={st.code} lineId={st.lineId} locale={locale} />
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter locale={locale} />
+</Base>
+
+<style>
+  svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .gpage {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 32px 88px;
+  }
+
+  /* ---------- 標題區 ---------- */
+  .ghero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 48px;
+    align-items: center;
+    margin-top: 28px;
+    padding-bottom: 40px;
+    border-bottom: 3px solid var(--c);
+  }
+  .ghero h1 {
+    margin: 16px 0 0;
+    font-size: clamp(2rem, 1.3rem + 2.2vw, 3rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .ghero__lead {
+    margin: 16px 0 0;
+    font-size: 17.5px;
+    line-height: 1.65;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+  .ghero__actions {
+    margin-top: 26px;
+  }
+  .ghero__open {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 10px;
+    background: var(--shu);
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    text-decoration: none;
+    box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--shu) 70%, transparent);
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1), filter 160ms;
+  }
+  .ghero__open:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+  }
+  .ghero__open svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.2;
+  }
+  .ghero__meta {
+    margin: 12px 0 0;
+    font-size: 12.5px;
+    color: var(--color-muted);
+  }
+  .ghero__shot {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-panel);
+    box-shadow: var(--shadow-lift);
+  }
+  .ghero__shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ---------- 各節 ---------- */
+  .gsec {
+    margin-top: 56px;
+  }
+  .gsec h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 18px;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+  .gsec h2 svg {
+    width: 20px;
+    height: 20px;
+    color: var(--c);
+    flex: none;
+  }
+  .gfeat {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .gfeat li {
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .gfeat svg {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    color: var(--c);
+    stroke-width: 2.4;
+  }
+
+  /* 步驟：文字在左、截圖在右 */
+  .gsteps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 28px;
+  }
+  .gstep {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 32px;
+    align-items: center;
+    padding-top: 28px;
+    border-top: 1px solid var(--color-border);
+  }
+  .gstep:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .gstep:not(:has(.gstep__shot)) {
+    grid-template-columns: 1fr;
+  }
+  .gstep__text {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .gstep__n {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--c);
+    border-radius: 50%;
+    background: var(--color-bg);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .gstep__text p {
+    margin: 6px 0 0;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .gstep__shot {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-panel);
+    box-shadow: var(--shadow-card);
+  }
+  .gstep__shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* 限制與隱私 */
+  .gnotes {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 20px;
+    margin-top: 56px;
+  }
+  .gnotes .gsec {
+    margin-top: 0;
+  }
+  .gsec--box {
+    padding: 24px 26px;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-panel);
+  }
+  .gsec--box h2 {
+    font-size: 19px;
+    margin-bottom: 12px;
+  }
+  .gsec--box p {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+  .glist {
+    margin: 0;
+    padding-left: 20px;
+    list-style: disc;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+  .glist li + li {
+    margin-top: 8px;
+  }
+  .glist li::marker {
+    color: var(--c);
+  }
+
+  /* 常見問題 */
+  .gfaq {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 40px;
+  }
+  .gfaq h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .gfaq p {
+    margin: 8px 0 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 960px) {
+    .ghero,
+    .gstep,
+    .gnotes {
+      grid-template-columns: 1fr;
+    }
+    .ghero {
+      gap: 28px;
+    }
+  }
+  @media (max-width: 760px) {
+    .gpage {
+      padding: 20px 16px 64px;
+    }
+    .ghero__lead {
+      font-size: 16px;
+    }
+    .gfeat,
+    .gfaq {
+      grid-template-columns: 1fr;
+    }
+    .gsec {
+      margin-top: 44px;
+    }
+    .gstep {
+      gap: 16px;
+    }
+    .gsec--box {
+      padding: 20px;
+    }
+  }
+</style>

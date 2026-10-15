@@ -1,0 +1,11 @@
+---
+// 英文工具介紹頁
+import GuidePage from '../../components/pages/GuidePage.astro';
+import { GUIDE_IDS } from '../../data/guides';
+
+export function getStaticPaths() {
+  return GUIDE_IDS.map((tool) => ({ params: { tool } }));
+}
+---
+
+<GuidePage locale="en" toolId={Astro.params.tool!} />

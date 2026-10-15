@@ -94,6 +94,7 @@
   gap: 22px;
 }
 .tcard__link {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -206,6 +207,39 @@
   font-size: 11px;
   font-weight: 700;
   color: var(--color-muted);
+}
+/* 工具名連結覆蓋整張卡片；「使用說明」連結浮在其上 */
+.tcard__main {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+.tcard__main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 12px;
+}
+.tcard__link:has(.tcard__main:focus-visible) {
+  outline: 2px solid var(--shu);
+  outline-offset: 3px;
+}
+.tcard__guide {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  padding: 3px 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-fg);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--c, var(--shu)) 60%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.tcard__guide:hover {
+  text-decoration-color: var(--c, var(--shu));
 }
 .tcard__open {
   margin-left: auto;

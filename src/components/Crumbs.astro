@@ -1,0 +1,43 @@
+---
+// 麵包屑：最後一項是當前頁（不帶連結）
+import { UI } from '../i18n/ui';
+import type { Locale } from '../i18n/routes';
+
+export interface Props {
+  locale: Locale;
+  trail: { name: string; href?: string }[];
+}
+const { locale, trail } = Astro.props;
+---
+
+<nav class="crumbs" aria-label={UI[locale].breadcrumb}>
+  <ol>
+    {trail.map((step, i) => (
+      i === trail.length - 1
+        ? <li aria-current="page">{step.name}</li>
+        : <li><a href={step.href}>{step.name}</a></li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+  .crumbs li + li::before {
+    content: '/';
+    margin-right: 6px;
+    opacity: 0.5;
+  }
+  .crumbs a {
+    color: inherit;
+  }
+
+</style>

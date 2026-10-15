@@ -49,7 +49,7 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   <!-- 站牌頂欄 -->
   <header class="topbar">
     <div class="topbar__inner">
-      <a class="brand" href={home} aria-label="OumaShu">
+      <a class="brand" href={home}>
         <span class="seal" aria-hidden="true" lang="ja">櫻</span>
         <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
       </a>
@@ -352,7 +352,7 @@ const themeLabels = { label: t.theme_label, ...t.theme };
       card.classList.remove('is-arrive');
       void card.offsetWidth;
       card.classList.add('is-arrive');
-      card.querySelector<HTMLAnchorElement>('.tcard__link')?.focus({ preventScroll: true });
+      card.querySelector<HTMLAnchorElement>('.tcard__main')?.focus({ preventScroll: true });
     });
   }
   for (const card of cards) {

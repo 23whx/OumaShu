@@ -8,6 +8,7 @@ import { LOCALES, fill } from '../i18n/routes';
 import { SITE_URL } from '../utils/schema';
 import { factValues, formatDate, latestUpdate } from '../data/stats';
 import en from '../locales/en.json';
+import { hasGuide, guidePath } from '../data/guides';
 
 const t = en as Record<string, any>;
 
@@ -41,7 +42,8 @@ export const GET: APIRoute = () => {
       const name = t[tool.id] ?? tool.name;
       const desc = t[`${tool.id}_desc`] ?? tool.description;
       const tag = tool.thirdParty ? ' (third-party site)' : '';
-      out.push(`- [${name}](${tool.url})${tag}: ${desc}. Host: ${hostOf(tool.url)}.`);
+      const guide = hasGuide(tool.id) ? ` Guide (features, steps, limits): ${SITE_URL}${guidePath(tool.id)}` : '';
+      out.push(`- [${name}](${tool.url})${tag}: ${desc}. Host: ${hostOf(tool.url)}.${guide}`);
     }
     out.push('');
   }

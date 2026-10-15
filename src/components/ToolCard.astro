@@ -1,11 +1,13 @@
 ---
-// 工具卡片：首頁與分類頁共用（樣式在 src/styles/site.css）
+// 工具卡片：首頁、分類頁與介紹頁共用（樣式在 src/styles/site.css）
+// 整張卡片點擊打開工具（工具名連結的 ::after 覆蓋全卡）；有介紹頁的工具另有「使用說明」連結
 import fs from 'node:fs';
 import path from 'node:path';
 import type { ToolItem } from '../data/tools';
 import { hostOf } from '../data/lines';
-import { dict, fill, type Locale } from '../i18n/routes';
+import { dict, fill, localePath, type Locale } from '../i18n/routes';
 import { UI } from '../i18n/ui';
+import { hasGuide, guidePath, toolEntry } from '../data/guides';
 
 export interface Props {
   tool: ToolItem;
@@ -14,22 +16,28 @@ export interface Props {
   /** 首屏以外的卡片延遲載入截圖 */
   eager?: boolean;
   locale?: Locale;
+  /** 標題層級：首頁與分類頁在 h2 之下用 h3，介紹頁的相關工具在 h2 之下也用 h3 */
+  headingLevel?: 'h3' | 'h4';
 }
 
-const { tool, code, lineId, eager = false, locale = 'en' } = Astro.props;
+const { tool, code, lineId, eager = false, locale = 'en', headingLevel = 'h3' } = Astro.props;
 const t = dict(locale);
+const ui = UI[locale];
 const name = t[tool.id] ?? tool.name;
 const desc = t[`${tool.id}_desc`] ?? tool.description;
 const hasShot = fs.existsSync(path.join(process.cwd(), 'public', 'shots', `${tool.id}.webp`));
+const href = toolEntry(tool.id, locale, tool.url);
+const guide = hasGuide(tool.id) ? localePath(locale, guidePath(tool.id)) : null;
+const Heading = headingLevel;
 ---
 
 <article class="tcard" id={`tool-${tool.id}`} data-tool-id={tool.id} data-line={lineId}>
-  <a class="tcard__link" href={tool.url} target="_blank" rel="noopener">
+  <div class="tcard__link">
     <div class="tcard__shot">
       {hasShot ? (
         <img
           src={`/shots/${tool.id}.webp`}
-          alt={fill(UI[locale].shotAlt, { name })}
+          alt={fill(ui.shotAlt, { name })}
           width="960"
           height="600"
           loading={eager ? 'eager' : 'lazy'}
@@ -41,18 +49,24 @@ const hasShot = fs.existsSync(path.join(process.cwd(), 'public', 'shots', `${too
     </div>
     <div class="tcard__body">
       <div class="tcard__title">
-        <span class="badge tcard__code"><span>{code.replace(' ', ' ')}</span></span>
-        <h3 class="tcard__name" data-i18n-tool={tool.id}>{name}</h3>
+        <span class="badge tcard__code"><span>{code.replace(' ', ' ')}</span></span>
+        <Heading class="tcard__name">
+          <a class="tcard__main" href={href} target="_blank" rel="noopener" data-i18n-tool={tool.id}>{name}</a>
+        </Heading>
       </div>
       <p class="tcard__desc" data-i18n-desc={tool.id}>{desc}</p>
       <div class="tcard__meta">
-        <span class="tcard__host mono">{hostOf(tool.url)}</span>
+        {guide ? (
+          <a class="tcard__guide" href={guide}>{ui.guide.link}</a>
+        ) : (
+          <span class="tcard__host mono">{hostOf(tool.url)}</span>
+        )}
         {tool.thirdParty && <span class="tcard__tag third-party-text">{t.third_party}</span>}
-        <span class="tcard__open">
+        <span class="tcard__open" aria-hidden="true">
           <span class="open-label">{t.open_tool}</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          <svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" /></svg>
         </span>
       </div>
     </div>
-  </a>
+  </div>
 </article>

@@ -277,9 +277,9 @@ export const tools: ToolItem[] = [
   },
   {
     id: 'efortunetell',
-    name: '玄学命理博客',
-    description: '专业的中国玄学在线平台，提供八字、奇门遁甲、大六壬等传统占卜服务与命理知识分享',
-    tags: ['玄学', '命理', '占卜', '八字', '奇门遁甲', '大六壬', '传统文化'],
+    name: '旭通命理小站',
+    description: '免费在线八字排盘、阴盘奇门遁甲、大六壬起课、万年历老黄历与八字起名工具，以及原创命理文章',
+    tags: ['八字', '八字排盘', '奇门遁甲', '大六壬', '老黄历', '万年历', '起名', 'BaZi', 'Chinese astrology', 'zodiac', 'Four Pillars'],
     url: 'https://fortunetell.oumashu.top/',
     icon: '🔮',
     featured: false,

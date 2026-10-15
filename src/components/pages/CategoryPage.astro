@@ -4,7 +4,8 @@
 import Base from '../../layouts/Base.astro';
 import ToolCard from '../ToolCard.astro';
 import SiteFooter from '../SiteFooter.astro';
-import LangMenu from '../LangMenu.astro';
+import PageBar from '../PageBar.astro';
+import Crumbs from '../Crumbs.astro';
 import { getLines } from '../../data/lines';
 import { categorySeo } from '../../data/seo';
 import { SITE_URL, ids, toolListNode, breadcrumbNode } from '../../utils/schema';
@@ -54,28 +55,10 @@ const categorySchema = [
   mainEntityId={ids.toolList(pageUrl)}
   breadcrumbId={ids.breadcrumb(pageUrl)}
 >
-  <header class="cbar">
-    <div class="cbar__inner">
-      <a class="brand" href={home}>
-        <span class="seal" aria-hidden="true" lang="ja">櫻</span>
-        <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
-      </a>
-      <form class="csearch" action={home} method="get" role="search">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
-        <label class="sr-only" for="csearch-q">{ui.searchAll}</label>
-        <input id="csearch-q" name="q" type="search" placeholder={t.search_placeholder} autocomplete="off" />
-      </form>
-      <LangMenu locale={locale} path={path} />
-    </div>
-  </header>
+  <PageBar locale={locale} path={path} />
 
   <main id="main-content" class="cpage" style={`--c:${line.meta.color}`}>
-    <nav class="crumbs" aria-label={ui.breadcrumb}>
-      <ol>
-        <li><a href={home}>OumaShu</a></li>
-        <li aria-current="page">{seo.h1}</li>
-      </ol>
-    </nav>
+    <Crumbs locale={locale} trail={[{ name: 'OumaShu', href: home }, { name: seo.h1 }]} />
 
     <section class="chero">
       <span class="badge badge--lg chero__badge"><span>{line.meta.code}</span></span>
@@ -128,91 +111,11 @@ const categorySchema = [
 </Base>
 
 <style>
-  .cbar {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    background: rgba(255, 255, 255, 0.72);
-    -webkit-backdrop-filter: saturate(180%) blur(16px);
-    backdrop-filter: saturate(180%) blur(16px);
-    border-bottom: 1px solid var(--hairline);
-  }
-  :global([data-theme='dark']) .cbar {
-    background: rgba(12, 12, 13, 0.7);
-  }
-  .cbar__inner {
-    max-width: 1320px;
-    height: 64px;
-    margin: 0 auto;
-    padding: 0 32px;
-    display: flex;
-    align-items: center;
-    gap: 28px;
-  }
-  .csearch {
-    position: relative;
-    flex: 1;
-    max-width: 420px;
-    margin-left: auto;
-  }
-  .cbar__inner > :global(.lang) {
-    margin-right: -9px;
-  }
-  .csearch svg {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    width: 17px;
-    height: 17px;
-    transform: translateY(-50%);
-    color: var(--color-muted);
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    pointer-events: none;
-  }
-  .csearch input {
-    width: 100%;
-    height: 38px;
-    padding: 0 14px 0 38px;
-    border: 1px solid var(--hairline);
-    border-radius: 10px;
-    background: var(--wash);
-    color: var(--color-fg);
-    font: 500 15px/1 var(--font-sans);
-    outline: none;
-  }
-  .csearch input:focus {
-    background: var(--color-card);
-    border-color: var(--shu);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--shu) 22%, transparent);
-  }
-
   .cpage {
     max-width: 1320px;
     margin: 0 auto;
     padding: 28px 32px 88px;
   }
-  .crumbs ol {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-size: 13px;
-    color: var(--color-muted);
-  }
-  .crumbs li + li::before {
-    content: '/';
-    margin-right: 6px;
-    opacity: 0.5;
-  }
-  .crumbs a {
-    color: inherit;
-  }
-
   .chero {
     display: flex;
     align-items: flex-start;
@@ -362,24 +265,6 @@ const categorySchema = [
   }
 
   @media (max-width: 760px) {
-    .cbar {
-      position: static;
-    }
-    .cbar__inner {
-      height: auto;
-      padding: 12px 16px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .cbar__inner > :global(.lang) {
-      margin-left: auto;
-    }
-    .csearch {
-      order: 3;
-      flex-basis: 100%;
-      max-width: none;
-      margin-left: 0;
-    }
     .cpage {
       padding: 20px 16px 64px;
     }

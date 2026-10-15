@@ -18,6 +18,21 @@ export interface UiStrings {
   suggest: string;
   suggestGo: string;
   dismiss: string;
+  // 工具介紹頁
+  guide: {
+    link: string;        // 卡片上的「使用說明」
+    features: string;
+    steps: string;
+    limits: string;
+    privacy: string;
+    faq: string;
+    related: string;
+    open: string;        // {{name}}
+    step: string;        // {{n}}
+    stepShot: string;    // {{n}} {{name}}
+    free: string;
+    titleSuffix: string; // <title> 後綴，例如「How to Use, Features & Limits」
+  };
 }
 
 export const UI: Record<Locale, UiStrings> = {
@@ -37,6 +52,20 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: 'This page is also in English.',
     suggestGo: 'Read in English',
     dismiss: 'Dismiss',
+    guide: {
+      link: 'How to use',
+      features: 'What it does',
+      steps: 'How to use it',
+      limits: 'Limits and notes',
+      privacy: 'Privacy',
+      faq: 'Questions',
+      related: 'Related tools',
+      open: 'Open {{name}}',
+      step: 'Step {{n}}',
+      stepShot: '{{name}}, step {{n}}',
+      free: 'Free · No sign-up',
+      titleSuffix: 'Features, How to Use & Limits',
+    },
   },
   'zh-CN': {
     skip: '跳到主要内容',
@@ -54,6 +83,20 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: '本页有简体中文版。',
     suggestGo: '切换到简体中文',
     dismiss: '关闭',
+    guide: {
+      link: '使用说明',
+      features: '功能',
+      steps: '使用步骤',
+      limits: '限制与注意事项',
+      privacy: '隐私',
+      faq: '常见问题',
+      related: '相关工具',
+      open: '打开{{name}}',
+      step: '第 {{n}} 步',
+      stepShot: '{{name}} 第 {{n}} 步',
+      free: '免费 · 无需注册',
+      titleSuffix: '功能、使用方法与限制',
+    },
   },
   'zh-TW': {
     skip: '跳到主要內容',
@@ -71,6 +114,20 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: '本頁有繁體中文版。',
     suggestGo: '切換到繁體中文',
     dismiss: '關閉',
+    guide: {
+      link: '使用說明',
+      features: '功能',
+      steps: '使用步驟',
+      limits: '限制與注意事項',
+      privacy: '隱私',
+      faq: '常見問題',
+      related: '相關工具',
+      open: '開啟{{name}}',
+      step: '第 {{n}} 步',
+      stepShot: '{{name}} 第 {{n}} 步',
+      free: '免費 · 免註冊',
+      titleSuffix: '功能、使用方法與限制',
+    },
   },
   'ja-JP': {
     skip: 'メインコンテンツへ移動',
@@ -88,6 +145,20 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: 'このページには日本語版があります。',
     suggestGo: '日本語で読む',
     dismiss: '閉じる',
+    guide: {
+      link: '使い方',
+      features: 'できること',
+      steps: '使い方',
+      limits: '制限と注意点',
+      privacy: 'プライバシー',
+      faq: 'よくある質問',
+      related: '関連ツール',
+      open: '{{name}}を開く',
+      step: 'ステップ {{n}}',
+      stepShot: '{{name}} のステップ {{n}}',
+      free: '無料・登録不要',
+      titleSuffix: '機能・使い方・制限',
+    },
   },
   ar: {
     skip: 'انتقل إلى المحتوى الرئيسي',
@@ -105,6 +176,20 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: 'هذه الصفحة متوفرة بالعربية.',
     suggestGo: 'اقرأ بالعربية',
     dismiss: 'إغلاق',
+    guide: {
+      link: 'طريقة الاستخدام',
+      features: 'ما الذي تفعله',
+      steps: 'طريقة الاستخدام',
+      limits: 'القيود والملاحظات',
+      privacy: 'الخصوصية',
+      faq: 'أسئلة',
+      related: 'أدوات ذات صلة',
+      open: 'افتح {{name}}',
+      step: 'الخطوة {{n}}',
+      stepShot: '{{name}}، الخطوة {{n}}',
+      free: 'مجاني · بدون تسجيل',
+      titleSuffix: 'الميزات وطريقة الاستخدام والقيود',
+    },
   },
   ru: {
     skip: 'Перейти к основному содержанию',
@@ -122,5 +207,19 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: 'Эта страница есть на русском.',
     suggestGo: 'Читать на русском',
     dismiss: 'Закрыть',
+    guide: {
+      link: 'Как пользоваться',
+      features: 'Возможности',
+      steps: 'Как пользоваться',
+      limits: 'Ограничения',
+      privacy: 'Конфиденциальность',
+      faq: 'Вопросы',
+      related: 'Похожие инструменты',
+      open: 'Открыть {{name}}',
+      step: 'Шаг {{n}}',
+      stepShot: '{{name}}, шаг {{n}}',
+      free: 'Бесплатно · Без регистрации',
+      titleSuffix: 'возможности, инструкция и ограничения',
+    },
   },
 };

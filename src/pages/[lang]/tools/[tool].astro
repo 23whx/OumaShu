@@ -1,0 +1,14 @@
+---
+// 其他語言的工具介紹頁：/zh-cn/tools/image-ocr/ …
+import GuidePage from '../../../components/pages/GuidePage.astro';
+import { GUIDE_IDS } from '../../../data/guides';
+import { PREFIXED, localeFromPrefix } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return PREFIXED.flatMap((l) => GUIDE_IDS.map((tool) => ({ params: { lang: l.prefix, tool } })));
+}
+
+const locale = localeFromPrefix(Astro.params.lang);
+---
+
+<GuidePage locale={locale} toolId={Astro.params.tool!} />
