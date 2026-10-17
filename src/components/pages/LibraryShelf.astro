@@ -35,10 +35,14 @@ const checked = shelfChecked(shelf);
 const hasOwn = shelf.tools.some((x) => libTool(x.id).own);
 const siblings = shelvesIn(shelf.section).filter((s) => s.id !== shelfId);
 const textDir = locale === 'ar' ? 'rtl' : undefined;
+// 書架上網站很多時，前幾個用大卡片，其餘用精簡列，頁面才不會太長
+const FEATURED = 6;
+const featured = shelf.tools.length > FEATURED + 2 ? shelf.tools.slice(0, FEATURED) : shelf.tools;
+const rest = shelf.tools.slice(featured.length);
 const listSep = locale.startsWith('zh') || locale === 'ja-JP' ? '、' : locale === 'ar' ? '، ' : ', ';
 
 const title = fill(c.ui.shelfMetaTitle, { title: copy.title, count });
-const description = fill(c.ui.shelfMetaDesc, { intro: copy.intro, names: names.join(listSep) });
+const description = fill(c.ui.shelfMetaDesc, { intro: copy.intro, names: names.slice(0, 8).join(listSep) });
 
 const schema = [
   {
@@ -97,10 +101,21 @@ const schema = [
     </header>
 
     <ol class="lshelf__list">
-      {shelf.tools.map((x, i) => (
+      {featured.map((x, i) => (
         <li><LibToolCard locale={locale} shelfId={shelfId} toolId={x.id} rank={i + 1} tested={x.tested} /></li>
       ))}
     </ol>
+
+    {rest.length > 0 && (
+      <section class="lshelf__rest" aria-labelledby="shelf-rest">
+        <h2 id="shelf-rest">{fill(c.ui.moreOnShelf, { count: rest.length })}</h2>
+        <ol class="lshelf__rows" start={FEATURED + 1}>
+          {rest.map((x, i) => (
+            <li><LibToolCard locale={locale} shelfId={shelfId} toolId={x.id} rank={FEATURED + i + 1} tested={x.tested} compact /></li>
+          ))}
+        </ol>
+      </section>
+    )}
 
     {hasOwn && <p class="lshelf__own" dir={textDir}><span class="lshelf__seal" aria-hidden="true" lang="ja">櫻</span>{c.ui.ownNote}</p>}
 
@@ -199,6 +214,22 @@ const schema = [
     margin: 34px 0 0;
     padding: 0;
     list-style: none;
+  }
+  .lshelf__rest {
+    margin-top: 44px;
+  }
+  .lshelf__rest h2 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: var(--color-muted);
+  }
+  .lshelf__rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--c);
   }
   .lshelf__own {
     display: flex;

@@ -30,7 +30,10 @@ export interface LibCopy {
     open: string;               // {{name}}
     source: string;             // 原始碼
     price: { free: string; freemium: string; 'free-personal': string };
-    runs: { local: string; cloud: string; app: string; builtin: string; site: string };
+    runs: { local: string; cloud: string; app: string; builtin: string; site: string; web: string };
+    article: string;            // 標在「一篇文章」上
+    channel: string;            // 標在「影片頻道」上
+    moreOnShelf: string;        // {{count}}：書架上精簡列表的標題
     noSignup: string;
     signupForm: string;
     openSource: string;
@@ -71,7 +74,7 @@ export interface LibCopy {
     leftOut: StandardItem[];
     labelsTitle: string;
     labelsLead: string;
-    /** 每個標籤的解釋，鍵與 ui 的標籤一致：free freemium free-personal local cloud app builtin site openSource ads tested */
+    /** 每個標籤的解釋，鍵與 ui 的標籤一致：free freemium free-personal local cloud app builtin site web openSource github ads tested */
     labels: Record<string, string>;
     updated: string;            // {{date}}
   };

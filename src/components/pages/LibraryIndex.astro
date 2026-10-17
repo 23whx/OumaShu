@@ -24,6 +24,8 @@ const pageUrl = `${SITE_URL}${localePath(locale, LIB_PATH)}`;
 const vals = { tools: LIB_TOOL_COUNT, shelves: LIB_SHELF_COUNT };
 const checked = libraryChecked();
 const textDir = locale === 'ar' ? 'rtl' : undefined;
+// 書架卡片上最多列出幾個網站名，其餘顯示 +N
+const SHOW = 5;
 const countText = (n: number) => (n === 1 ? c.ui.toolsOne : fill(c.ui.toolsCount, { count: n }));
 
 const allShelves = SECTION_IDS.flatMap((s) => shelvesIn(s));
@@ -109,7 +111,8 @@ const schema = [
                   <h3><a href={localePath(locale, shelfPath(shelf.id))}>{copy.name}</a></h3>
                   <p class="lshelfc__intro" dir={textDir}>{copy.intro}</p>
                   <p class="lshelfc__tools">
-                    {names.map((n, i) => <span class:list={{ 'is-pick': i === 0 }}>{n}</span>)}
+                    {names.slice(0, SHOW).map((n, i) => <span class:list={{ 'is-pick': i === 0 }}>{n}</span>)}
+                    {names.length > SHOW && <span class="is-more">+{names.length - SHOW}</span>}
                   </p>
                   <span class="lshelfc__n">{countText(shelf.tools.length)}</span>
                 </li>
@@ -410,6 +413,10 @@ const schema = [
   }
   .lshelfc__tools .is-pick {
     background: color-mix(in srgb, var(--c) 14%, transparent);
+  }
+  .lshelfc__tools .is-more {
+    background: none;
+    color: var(--color-muted);
   }
   .lshelfc__n {
     margin-top: auto;

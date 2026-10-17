@@ -24,7 +24,7 @@ const checked = libraryChecked();
 const textDir = locale === 'ar' ? 'rtl' : undefined;
 
 // 標籤樣本：與工具卡上的寫法一致
-const labelChips: { key: string; text: string; kind: 'ok' | 'warn' | 'info' }[] = [
+const labelChips: { key: string; text: string; kind: 'ok' | 'warn' | 'info' | 'gh' }[] = [
   { key: 'free', text: c.ui.price.free, kind: 'ok' },
   { key: 'freemium', text: c.ui.price.freemium, kind: 'info' },
   { key: 'free-personal', text: c.ui.price['free-personal'], kind: 'info' },
@@ -33,7 +33,9 @@ const labelChips: { key: string; text: string; kind: 'ok' | 'warn' | 'info' }[] 
   { key: 'app', text: c.ui.runs.app, kind: 'info' },
   { key: 'builtin', text: c.ui.runs.builtin, kind: 'info' },
   { key: 'site', text: c.ui.runs.site, kind: 'info' },
+  { key: 'web', text: c.ui.runs.web, kind: 'info' },
   { key: 'openSource', text: c.ui.openSource, kind: 'ok' },
+  { key: 'github', text: 'GitHub', kind: 'gh' },
   { key: 'ads', text: c.ui.ads, kind: 'warn' },
   { key: 'tested', text: fill(c.ui.tested, { date: '' }).trim(), kind: 'info' },
 ];
@@ -283,6 +285,14 @@ const schema = [
   }
   .chipx--warn {
     background: color-mix(in srgb, #d97706 13%, transparent);
+  }
+  .chipx--gh {
+    background: #24292f;
+    color: #fff;
+  }
+  :global([data-theme='dark']) .chipx--gh {
+    background: #f0f6fc;
+    color: #0d1117;
   }
   .lstd__updated {
     margin: 44px 0 0;

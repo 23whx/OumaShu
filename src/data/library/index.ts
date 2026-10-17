@@ -2,7 +2,7 @@
 import type { Locale } from '../../i18n/routes';
 import { dict } from '../../i18n/routes';
 import { toolEntry } from '../guides';
-import { LIB_TOOLS, SHELVES, SECTIONS, type LibTool, type SectionId, type Shelf } from './catalog';
+import { LIB_TOOLS, SHELVES, SECTIONS, onGitHub, type LibTool, type SectionId, type Shelf } from './catalog';
 import type { LibCopy } from './copy/types';
 import { en } from './copy/en';
 import { zhCN } from './copy/zh-CN';
@@ -10,11 +10,21 @@ import { zhTW } from './copy/zh-TW';
 import { ja } from './copy/ja-JP';
 import { ar } from './copy/ar';
 import { ru } from './copy/ru';
+import { GROUPS } from './more/index.ts';
 
-export { SECTIONS, SHELVES, LIB_TOOLS };
+export { SECTIONS, SHELVES, LIB_TOOLS, onGitHub };
 export type { LibTool, Shelf, SectionId, LibCopy };
 
 const COPY: Record<Locale, LibCopy> = { en, 'zh-CN': zhCN, 'zh-TW': zhTW, 'ja-JP': ja, ar, ru };
+
+// 擴充大類的書架文案寫在 more/*.ts 的書架旁邊，這裡併入各語言的 copy.shelves
+for (const [locale, copy] of Object.entries(COPY) as [Locale, LibCopy][]) {
+  for (const g of GROUPS) {
+    for (const s of g.shelves) {
+      copy.shelves[s.id] = { name: s.name[locale], title: s.title[locale], intro: s.intro[locale], keywords: s.kw[locale] };
+    }
+  }
+}
 
 export const LIB_PATH = '/library/';
 export const STANDARDS_PATH = '/library/standards/';
@@ -47,6 +57,16 @@ export function libToolName(id: string, locale: Locale): string {
   return COPY[locale].names[id] ?? tool.name;
 }
 
+/** 工具在某個書架上的說明：書架專屬說明優先，否則用工具的一句話介紹 */
+export const libNote = (locale: Locale, shelfId: string, id: string): string =>
+  COPY[locale].notes[`${shelfId}/${id}`] ?? libTool(id).d?.[locale] ?? anyNote(locale, id);
+
+/** 原有工具放到新書架時，沿用它在其他書架上的說明 */
+function anyNote(locale: Locale, id: string): string {
+  const key = Object.keys(COPY[locale].notes).find((k) => k.endsWith(`/${id}`));
+  return key ? COPY[locale].notes[key] : '';
+}
+
 /** 打開工具的網址：本站 imghub 工具跳到對應語言版本 */
 export const libToolUrl = (id: string, locale: Locale): string => {
   const tool = libTool(id);
@@ -67,8 +87,13 @@ export const libraryChecked = (): string => LIB_TOOLS.map((t) => t.checked).sort
     if (seen.has(t.id)) problems.push(`重複的工具 id：${t.id}`);
     seen.add(t.id);
     if (!t.url.startsWith('https://')) problems.push(`${t.id} 的網址不是 https`);
+    if (t.d) for (const l of Object.keys(COPY)) if (!t.d[l]?.trim()) problems.push(`[${l}] ${t.id} 缺少一句話介紹`);
   }
+  const shelfIds = new Set<string>();
   for (const shelf of SHELVES) {
+    if (shelfIds.has(shelf.id)) problems.push(`重複的書架 id：${shelf.id}`);
+    shelfIds.add(shelf.id);
+    if (!shelf.tools.length) problems.push(`書架 ${shelf.id} 是空的`);
     for (const { id } of shelf.tools) if (!byId.has(id)) problems.push(`書架 ${shelf.id} 引用了不存在的工具 ${id}`);
   }
   const used = new Set(SHELVES.flatMap((s) => s.tools.map((x) => x.id)));
@@ -77,8 +102,11 @@ export const libraryChecked = (): string => LIB_TOOLS.map((t) => t.checked).sort
     for (const shelf of SHELVES) {
       const c = copy.shelves[shelf.id];
       if (!c?.name || !c.title || !c.intro || !c.keywords?.length) problems.push(`[${locale}] 缺少書架文案：${shelf.id}`);
+      const seenOnShelf = new Set<string>();
       for (const { id } of shelf.tools) {
-        if (!copy.notes[`${shelf.id}/${id}`]) problems.push(`[${locale}] 缺少說明：${shelf.id}/${id}`);
+        if (seenOnShelf.has(id)) problems.push(`書架 ${shelf.id} 重複放了 ${id}`);
+        seenOnShelf.add(id);
+        if (!libNote(locale as Locale, shelf.id, id)) problems.push(`[${locale}] 缺少說明：${shelf.id}/${id}`);
       }
     }
     for (const key of Object.keys(copy.notes)) {
