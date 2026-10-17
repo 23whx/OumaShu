@@ -1,0 +1,13 @@
+---
+// 其他語言的收錄標準頁
+import LibraryStandards from '../../../components/pages/LibraryStandards.astro';
+import { PREFIXED, localeFromPrefix } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return PREFIXED.map((l) => ({ params: { lang: l.prefix } }));
+}
+
+const locale = localeFromPrefix(Astro.params.lang);
+---
+
+<LibraryStandards locale={locale} />

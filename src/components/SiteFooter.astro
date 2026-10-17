@@ -7,6 +7,7 @@ import { UI } from '../i18n/ui';
 import { FAQ } from '../i18n/faq';
 import { factValues } from '../data/stats';
 import { fill } from '../i18n/routes';
+import { LIB_PATH, STANDARDS_PATH, libCopy } from '../data/library';
 
 export interface Props {
   locale?: Locale;
@@ -47,6 +48,8 @@ const year = new Date().getFullYear();
       <span class="foot__label" id="foot-contact">{t.footer.contact}</span>
       <a href="mailto:wanghongxiang23@gmail.com">wanghongxiang23@gmail.com</a>
       <a href="https://x.com/Rollkey4" target="_blank" rel="noopener">@Rollkey4 on X</a>
+      <a href={localePath(locale, LIB_PATH)}>{libCopy(locale).ui.library}</a>
+      <a href={localePath(locale, STANDARDS_PATH)}>{libCopy(locale).ui.standardsLink}</a>
       <a href="/about/" id="foot-about">{t.footer.about}</a>
       <a href="/privacy/" id="foot-privacy">{t.footer.privacy}</a>
     </div>

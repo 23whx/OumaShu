@@ -10,8 +10,9 @@ import { tools } from '../../data/tools';
 import { getLines } from '../../data/lines';
 import { SITE_URL, ids, toolListNode } from '../../utils/schema';
 import { homeSeo } from '../../data/seo';
-import { dict, fill, localePath, type Locale } from '../../i18n/routes';
+import { dict, fill, localeInfo, localePath, type Locale } from '../../i18n/routes';
 import { UI } from '../../i18n/ui';
+import { LIB_PATH, libCopy } from '../../data/library';
 
 export interface Props {
   locale: Locale;
@@ -32,6 +33,10 @@ const STATIONS_PER_ROW = 7;
 const chunk = <T,>(items: T[], size: number): T[][] =>
   Array.from({ length: Math.ceil(items.length / size) }, (_, i) => items.slice(i * size, (i + 1) * size));
 const themeLabels = { label: t.theme_label, ...t.theme };
+const home_ = UI[locale].home;
+const lib = libCopy(locale);
+// 阿拉伯文輸入框從右往左打字（頁面整體仍是 ltr）
+const dirAttr = locale === 'ar' ? 'rtl' : undefined;
 ---
 
 <Base
@@ -54,11 +59,12 @@ const themeLabels = { label: t.theme_label, ...t.theme };
         <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
       </a>
 
-      <div class="search" role="search">
+      <!-- 首屏搜索框捲出視窗後，頂欄才出現這個小搜索框（與首屏同步） -->
+      <div class="search" role="search" data-dock inert>
         <svg class="search__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
-        <label class="sr-only" for="search-input">{t.nav.search}</label>
-        <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder={t.search_placeholder} />
-        <kbd class="search__kbd" aria-hidden="true" id="search-kbd">/</kbd>
+        <label class="sr-only" for="dock-input">{t.nav.search}</label>
+        <input id="dock-input" type="search" autocomplete="off" spellcheck="false" placeholder={t.search_placeholder} dir={dirAttr} />
+        <kbd class="search__kbd" aria-hidden="true">/</kbd>
       </div>
 
       <div class="status">
@@ -76,6 +82,10 @@ const themeLabels = { label: t.theme_label, ...t.theme };
       </div>
 
       <div class="controls">
+        <a class="navlink" href={localePath(locale, LIB_PATH)}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3v16H5zM10 4h3v16h-3zM15.2 4.6l2.9-.8 3.9 15.5-2.9.8z" /></svg>
+          <span>{lib.ui.library}</span>
+        </a>
         <LangMenu locale={locale} path="/" />
         <button id="theme-toggle-btn" class="ctrl" type="button" data-mode="system" aria-label={t.theme_label} data-labels={JSON.stringify(themeLabels)}>
           <svg class="i-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" /></svg>
@@ -87,10 +97,64 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   </header>
 
   <main id="main-content">
-    <!-- 駅名標 + 標題 -->
-    <section class="hero">
-      <div class="hero__copy">
+    <!-- 首屏：站名牌 + 搜索（像搜索引擎一樣，進站先看到搜索框） -->
+    <section class="gate" aria-labelledby="hero-title">
+      <div class="gate__inner">
+        <div class="gate__mark" aria-hidden="true">
+          <span class="seal seal--lg" lang="ja">櫻</span>
+          <span class="gate__name">
+            <span class="gate__kanji" lang="ja">櫻滿集</span>
+            <span class="gate__roman">Ōmashū</span>
+          </span>
+        </div>
+        <ol class="gate__ribbon" aria-hidden="true">
+          {lines.map((line, i) => <li style={`--c:${line.meta.color};--i:${i}`}></li>)}
+        </ol>
+
         <h1 id="hero-title">{t.hero_title}</h1>
+
+        <div class="qbox" role="search" data-qbox data-tpl={JSON.stringify({ seeAll: home_.seeAll, seeAllOne: home_.seeAllOne, noMatch: home_.noMatch, groupOwn: lib.ui.groupOwn, groupLibrary: lib.ui.groupLibrary, shelfHit: lib.ui.shelfHit })}
+          data-lib-index={`/library-index/${localeInfo(locale).prefix || 'en'}.json`}>
+          <label class="sr-only" for="search-input">{t.nav.search}</label>
+          <svg class="qbox__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
+          <input
+            id="search-input"
+            type="search"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="qbox-list"
+            aria-autocomplete="list"
+            autocomplete="off"
+            spellcheck="false"
+            enterkeyhint="search"
+            placeholder={home_.placeholder}
+            dir={dirAttr}
+          />
+          <kbd class="qbox__kbd" aria-hidden="true">/</kbd>
+          <button type="button" class="qbox__go" data-qbox-go aria-label={t.nav.search}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          </button>
+          <div class="qbox__panel" data-qbox-panel hidden>
+            <ul class="qbox__list" id="qbox-list" role="listbox" aria-label={home_.results}></ul>
+            <div class="qbox__empty" data-qbox-empty hidden>
+              <p class="qbox__empty-title"></p>
+              <p class="qbox__empty-hint">{home_.noHint}</p>
+            </div>
+            <button type="button" class="qbox__all" data-qbox-all></button>
+          </div>
+        </div>
+
+        <p class="gate__try" dir={dirAttr}>
+          <span class="gate__try-label">{home_.try}</span>
+          {home_.suggestions.map((s) => <button type="button" class="gate__q" data-q={s}>{s}</button>)}
+        </p>
+        <a class="gate__lib" href={localePath(locale, LIB_PATH)}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3v16H5zM10 4h3v16h-3zM15.2 4.6l2.9-.8 3.9 15.5-2.9.8z" /></svg>
+          {lib.ui.browseLibrary} →
+        </a>
+      </div>
+
+      <div class="gate__foot">
         <p id="hero-sub" data-tpl-tools={tools.length} data-tpl-lines={lines.length}>
           {fill(t.hero_sub, { tools: tools.length, lines: lines.length })}
         </p>
@@ -100,33 +164,15 @@ const themeLabels = { label: t.theme_label, ...t.theme };
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5.5 13.5H12L11 21l7.5-10.5H12L13 3Z" /></svg><span id="intro-feature-noinstall-title">{t.intro_feature_noinstall_title}</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" /><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0M4 4l16 16" /></svg><span id="fact-nosignup">{t.fact_nosignup}</span></li>
         </ul>
-      </div>
-
-      <div class="ekimei">
-        <div class="ekimei__top">
-          <span class="seal seal--lg" aria-hidden="true" lang="ja">櫻</span>
-          <div class="ekimei__name" aria-hidden="true">
-            <span class="ekimei__kanji" lang="ja">櫻滿集</span>
-            <span class="ekimei__roman">Ōmashū</span>
-          </div>
-        </div>
-        <nav class="ekimei__band" aria-label={t.map_label}>
-          <a href={`#line-${lines[0].id}`} class="ekimei__next" style={`--c:${lines[0].meta.color}`}>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" /></svg>
-            <span class="mono">{lines[0].meta.code}</span>
-            <span data-cat={lines[0].id}>{t.categories[lines[0].id] ?? lines[0].name}</span>
-          </a>
-          <a href={`#line-${lines[lines.length - 1].id}`} class="ekimei__next ekimei__next--r" style={`--c:${lines[lines.length - 1].meta.color}`}>
-            <span data-cat={lines[lines.length - 1].id}>{t.categories[lines[lines.length - 1].id] ?? lines[lines.length - 1].name}</span>
-            <span class="mono">{lines[lines.length - 1].meta.code}</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
-          </a>
-        </nav>
+        <a class="gate__down" href="#route-map">
+          <span>{fill(home_.browse, { lines: lines.length, tools: tools.length })}</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v13M6 12l6 6 6-6" /></svg>
+        </a>
       </div>
     </section>
 
     <!-- 線路圖 -->
-    <section class="map" aria-labelledby="map-title">
+    <section class="map" id="route-map" aria-labelledby="map-title">
       <h2 id="map-title" class="sr-only">{t.map_label}</h2>
       <ol class="map__lines">
         {lines.map((line, i) => (
@@ -218,6 +264,7 @@ const themeLabels = { label: t.theme_label, ...t.theme };
 <script>
   // 頁面文字已按語言寫進 HTML；這裡只負責篩選、搜索、主題與天氣
   import { tools } from '../../data/tools';
+  import { trackSearch } from '../../utils/track';
 
   const fill = (tpl: string, vals: Record<string, string | number>) =>
     tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => String(vals[k] ?? ''));
@@ -231,6 +278,14 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   const mapLines = $$<HTMLElement>('.mline');
   const filterButtons = $$<HTMLButtonElement>('[data-filter]');
   const searchInput = $<HTMLInputElement>('#search-input')!;
+  const dockInput = $<HTMLInputElement>('#dock-input')!;
+  const dock = $('[data-dock]')!;
+  const qbox = $('[data-qbox]')!;
+  const panel = $('[data-qbox-panel]')!;
+  const list = $('#qbox-list')!;
+  const emptyBox = $('[data-qbox-empty]')!;
+  const allBtn = $<HTMLButtonElement>('[data-qbox-all]')!;
+  const tpl: Record<string, string> = JSON.parse(qbox.dataset.tpl || '{}');
   const searchStatus = $('#search-status')!;
   const emptyState = $('#empty-state')!;
   const directory = $('#directory')!;
@@ -249,16 +304,27 @@ const themeLabels = { label: t.theme_label, ...t.theme };
     haystack.set(id, parts.join(' ').replace(/\s+/g, ' ').toLowerCase());
   }
 
+  // 多個詞用空格分開時，每個詞都要出現（「画像 圧縮」）
+  const termsOf = (q: string) => q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  // 拉丁 / 西里爾字母的長詞去掉詞尾再比（сжатие ↔ сжатия、images ↔ image）
+  const stem = (term: string) =>
+    /^[a-zа-яё]+$/.test(term) && term.length >= 5 ? term.slice(0, term.length >= 7 ? -2 : -1) : term;
+  const matches = (id: string, terms: string[]) => {
+    const text = haystack.get(id) || '';
+    return terms.every((term) => text.includes(term) || text.includes(stem(term)));
+  };
+
   // ---------- 篩選 / 搜索 ----------
   function apply() {
-    const q = query.trim().toLowerCase();
+    const terms = termsOf(query);
+    const q = terms.join(' ');
     let shown = 0;
     const visible = new Set<string>();
 
     for (const card of cards) {
       const id = card.dataset.toolId!;
       const lineOk = filter === 'all' || card.dataset.line === filter;
-      const queryOk = !q || (haystack.get(id) || '').includes(q);
+      const queryOk = !terms.length || matches(id, terms);
       const on = lineOk && queryOk;
       card.hidden = !on;
       if (on) {
@@ -289,38 +355,285 @@ const themeLabels = { label: t.theme_label, ...t.theme };
       : '';
   }
 
+  // ---------- 首屏搜索框的即時建議 ----------
+  const info = new Map(cards.map((card) => {
+    const main = card.querySelector<HTMLAnchorElement>('.tcard__main')!;
+    return [card.dataset.toolId!, {
+      name: main.textContent?.trim() ?? '',
+      href: main.href,
+      desc: card.querySelector('.tcard__desc')?.textContent?.trim() ?? '',
+      code: card.querySelector('.tcard__code')?.textContent?.trim() ?? '',
+      color: card.closest<HTMLElement>('.dline')?.style.getPropertyValue('--c') ?? '',
+    }];
+  }));
+  const MAX_OWN = 5;
+  const MAX_LIB = 4;
+  let active = -1;
+  // 建議列表裡的每一列：本站工具在新分頁打開，圖書館書架在本頁打開
+  type Opt = { key: string; href: string; external: boolean; code: string; color: string; name: string; desc: string };
+  let options: Opt[] = [];
+  let ownCount = 0;
+
+  // 名稱命中的排前面，其次是描述與標籤命中的
+  function rank(terms: string[]) {
+    const ids = cards.map((c) => c.dataset.toolId!).filter((id) => matches(id, terms));
+    const score = (id: string) => {
+      const name = (info.get(id)?.name ?? '').toLowerCase();
+      if (name.startsWith(terms[0])) return 0;
+      if (terms.every((term) => name.includes(term))) return 1;
+      return 2;
+    };
+    return ids.map((id, i) => ({ id, s: score(id) * 1000 + i })).sort((a, b) => a.s - b.s).map((r) => r.id);
+  }
+
+  // ---------- 工具圖書館索引：第一次用搜索框時才載入 ----------
+  type LibShelf = { id: string; code: string; color: string; name: string; intro: string; href: string; count: number; text: string; tools: string[] };
+  type LibToolHit = { name: string; shelf: string; href: string; code: string; color: string };
+  let lib: { shelves: LibShelf[]; tools: LibToolHit[] } | null = null;
+  let libLoading: Promise<void> | null = null;
+  function loadLibrary() {
+    libLoading ??= fetch(qbox.dataset.libIndex!)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        lib = data;
+        if (searchInput.value.trim() && !panel.hidden) suggest();
+      })
+      .catch(() => {});
+    return libLoading;
+  }
+  searchInput.addEventListener('focus', loadLibrary, { once: true });
+  searchInput.addEventListener('pointerenter', loadLibrary, { once: true });
+
+  function libraryHits(terms: string[]): Opt[] {
+    if (!lib) return [];
+    const has = (text: string) => terms.every((t) => text.includes(t) || text.includes(stem(t)));
+    const shelves = lib.shelves
+      .filter((s) => has(`${s.text} ${s.tools.join(' ').toLowerCase()}`))
+      .map((s) => ({
+        key: `lib-${s.id}`, href: s.href, external: false, code: s.code, color: s.color,
+        name: s.name, desc: `${fill(tpl.shelfHit || '', { count: s.count })} ${s.tools.join(' / ')}`,
+      }));
+    // 工具名直接命中、而且它的書架還沒列出來時，補一列
+    const shown = new Set(shelves.map((s) => s.href));
+    const tools = lib.tools
+      .filter((t) => has(t.name.toLowerCase()) && !shown.has(t.href.split('#')[0]))
+      .map((t) => ({ key: `lib-t-${t.href}`, href: t.href, external: false, code: t.code, color: t.color, name: t.name, desc: t.shelf }));
+    return [...shelves, ...tools].slice(0, MAX_LIB);
+  }
+
+  function setActive(i: number) {
+    active = i;
+    list.querySelectorAll<HTMLElement>('[role="option"]').forEach((opt, j) => {
+      opt.setAttribute('aria-selected', String(j === i));
+      // 只捲動建議面板本身，不帶動整頁
+      if (j === i) {
+        const top = opt.offsetTop;
+        const bottom = top + opt.offsetHeight;
+        if (top < panel.scrollTop) panel.scrollTop = top;
+        else if (bottom > panel.scrollTop + panel.clientHeight) panel.scrollTop = bottom - panel.clientHeight;
+      }
+    });
+    if (i >= 0) searchInput.setAttribute('aria-activedescendant', `qopt-${i}`);
+    else searchInput.removeAttribute('aria-activedescendant');
+  }
+
+  function openPanel(open: boolean) {
+    panel.hidden = !open;
+    qbox.classList.toggle('is-open', open);
+    searchInput.setAttribute('aria-expanded', String(open));
+    if (!open) setActive(-1);
+  }
+
+  function optionRow(o: Opt, i: number) {
+    const li = document.createElement('li');
+    li.id = `qopt-${i}`;
+    li.setAttribute('role', 'option');
+    li.setAttribute('aria-selected', 'false');
+    li.style.setProperty('--c', o.color);
+    const a = document.createElement('a');
+    a.className = 'qopt';
+    a.href = o.href;
+    if (o.external) {
+      a.target = '_blank';
+      a.rel = 'noopener';
+    }
+    a.tabIndex = -1;
+    const badge = document.createElement('span');
+    badge.className = 'qopt__code mono';
+    badge.textContent = o.code;
+    const text = document.createElement('span');
+    text.className = 'qopt__text';
+    const name = document.createElement('span');
+    name.className = 'qopt__name';
+    name.textContent = o.name;
+    const desc = document.createElement('span');
+    desc.className = 'qopt__desc';
+    desc.textContent = o.desc;
+    text.append(name, desc);
+    const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    arrow.setAttribute('viewBox', '0 0 24 24');
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.classList.add('qopt__go');
+    arrow.innerHTML = o.external ? '<path d="M7 17 17 7M9 7h8v8" />' : '<path d="M5 12h13M13 6l6 6-6 6" />';
+    a.append(badge, text, arrow);
+    li.append(a);
+    return li;
+  }
+
+  function groupHead(label: string) {
+    const li = document.createElement('li');
+    li.className = 'qgroup';
+    li.setAttribute('role', 'presentation');
+    li.textContent = label;
+    return li;
+  }
+
+  function suggest() {
+    const terms = termsOf(searchInput.value);
+    if (!terms.length) {
+      openPanel(false);
+      return;
+    }
+    const own = rank(terms);
+    ownCount = own.length;
+    const ownOpts: Opt[] = own.slice(0, MAX_OWN).map((id) => {
+      const d = info.get(id)!;
+      return { key: id, href: d.href, external: true, code: d.code, color: d.color, name: d.name, desc: d.desc };
+    });
+    const libOpts = libraryHits(terms);
+    options = [...ownOpts, ...libOpts];
+
+    const rows: HTMLElement[] = [];
+    if (ownOpts.length) {
+      if (libOpts.length) rows.push(groupHead(tpl.groupOwn || ''));
+      ownOpts.forEach((o, i) => rows.push(optionRow(o, i)));
+    }
+    if (libOpts.length) {
+      rows.push(groupHead(tpl.groupLibrary || ''));
+      libOpts.forEach((o, i) => rows.push(optionRow(o, ownOpts.length + i)));
+    }
+    list.replaceChildren(...rows);
+
+    emptyBox.hidden = options.length > 0;
+    emptyBox.querySelector('.qbox__empty-title')!.textContent = fill(tpl.noMatch || '', { q: searchInput.value.trim() });
+    allBtn.hidden = ownCount === 0;
+    allBtn.textContent = ownCount === 1 ? tpl.seeAllOne : fill(tpl.seeAll || '', { count: ownCount });
+    setActive(-1);
+    openPanel(true);
+    trackSearch('home', searchInput.value, options.length);
+  }
+
+  // 帶著結果「下車」到目錄
+  function goToResults() {
+    openPanel(false);
+    directory.scrollIntoView({ block: 'start' });
+  }
+
+  // 兩個搜索框共用同一個查詢
   let searchTimer: number | undefined;
-  searchInput.addEventListener('input', () => {
+  function onType(from: HTMLInputElement) {
+    const other = from === searchInput ? dockInput : searchInput;
+    other.value = from.value;
+    if (from === searchInput) suggest();
     window.clearTimeout(searchTimer);
     searchTimer = window.setTimeout(() => {
-      query = searchInput.value;
+      query = from.value;
       apply();
     }, 120);
+  }
+  function clearQuery() {
+    searchInput.value = '';
+    dockInput.value = '';
+    query = '';
+    openPanel(false);
+    apply();
+  }
+
+  searchInput.addEventListener('input', () => onType(searchInput));
+  dockInput.addEventListener('input', () => {
+    onType(dockInput);
+    trackSearch('home-topbar', dockInput.value, rank(termsOf(dockInput.value)).length);
+    if (directory.getBoundingClientRect().top > window.innerHeight * 0.6) directory.scrollIntoView({ block: 'start' });
   });
+  searchInput.addEventListener('focus', () => searchInput.value.trim() && suggest());
   searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      searchInput.value = '';
-      query = '';
-      apply();
-      searchInput.blur();
+    const n = options.length;
+    if (e.key === 'ArrowDown' && !panel.hidden && n) {
+      e.preventDefault();
+      setActive((active + 1) % n);
+    } else if (e.key === 'ArrowUp' && !panel.hidden && n) {
+      e.preventDefault();
+      setActive(active <= 0 ? n - 1 : active - 1);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (active >= 0) list.querySelectorAll<HTMLAnchorElement>('.qopt')[active]?.click();
+      else if (searchInput.value.trim()) {
+        window.clearTimeout(searchTimer);
+        query = searchInput.value;
+        apply();
+        goToResults();
+      }
+    } else if (e.key === 'Escape') {
+      if (!panel.hidden) openPanel(false);
+      else {
+        clearQuery();
+        searchInput.blur();
+      }
     }
   });
+  dockInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      clearQuery();
+      dockInput.blur();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!qbox.contains(target) && !target.closest('.gate__q')) openPanel(false);
+  });
+  allBtn.addEventListener('click', goToResults);
+  $('[data-qbox-go]')!.addEventListener('click', () => {
+    if (!searchInput.value.trim()) {
+      searchInput.focus();
+      return;
+    }
+    window.clearTimeout(searchTimer);
+    query = searchInput.value;
+    apply();
+    goToResults();
+  });
+  for (const btn of $$<HTMLButtonElement>('.gate__q')) {
+    btn.addEventListener('click', () => {
+      searchInput.value = btn.dataset.q!;
+      onType(searchInput);
+      searchInput.focus();
+    });
+  }
+
+  // 首屏搜索框捲出視窗時，頂欄顯示小搜索框
+  new IntersectionObserver(([entry]) => {
+    const docked = !entry.isIntersecting;
+    dock.classList.toggle('is-docked', docked);
+    dock.toggleAttribute('inert', !docked);
+    if (docked) openPanel(false);
+  }, { rootMargin: '-64px 0px 0px 0px' }).observe(qbox);
+
   document.addEventListener('keydown', (e) => {
     const target = e.target as HTMLElement;
     const typing = target.closest('input, textarea, select, [contenteditable="true"]');
     if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
       e.preventDefault();
-      searchInput.focus();
-      searchInput.select();
+      const input = dock.classList.contains('is-docked') && dock.offsetParent ? dockInput : searchInput;
+      input.focus();
+      input.select();
     }
   });
 
   $('#clear-search')!.addEventListener('click', () => {
-    searchInput.value = '';
-    query = '';
+    clearQuery();
     filter = 'all';
     apply();
-    searchInput.focus();
+    (dock.classList.contains('is-docked') && dock.offsetParent ? dockInput : searchInput).focus();
   });
 
   for (const btn of filterButtons) {
@@ -344,9 +657,7 @@ const themeLabels = { label: t.theme_label, ...t.theme };
       e.preventDefault();
       if (card.hidden) {
         filter = 'all';
-        query = '';
-        searchInput.value = '';
-        apply();
+        clearQuery();
       }
       card.scrollIntoView({ block: 'center' });
       card.classList.remove('is-arrive');
@@ -438,6 +749,7 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   const initialQuery = new URLSearchParams(location.search).get('q');
   if (initialQuery) {
     searchInput.value = initialQuery;
+    dockInput.value = initialQuery;
     query = initialQuery;
     apply();
     directory.scrollIntoView({ block: 'start' });
@@ -479,7 +791,17 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   .search {
     position: relative;
     flex: 1;
-    max-width: 560px;
+    max-width: 480px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 220ms;
+  }
+  .search.is-docked {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .search__icon {
     position: absolute;
@@ -494,7 +816,8 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   .search input {
     width: 100%;
     height: 38px;
-    padding: 0 44px 0 40px;
+    padding-block: 0;
+    padding-inline: 40px 44px;
     border: 1px solid var(--hairline);
     border-radius: 10px;
     background: var(--wash);
@@ -604,37 +927,125 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   .ctrl[data-mode='system'] .i-system {
     display: block;
   }
-  /* ---------- 駅名標 + 標題 ---------- */
-  .hero {
-    max-width: 1320px;
+  /* ---------- 首屏：站名牌 + 搜索 ---------- */
+  .gate {
+    position: relative;
+    min-height: calc(100svh - 64px);
+    display: flex;
+    flex-direction: column;
+    padding: 0 32px;
+    isolation: isolate;
+    overflow: clip;
+  }
+  /* 背景：極淡的朱色晨光 + 月台地磚的細線 */
+  .gate::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(60% 46% at 50% 34%, color-mix(in srgb, var(--shu) 7%, transparent), transparent 72%),
+      linear-gradient(to bottom, transparent calc(100% - 1px), var(--hairline) 0) 0 0 / 100% 56px;
+    -webkit-mask-image: radial-gradient(75% 70% at 50% 40%, #000 30%, transparent 78%);
+    mask-image: radial-gradient(75% 70% at 50% 40%, #000 30%, transparent 78%);
+  }
+  .gate__inner {
+    flex: 1;
+    width: 100%;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 52px 32px 40px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 9vh 0 28px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 56px;
+    justify-content: center;
+    text-align: center;
   }
-  .hero h1 {
-    margin: 0;
-    font-size: clamp(2.4rem, 1.4rem + 3.2vw, 4rem);
+  .gate__mark {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .gate__mark .seal--lg {
+    width: 64px;
+    height: 64px;
+    font-size: 38px;
+    box-shadow: inset 0 0 0 4.5px var(--shu), inset 0 0 0 6px rgba(255, 255, 255, 0.92);
+  }
+  .gate__name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .gate__kanji {
+    font-family: var(--font-mincho);
     font-weight: 800;
-    line-height: 1.04;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-    max-width: 15ch;
+    font-size: clamp(44px, 6.4vw, 68px);
+    line-height: 1;
+    letter-spacing: 0.12em;
+    margin-right: -0.12em;
   }
-  :global(html[lang='zh-CN']) .hero h1,
-  :global(html[lang='zh-TW']) .hero h1,
-  :global(html[lang='ja-JP']) .hero h1 {
+  .gate__roman {
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.42em;
+    color: var(--color-muted);
+  }
+  /* 線路色帶：12 條線路的顏色連成一條軌道 */
+  .gate__ribbon {
+    display: flex;
+    gap: 3px;
+    width: min(100%, 340px);
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .gate__ribbon li {
+    flex: 1;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--c);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .gate__ribbon li {
+      animation: ribbon 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: calc(var(--i) * 45ms + 80ms);
+    }
+    .gate__inner > :not(.gate__ribbon) {
+      animation: rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .gate h1 { animation-delay: 60ms; }
+    .qbox { animation-delay: 120ms; }
+    .gate__try { animation-delay: 180ms; }
+  }
+  @keyframes ribbon {
+    from { transform: scaleX(0); opacity: 0; }
+    to { transform: scaleX(1); opacity: 1; }
+  }
+  @keyframes rise {
+    from { transform: translateY(10px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+  .gate h1 {
+    margin: 34px 0 0;
+    font-size: clamp(1.7rem, 1.1rem + 2vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  :global(html[lang='zh-CN']) .gate h1,
+  :global(html[lang='zh-TW']) .gate h1,
+  :global(html[lang='ja-JP']) .gate h1 {
     font-family: var(--font-cjk), sans-serif;
     font-weight: 900;
-    font-size: clamp(2.1rem, 1.1rem + 2.6vw, 3.4rem);
-    letter-spacing: 0.01em;
-    line-height: 1.2;
-    max-width: 13em;
+    font-size: clamp(1.6rem, 1rem + 1.8vw, 2.3rem);
+    letter-spacing: 0.02em;
+    line-height: 1.3;
   }
-  :global(html[lang='ja-JP']) .hero h1,
-  :global(html[lang='ja-JP']) .hero p,
+  :global(html[lang='ja-JP']) .gate h1,
+  :global(html[lang='ja-JP']) .gate p,
   :global(html[lang='ja-JP']) .stn__name {
     word-break: auto-phrase;
     line-break: strict;
@@ -650,108 +1061,371 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   :global(html[lang='ja-JP']) .ja {
     display: none;
   }
-  .hero p {
-    margin: 18px 0 0;
-    max-width: 54ch;
-    font-size: 19px;
+
+  /* 搜索框：像車票一樣的長條，右端是朱印色的出發鈕 */
+  .qbox {
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    margin-top: 30px;
+  }
+  .qbox__icon {
+    position: absolute;
+    left: 22px;
+    top: 32px;
+    width: 22px;
+    height: 22px;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    pointer-events: none;
+  }
+  .qbox input {
+    width: 100%;
+    height: 64px;
+    padding: 0 128px 0 58px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 32px;
+    background: var(--color-card);
+    color: var(--color-fg);
+    font: 500 18px/1 var(--font-sans);
+    box-shadow: var(--shadow-card);
+    outline: none;
+    transition: box-shadow var(--transition-normal), border-color var(--transition-normal), border-radius 120ms;
+  }
+  .qbox input[dir='rtl'] {
+    text-align: right;
+  }
+  .qbox input::placeholder {
+    color: var(--color-muted);
+    opacity: 0.85;
+  }
+  .qbox input::-webkit-search-cancel-button {
+    display: none;
+  }
+  .qbox input:hover {
+    box-shadow: var(--shadow-lift);
+  }
+  .qbox input:focus {
+    border-color: var(--shu);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--shu) 18%, transparent), var(--shadow-lift);
+  }
+  .qbox.is-open input {
+    border-radius: 28px 28px 0 0;
+    box-shadow: var(--shadow-lift);
+    border-color: var(--hairline-strong);
+    border-bottom-color: transparent;
+  }
+  .qbox__kbd {
+    position: absolute;
+    right: 76px;
+    top: 32px;
+    transform: translateY(-50%);
+    min-width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 6px;
+    color: var(--color-muted);
+    font: 600 12px/1 var(--font-mono);
+    transition: opacity var(--transition-normal);
+  }
+  .qbox:focus-within .qbox__kbd {
+    opacity: 0;
+  }
+  .qbox__go {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: var(--shu);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), background var(--transition-normal);
+  }
+  .qbox__go:hover {
+    background: color-mix(in srgb, var(--shu) 86%, #000);
+  }
+  .qbox__go:active {
+    transform: scale(0.94);
+  }
+  .qbox__go svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.2;
+  }
+
+  /* 即時建議 */
+  .qbox__panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 63px;
+    max-height: min(62vh, 520px);
+    overflow-y: auto;
+    padding: 6px 0 8px;
+    border: 1px solid var(--hairline-strong);
+    border-top: 1px solid var(--hairline);
+    border-radius: 0 0 28px 28px;
+    background: var(--color-card);
+    box-shadow: var(--shadow-lift);
+    text-align: left;
+  }
+  .qbox__panel[hidden] {
+    display: none;
+  }
+  .qbox__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .qbox__list :global(.qopt) {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 22px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .qbox__list :global(.qopt:hover),
+  .qbox__list :global([aria-selected='true'] > .qopt) {
+    background: var(--wash-strong);
+  }
+  .qbox__list :global(.qopt__code) {
+    justify-self: start;
+    padding: 4px 6px 3px;
+    border: 2px solid var(--c);
+    border-radius: 6px;
+    background: #fff;
+    color: #18181b;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .qbox__list :global(.qopt__text) {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .qbox__list :global(.qopt__name) {
+    font-weight: 700;
+    font-size: 15.5px;
+    line-height: 1.3;
+  }
+  .qbox__list :global(.qopt__desc) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 13.5px;
+    color: var(--color-muted);
+  }
+  .qbox__list :global(.qopt__go) {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    width: 18px;
+    height: 18px;
+    color: var(--color-muted);
+    opacity: 0;
+    transition: opacity 120ms;
+  }
+  .qbox__list :global(.qopt:hover .qopt__go),
+  .qbox__list :global([aria-selected='true'] > .qopt .qopt__go) {
+    opacity: 1;
+  }
+  .qbox__empty {
+    padding: 18px 22px 10px;
+  }
+  .qbox__empty[hidden],
+  .qbox__all[hidden] {
+    display: none;
+  }
+  .qbox__empty p {
+    margin: 0;
+  }
+  .qbox__empty-title {
+    font-weight: 700;
+  }
+  .qbox__empty-hint {
+    margin-top: 4px !important;
+    font-size: 14px;
+    color: var(--color-muted);
+  }
+  .qbox__all {
+    display: block;
+    width: calc(100% - 28px);
+    margin: 6px 14px 0;
+    padding: 11px 8px;
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    background: none;
+    color: var(--color-brand-ink);
+    font: 700 14px/1.2 var(--font-sans);
+    text-align: center;
+    cursor: pointer;
+  }
+  .qbox__all:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* 建議列表的分組標題（腳本動態建立） */
+  .qbox__list :global(.qgroup) {
+    padding: 12px 22px 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .qbox__list :global(.qgroup:not(:first-child)) {
+    margin-top: 6px;
+    border-top: 1px solid var(--hairline);
+    padding-top: 14px;
+  }
+
+  /* 去圖書館的入口 */
+  .gate__lib {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 18px;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--color-brand-ink);
+    text-decoration: none;
+  }
+  .gate__lib:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .gate__lib svg {
+    width: 17px;
+    height: 17px;
+    stroke-linejoin: round;
+  }
+
+  /* 建議詞 */
+  .gate__try {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0 0;
+  }
+  .gate__try-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-muted);
+    margin-inline-end: 2px;
+  }
+  .gate__q {
+    height: 34px;
+    padding: 0 14px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 999px;
+    background: var(--color-card);
+    color: var(--color-fg);
+    font: 600 14px/1 var(--font-sans);
+    cursor: pointer;
+    transition: border-color var(--transition-normal), background var(--transition-normal);
+  }
+  .gate__q:hover {
+    border-color: var(--shu);
+    background: color-mix(in srgb, var(--shu) 6%, var(--color-card));
+  }
+
+  /* 首屏底部：一句話介紹 + 特點 + 往下看 */
+  .gate__foot {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 22px 0 26px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'sub down' 'facts down';
+    align-items: center;
+    column-gap: 40px;
+    row-gap: 10px;
+    border-top: 1px solid var(--hairline);
+  }
+  .gate__foot p {
+    grid-area: sub;
+    margin: 0;
+    max-width: 78ch;
+    font-size: 15px;
     line-height: 1.55;
     color: var(--color-muted);
     text-wrap: pretty;
   }
   .facts {
+    grid-area: facts;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 26px;
-    margin: 26px 0 0;
+    gap: 8px 22px;
+    margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
   }
   .facts li {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
   }
   .facts svg {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
     color: var(--color-brand-ink);
     stroke-width: 2.2;
   }
-  .ekimei {
-    width: 400px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-card);
-  }
-  .ekimei__top {
-    position: relative;
-    padding: 30px 28px 22px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .ekimei__top .seal {
-    position: absolute;
-    left: 18px;
-    top: 18px;
-  }
-  .ekimei__name {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .ekimei__kanji {
-    font-family: var(--font-ja);
-    font-weight: 900;
-    font-size: 64px;
-    line-height: 1.1;
-    letter-spacing: 0.14em;
-    margin-right: -0.14em;
-  }
-  .ekimei__roman {
-    margin-top: 4px;
-    font-weight: 600;
-    font-size: 17px;
-    letter-spacing: 0.32em;
-    margin-right: -0.32em;
-    color: var(--color-muted);
-  }
-  .ekimei__band {
-    display: flex;
-    justify-content: space-between;
-    background: var(--shu);
-  }
-  .ekimei__next {
+  .gate__down {
+    grid-area: down;
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 11px 16px;
-    color: #fff;
+    gap: 10px;
+    height: 44px;
+    padding: 0 8px 0 18px;
+    border-radius: 999px;
+    background: var(--sign);
+    color: var(--sign-ink);
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 700;
     text-decoration: none;
+    white-space: nowrap;
   }
-  .ekimei__next:hover > span:not(.mono) {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+  :global([data-theme='dark']) .gate__down {
+    background: var(--sign-ink);
+    color: var(--sign);
   }
-  .ekimei__next svg {
-    width: 16px;
-    height: 16px;
+  .gate__down svg {
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    border-radius: 50%;
+    background: var(--shu);
+    color: #fff;
     stroke-width: 2.4;
   }
-  .ekimei__next .mono {
-    padding: 2px 5px 1px;
-    border: 2px solid var(--c);
-    border-radius: 5px;
-    background: #fff;
-    color: #18181b;
-    font-size: 11px;
-    font-weight: 600;
+  @media (prefers-reduced-motion: no-preference) {
+    .gate__down:hover svg {
+      animation: nudge 900ms cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    }
+  }
+  @keyframes nudge {
+    50% { transform: translateY(3px); }
   }
 
   /* ---------- 線路圖 ---------- */
@@ -927,16 +1601,6 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   :global([data-theme='dark']) .stn.is-dim .stn__dot {
     box-shadow: none;
   }
-  :global([data-theme='dark']) .ekimei {
-    background: #f7f7f7;
-    color: #18181b;
-    border-color: transparent;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 48px -10px color-mix(in srgb, var(--color-brand) 55%, transparent), 0 18px 40px -18px rgba(0, 0, 0, 0.8);
-  }
-  :global([data-theme='dark']) .ekimei__roman {
-    color: #5f5f66;
-  }
-
 
   /* ---------- 篩選軌 ---------- */
   .rail {
@@ -1112,25 +1776,17 @@ const themeLabels = { label: t.theme_label, ...t.theme };
   }
 
   /* ---------- 響應式 ---------- */
-  @media (max-width: 1180px) {
-    .ekimei {
-      width: 340px;
-    }
-    .ekimei__kanji {
-      font-size: 52px;
-    }
-  }
   @media (max-width: 960px) {
     .search {
       margin-left: auto;
     }
-    .hero {
+    .gate__foot {
       grid-template-columns: 1fr;
-      gap: 32px;
+      grid-template-areas: 'sub' 'facts' 'down';
     }
-    .ekimei {
-      width: 100%;
-      max-width: 400px;
+    .gate__down {
+      justify-self: start;
+      margin-top: 6px;
     }
     .map__lines {
       grid-template-columns: 1fr;
@@ -1161,23 +1817,105 @@ const themeLabels = { label: t.theme_label, ...t.theme };
     .controls {
       margin-left: auto;
     }
+    /* 手機：圖書館入口只留圖示，文字仍給讀屏軟體 */
+    .controls :global(.navlink) {
+      width: 38px;
+      padding: 0;
+      justify-content: center;
+    }
+    .controls :global(.navlink span) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    /* 手機：頂欄不固定，只用首屏的大搜索框 */
     .search {
-      order: 3;
-      flex-basis: 100%;
-      max-width: none;
-      margin-left: 0;
-    }
-    .search__kbd {
       display: none;
     }
-    .hero {
-      padding: 32px 16px 28px;
+    .gate {
+      min-height: calc(100svh - 62px);
+      padding: 0 16px;
     }
-    .hero p {
-      font-size: 17px;
+    .gate__inner {
+      padding: 5vh 0 20px;
     }
-    .ekimei {
+    .gate__mark {
+      gap: 13px;
+    }
+    .gate__mark .seal--lg {
+      width: 50px;
+      height: 50px;
+      font-size: 29px;
+    }
+    .gate__roman {
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    .gate__ribbon {
+      width: min(100%, 260px);
+      margin-top: 20px;
+    }
+    .gate h1 {
+      margin-top: 24px;
+    }
+    .qbox {
+      margin-top: 22px;
+    }
+    .qbox__icon {
+      left: 17px;
+      top: 27px;
+      width: 20px;
+      height: 20px;
+    }
+    .qbox input {
+      height: 54px;
+      padding-inline: 46px 62px;
+      font-size: 16px;
+    }
+    .qbox.is-open input {
+      border-radius: 24px 24px 0 0;
+    }
+    .qbox__kbd {
       display: none;
+    }
+    .qbox__go {
+      top: 6px;
+      right: 6px;
+      width: 42px;
+      height: 42px;
+    }
+    .qbox__panel {
+      top: 53px;
+      border-radius: 0 0 24px 24px;
+    }
+    .qbox__list :global(.qopt) {
+      grid-template-columns: 46px minmax(0, 1fr);
+      gap: 12px;
+      padding: 10px 16px;
+    }
+    .qbox__list :global(.qopt__go) {
+      display: none;
+    }
+    .gate__try {
+      gap: 7px;
+    }
+    .gate__q {
+      height: 32px;
+      padding: 0 12px;
+      font-size: 13.5px;
+    }
+    .gate__foot {
+      padding: 18px 0 22px;
+    }
+    .gate__foot p {
+      font-size: 14.5px;
+    }
+    .facts {
+      font-size: 13.5px;
+      gap: 6px 16px;
     }
     .map__lines {
       grid-template-columns: repeat(2, minmax(0, 1fr));

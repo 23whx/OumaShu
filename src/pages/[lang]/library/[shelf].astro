@@ -1,0 +1,14 @@
+---
+// 其他語言的書架頁：/zh-cn/library/remove-background/ …
+import LibraryShelf from '../../../components/pages/LibraryShelf.astro';
+import { SHELVES } from '../../../data/library';
+import { PREFIXED, localeFromPrefix } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return PREFIXED.flatMap((l) => SHELVES.map((s) => ({ params: { lang: l.prefix, shelf: s.id } })));
+}
+
+const locale = localeFromPrefix(Astro.params.lang);
+---
+
+<LibraryShelf locale={locale} shelfId={Astro.params.shelf!} />

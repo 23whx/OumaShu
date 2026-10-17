@@ -9,6 +9,9 @@ import { SITE_URL } from '../utils/schema';
 import { factValues, formatDate, latestUpdate } from '../data/stats';
 import en from '../locales/en.json';
 import { hasGuide, guidePath } from '../data/guides';
+import {
+  SHELVES, LIB_PATH, STANDARDS_PATH, LIB_TOOL_COUNT, LIB_SHELF_COUNT, libCopy, libToolName, shelfPath,
+} from '../data/library';
 
 const t = en as Record<string, any>;
 
@@ -47,6 +50,20 @@ export const GET: APIRoute = () => {
     }
     out.push('');
   }
+
+  // 工具圖書館：按用途分類、人工核查過的外部工具
+  const lib = libCopy('en');
+  out.push(
+    '## Tool Library',
+    '',
+    `${fill(lib.ui.indexLead, { tools: LIB_TOOL_COUNT, shelves: LIB_SHELF_COUNT })} Library: ${SITE_URL}${LIB_PATH} · Selection standard: ${SITE_URL}${STANDARDS_PATH}`,
+    '',
+  );
+  for (const shelf of SHELVES) {
+    const names = shelf.tools.map((x) => libToolName(x.id, 'en')).join(', ');
+    out.push(`- [${lib.shelves[shelf.id].title}](${SITE_URL}${shelfPath(shelf.id)}): ${names}.`);
+  }
+  out.push('');
 
   return new Response(out.join('\n'), {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },

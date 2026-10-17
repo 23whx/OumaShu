@@ -1,0 +1,440 @@
+---
+// 工具圖書館首頁：/library/（各語言共用）。按分區列出所有書架，可即時篩選
+import Base from '../../layouts/Base.astro';
+import PageBar from '../PageBar.astro';
+import Crumbs from '../Crumbs.astro';
+import SiteFooter from '../SiteFooter.astro';
+import LibSuggest from '../LibSuggest.astro';
+import {
+  SECTIONS, SECTION_IDS, LIB_PATH, STANDARDS_PATH, LIB_TOOL_COUNT, LIB_SHELF_COUNT,
+  callNumber, libCopy, libToolName, libraryChecked, shelfPath, shelvesIn,
+} from '../../data/library';
+import { formatDate } from '../../data/stats';
+import { SITE_URL, ids, breadcrumbNode } from '../../utils/schema';
+import { fill, localePath, type Locale } from '../../i18n/routes';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = libCopy(locale);
+const home = localePath(locale, '/');
+const pageUrl = `${SITE_URL}${localePath(locale, LIB_PATH)}`;
+const vals = { tools: LIB_TOOL_COUNT, shelves: LIB_SHELF_COUNT };
+const checked = libraryChecked();
+const textDir = locale === 'ar' ? 'rtl' : undefined;
+const countText = (n: number) => (n === 1 ? c.ui.toolsOne : fill(c.ui.toolsCount, { count: n }));
+
+const allShelves = SECTION_IDS.flatMap((s) => shelvesIn(s));
+const schema = [
+  {
+    '@type': 'ItemList',
+    '@id': ids.toolList(pageUrl),
+    name: c.ui.indexTitle,
+    numberOfItems: allShelves.length,
+    itemListElement: allShelves.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.shelves[s.id].title,
+      url: `${SITE_URL}${localePath(locale, shelfPath(s.id))}`,
+    })),
+  },
+  breadcrumbNode(pageUrl, [
+    { name: 'OumaShu', url: `${SITE_URL}${home}` },
+    { name: c.ui.library, url: pageUrl },
+  ]),
+];
+---
+
+<Base
+  title={fill(c.ui.indexMetaTitle, vals)}
+  description={fill(c.ui.indexMetaDesc, vals)}
+  keywords={allShelves.slice(0, 12).map((s) => c.shelves[s.id].name).join(', ')}
+  locale={locale}
+  alternatePath={LIB_PATH}
+  canonicalUrl={pageUrl}
+  dateModified={checked}
+  pageType="CollectionPage"
+  schema={schema}
+  mainEntityId={ids.toolList(pageUrl)}
+  breadcrumbId={ids.breadcrumb(pageUrl)}
+>
+  <PageBar locale={locale} path={LIB_PATH} />
+
+  <main id="main-content" class="lib">
+    <Crumbs locale={locale} trail={[{ name: 'OumaShu', href: home }, { name: c.ui.library }]} />
+
+    <header class="lib__hero">
+      <div class="lib__mark" aria-hidden="true">
+        {SECTION_IDS.map((s) => <i style={`--c:${SECTIONS[s].color}`}></i>)}
+      </div>
+      <h1>{c.ui.indexTitle}</h1>
+      <p class="lib__lead" dir={textDir}>{fill(c.ui.indexLead, vals)}</p>
+      <p class="lib__stats">
+        <b>{countText(LIB_TOOL_COUNT)}</b>
+        <time datetime={checked}>{fill(c.ui.checked, { date: formatDate(checked, locale) })}</time>
+        <a href={localePath(locale, STANDARDS_PATH)}>{c.ui.standardsLink} →</a>
+      </p>
+
+      <div class="lib__search" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
+        <label class="sr-only" for="lib-q">{c.ui.searchLabel}</label>
+        <input id="lib-q" type="search" autocomplete="off" spellcheck="false" placeholder={c.ui.searchPlaceholder} dir={textDir} />
+      </div>
+      <nav class="lib__jump" aria-label={c.ui.allShelves}>
+        {SECTION_IDS.map((s) => (
+          <a href={`#sec-${s}`} style={`--c:${SECTIONS[s].color}`}>
+            <span class="mono">{SECTIONS[s].code}</span>{c.sections[s]}
+          </a>
+        ))}
+      </nav>
+    </header>
+
+    <div class="lib__sections" data-noresults={c.ui.noResults}>
+      {SECTION_IDS.map((s) => (
+        <section class="lsec" id={`sec-${s}`} style={`--c:${SECTIONS[s].color}`} aria-labelledby={`sec-${s}-title`}>
+          <header class="lsec__head">
+            <span class="badge badge--lg"><span>{SECTIONS[s].code}</span></span>
+            <h2 id={`sec-${s}-title`}>{c.sections[s]}</h2>
+          </header>
+          <ul class="lsec__grid">
+            {shelvesIn(s).map((shelf) => {
+              const copy = c.shelves[shelf.id];
+              const names = shelf.tools.map((x) => libToolName(x.id, locale));
+              const search = [copy.name, copy.title, ...copy.keywords, ...names, shelf.id.replace(/-/g, ' ')].join(' ').toLowerCase();
+              return (
+                <li class="lshelfc" data-search={search}>
+                  <span class="lshelfc__code mono">{callNumber(shelf.id)}</span>
+                  <h3><a href={localePath(locale, shelfPath(shelf.id))}>{copy.name}</a></h3>
+                  <p class="lshelfc__intro" dir={textDir}>{copy.intro}</p>
+                  <p class="lshelfc__tools">
+                    {names.map((n, i) => <span class:list={{ 'is-pick': i === 0 }}>{n}</span>)}
+                  </p>
+                  <span class="lshelfc__n">{countText(shelf.tools.length)}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))}
+      <p class="lib__empty" id="lib-empty" hidden></p>
+    </div>
+
+    <LibSuggest locale={locale} />
+  </main>
+
+  <SiteFooter locale={locale} />
+</Base>
+
+<script>
+  import { trackSearch } from '../../utils/track';
+
+  // 即時篩選書架：每個詞都要出現在書架名、同義詞或工具名裡
+  const input = document.querySelector<HTMLInputElement>('#lib-q')!;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.lshelfc'));
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('.lsec'));
+  const empty = document.querySelector<HTMLElement>('#lib-empty')!;
+  const tpl = empty.parentElement!.dataset.noresults || '';
+
+  function apply() {
+    const terms = input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    let shown = 0;
+    for (const card of cards) {
+      const text = card.dataset.search || '';
+      const on = terms.every((t) => text.includes(t));
+      card.hidden = !on;
+      if (on) shown++;
+    }
+    for (const sec of sections) sec.hidden = !sec.querySelector('.lshelfc:not([hidden])');
+    empty.hidden = shown > 0;
+    empty.textContent = tpl.replace('{{q}}', input.value.trim());
+    trackSearch('library', input.value, shown);
+  }
+  input.addEventListener('input', apply);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      input.value = '';
+      apply();
+    }
+  });
+  const q = new URLSearchParams(location.search).get('q');
+  if (q) {
+    input.value = q;
+    apply();
+  }
+</script>
+
+<style>
+  svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .lib {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 32px 88px;
+  }
+  .lib__hero {
+    margin-top: 34px;
+    max-width: 820px;
+  }
+  /* 書脊：六個分區的顏色排成一排書 */
+  .lib__mark {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 46px;
+  }
+  .lib__mark i {
+    width: 12px;
+    border-radius: 2px 2px 1px 1px;
+    background: var(--c);
+  }
+  .lib__mark i:nth-child(1) { height: 70%; }
+  .lib__mark i:nth-child(2) { height: 100%; }
+  .lib__mark i:nth-child(3) { height: 82%; }
+  .lib__mark i:nth-child(4) { height: 94%; transform: rotate(8deg); transform-origin: bottom left; margin-left: 2px; }
+  .lib__mark i:nth-child(5) { height: 76%; margin-left: 5px; }
+  .lib__mark i:nth-child(6) { height: 88%; }
+  .lib__hero h1 {
+    margin: 18px 0 0;
+    font-size: clamp(2.4rem, 1.5rem + 3vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+  :global(html[lang='zh-CN']) .lib__hero h1,
+  :global(html[lang='zh-TW']) .lib__hero h1,
+  :global(html[lang='ja-JP']) .lib__hero h1 {
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+  .lib__lead {
+    margin: 16px 0 0;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+  .lib__stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 22px;
+    margin: 18px 0 0;
+    font-size: 14px;
+    color: var(--color-muted);
+  }
+  .lib__stats b {
+    color: var(--color-fg);
+    font-size: 16px;
+  }
+  .lib__stats a {
+    color: var(--color-brand-ink);
+    font-weight: 700;
+  }
+  .lib__search {
+    position: relative;
+    margin-top: 26px;
+  }
+  .lib__search svg {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    pointer-events: none;
+  }
+  .lib__search input {
+    width: 100%;
+    height: 54px;
+    padding: 0 18px 0 50px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 14px;
+    background: var(--color-card);
+    color: var(--color-fg);
+    font: 500 17px/1 var(--font-sans);
+    box-shadow: var(--shadow-card);
+    outline: none;
+  }
+  .lib__search input[dir='rtl'] {
+    text-align: right;
+  }
+  .lib__search input:focus {
+    border-color: var(--shu);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--shu) 18%, transparent);
+  }
+  .lib__jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .lib__jump a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 34px;
+    padding: 0 12px 0 6px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-card);
+    color: var(--color-fg);
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .lib__jump a:hover {
+    border-color: var(--c);
+  }
+  .lib__jump .mono,
+  .lshelfc__code {
+    padding: 3px 6px 2px;
+    border: 2px solid var(--c);
+    border-radius: 6px;
+    background: #fff;
+    color: #18181b;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .lib__sections {
+    margin-top: 56px;
+  }
+  .lsec + .lsec {
+    margin-top: 56px;
+  }
+  .lsec__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+    border-bottom: 3px solid var(--c);
+  }
+  .lsec__head h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+  .lsec__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* 書架卡：像圖書館的索引卡 */
+  .lshelfc {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-card);
+    box-shadow: var(--shadow-card);
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 240ms, border-color 160ms;
+  }
+  .lshelfc[hidden] {
+    display: none;
+  }
+  .lshelfc:hover {
+    transform: translateY(-2px);
+    border-color: var(--c);
+    box-shadow: var(--shadow-lift);
+  }
+  .lshelfc:focus-within {
+    border-color: var(--c);
+  }
+  .lshelfc__code {
+    align-self: flex-start;
+  }
+  .lshelfc h3 {
+    margin: 12px 0 0;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .lshelfc h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .lshelfc h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .lshelfc h3 a:focus-visible {
+    outline: none;
+  }
+  .lshelfc h3 a:focus-visible::after {
+    outline: 3px solid var(--c);
+    outline-offset: 2px;
+  }
+  .lshelfc__intro {
+    margin: 8px 0 0;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--color-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .lshelfc__tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 14px 0 0;
+    padding-top: 12px;
+    border-top: 1px dashed var(--hairline-strong);
+  }
+  .lshelfc__tools span {
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--wash);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  .lshelfc__tools .is-pick {
+    background: color-mix(in srgb, var(--c) 14%, transparent);
+  }
+  .lshelfc__n {
+    margin-top: auto;
+    padding-top: 12px;
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+  .lib__empty {
+    padding: 48px 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  @media (max-width: 760px) {
+    .lib {
+      padding: 20px 16px 64px;
+    }
+    .lib__lead {
+      font-size: 16.5px;
+    }
+    .lib__sections {
+      margin-top: 40px;
+    }
+    .lsec + .lsec {
+      margin-top: 44px;
+    }
+  }
+</style>

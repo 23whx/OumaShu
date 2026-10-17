@@ -18,6 +18,18 @@ export interface UiStrings {
   suggest: string;
   suggestGo: string;
   dismiss: string;
+  // 首頁第一屏的搜索入口
+  home: {
+    placeholder: string;
+    try: string;           // 建議詞前的「試試」
+    suggestions: string[]; // 必須能在本語言的工具名或描述裡搜到
+    browse: string;        // {{lines}} {{tools}}
+    seeAll: string;        // {{count}}
+    seeAllOne: string;
+    noMatch: string;       // {{q}}
+    noHint: string;
+    results: string;       // 建議列表的無障礙名稱
+  };
   // 工具介紹頁
   guide: {
     link: string;        // 卡片上的「使用說明」
@@ -52,6 +64,17 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: 'This page is also in English.',
     suggestGo: 'Read in English',
     dismiss: 'Dismiss',
+    home: {
+      placeholder: 'What do you want to do?',
+      try: 'Try',
+      suggestions: ['compress', 'watermark', 'OCR', 'screenshot', 'meme'],
+      browse: 'Browse all {{lines}} lines, {{tools}} tools',
+      seeAll: 'Show all {{count}} results below',
+      seeAllOne: 'Show the result below',
+      noMatch: 'Nothing matches “{{q}}” yet.',
+      noHint: 'Try a shorter word, or search in English.',
+      results: 'Suggestions',
+    },
     guide: {
       link: 'How to use',
       features: 'What it does',
@@ -83,6 +106,17 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: '本页有简体中文版。',
     suggestGo: '切换到简体中文',
     dismiss: '关闭',
+    home: {
+      placeholder: '想做什么？比如：压缩图片',
+      try: '试试',
+      suggestions: ['压缩', '水印', 'OCR', '长截图', '表情包'],
+      browse: '浏览全部 {{lines}} 条线路、{{tools}} 个工具',
+      seeAll: '在下方查看全部 {{count}} 个结果',
+      seeAllOne: '在下方查看结果',
+      noMatch: '还没有和“{{q}}”相关的工具',
+      noHint: '换个更短的词，或者用英文搜搜看。',
+      results: '搜索建议',
+    },
     guide: {
       link: '使用说明',
       features: '功能',
@@ -114,6 +148,17 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: '本頁有繁體中文版。',
     suggestGo: '切換到繁體中文',
     dismiss: '關閉',
+    home: {
+      placeholder: '想做什麼？例如：壓縮圖片',
+      try: '試試',
+      suggestions: ['壓縮', '浮水印', 'OCR', '長截圖', '梗圖'],
+      browse: '瀏覽全部 {{lines}} 條路線、{{tools}} 個工具',
+      seeAll: '在下方查看全部 {{count}} 個結果',
+      seeAllOne: '在下方查看結果',
+      noMatch: '還沒有和「{{q}}」相關的工具',
+      noHint: '換個更短的詞，或用英文搜搜看。',
+      results: '搜尋建議',
+    },
     guide: {
       link: '使用說明',
       features: '功能',
@@ -145,6 +190,17 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: 'このページには日本語版があります。',
     suggestGo: '日本語で読む',
     dismiss: '閉じる',
+    home: {
+      placeholder: '何をしたい？ 例：画像 圧縮',
+      try: '例',
+      suggestions: ['圧縮', '透かし', 'OCR', 'スクリーンショット', 'ミーム'],
+      browse: '全 {{lines}} 路線・{{tools}} ツールを見る',
+      seeAll: '下で {{count}} 件すべてを見る',
+      seeAllOne: '下で結果を見る',
+      noMatch: '「{{q}}」に合うツールはまだありません',
+      noHint: '短い言葉か、英語で探してみてください。',
+      results: '検索候補',
+    },
     guide: {
       link: '使い方',
       features: 'できること',
@@ -176,6 +232,17 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: 'هذه الصفحة متوفرة بالعربية.',
     suggestGo: 'اقرأ بالعربية',
     dismiss: 'إغلاق',
+    home: {
+      placeholder: 'ماذا تريد أن تفعل؟',
+      try: 'جرّب',
+      suggestions: ['ضغط', 'علامة مائية', 'OCR', 'لقطة شاشة', 'ميم'],
+      browse: 'تصفّح {{lines}} خطًا و{{tools}} أداة',
+      seeAll: 'اعرض النتائج كلها أدناه ({{count}})',
+      seeAllOne: 'اعرض النتيجة أدناه',
+      noMatch: 'لا توجد أداة تطابق «{{q}}» بعد',
+      noHint: 'جرّب كلمة أقصر، أو ابحث بالإنجليزية.',
+      results: 'اقتراحات',
+    },
     guide: {
       link: 'طريقة الاستخدام',
       features: 'ما الذي تفعله',
@@ -207,6 +274,17 @@ export const UI: Record<Locale, UiStrings> = {
     suggest: 'Эта страница есть на русском.',
     suggestGo: 'Читать на русском',
     dismiss: 'Закрыть',
+    home: {
+      placeholder: 'Что нужно сделать?',
+      try: 'Например',
+      suggestions: ['сжатие', 'водяной знак', 'OCR', 'скриншот', 'мем'],
+      browse: 'Все {{lines}} линий, {{tools}} инструментов',
+      seeAll: 'Показать все результаты ниже: {{count}}',
+      seeAllOne: 'Показать результат ниже',
+      noMatch: 'По запросу «{{q}}» пока ничего нет',
+      noHint: 'Попробуйте слово покороче или поиск на английском.',
+      results: 'Подсказки',
+    },
     guide: {
       link: 'Как пользоваться',
       features: 'Возможности',

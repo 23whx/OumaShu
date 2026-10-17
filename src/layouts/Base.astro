@@ -49,6 +49,8 @@ const {
 
 // 版面固定 LTR（阿拉伯文只換文字，不鏡像版面）
 const textDirection = 'ltr';
+// Google Analytics 4 評估 ID
+const GA_ID = 'G-R142MPGBY0';
 const ui = UI[locale];
 const siteName = 'OumaShu';
 const origin = (Astro.site ?? Astro.url).origin;
@@ -94,7 +96,17 @@ const jsonLd = graph([
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
+  <!-- Google Analytics 4：流量統計，以及站內搜索沒有結果的詞（見 /privacy/#analytics） -->
+  <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+  <script is:inline define:vars={{ GA_ID }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+  </script>
+
   <!-- 基础 SEO -->
   <title>{title}</title>
   <meta name="description" content={description}>
@@ -302,15 +314,6 @@ const jsonLd = graph([
   
   <!-- 结构化数据 -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
-  
-  <!-- Google Analytics 4 (可选) -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script is:inline>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script> -->
 </head>
 
 <body class="min-h-screen">

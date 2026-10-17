@@ -3,6 +3,7 @@
 import LangMenu from './LangMenu.astro';
 import { dict, localePath, type Locale } from '../i18n/routes';
 import { UI } from '../i18n/ui';
+import { LIB_PATH, libCopy } from '../data/library';
 
 export interface Props {
   locale: Locale;
@@ -19,6 +20,10 @@ const home = localePath(locale, '/');
     <a class="brand" href={home}>
       <span class="seal" aria-hidden="true" lang="ja">櫻</span>
       <span class="brand__name">OumaShu<span class="brand__ja" lang="ja">櫻滿集</span></span>
+    </a>
+    <a class="navlink" href={localePath(locale, LIB_PATH)} aria-current={path.startsWith(LIB_PATH) ? 'page' : undefined}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3v16H5zM10 4h3v16h-3zM15.2 4.6l2.9-.8 3.9 15.5-2.9.8z" /></svg>
+      {libCopy(locale).ui.library}
     </a>
     <form class="csearch" action={home} method="get" role="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
@@ -101,8 +106,12 @@ const home = localePath(locale, '/');
       flex-wrap: wrap;
       gap: 10px;
     }
-    .cbar__inner > :global(.lang) {
+    .cbar__inner > :global(.navlink) {
       margin-left: auto;
+      padding: 0 8px;
+    }
+    .cbar__inner > :global(.lang) {
+      margin-right: -9px;
     }
     .csearch {
       order: 3;

@@ -1,0 +1,279 @@
+---
+// 圖書館書架頁：/library/remove-background/ …（各語言共用）
+import Base from '../../layouts/Base.astro';
+import PageBar from '../PageBar.astro';
+import Crumbs from '../Crumbs.astro';
+import SiteFooter from '../SiteFooter.astro';
+import LibToolCard from '../LibToolCard.astro';
+import LibSuggest from '../LibSuggest.astro';
+import {
+  SECTIONS, SHELVES, LIB_PATH, STANDARDS_PATH, callNumber, libCopy, libTool, libToolName, libToolUrl,
+  shelfChecked, shelfPath, shelvesIn,
+} from '../../data/library';
+import { formatDate } from '../../data/stats';
+import { SITE_URL, ids, breadcrumbNode } from '../../utils/schema';
+import { fill, localePath, type Locale } from '../../i18n/routes';
+
+export interface Props {
+  locale: Locale;
+  shelfId: string;
+}
+
+const { locale, shelfId } = Astro.props;
+const c = libCopy(locale);
+const shelf = SHELVES.find((s) => s.id === shelfId)!;
+const copy = c.shelves[shelfId];
+const section = SECTIONS[shelf.section];
+const path = shelfPath(shelfId);
+const pageUrl = `${SITE_URL}${localePath(locale, path)}`;
+const home = localePath(locale, '/');
+const libHome = localePath(locale, LIB_PATH);
+const count = shelf.tools.length;
+const countText = count === 1 ? c.ui.toolsOne : fill(c.ui.toolsCount, { count });
+const names = shelf.tools.map((x) => libToolName(x.id, locale));
+const checked = shelfChecked(shelf);
+const hasOwn = shelf.tools.some((x) => libTool(x.id).own);
+const siblings = shelvesIn(shelf.section).filter((s) => s.id !== shelfId);
+const textDir = locale === 'ar' ? 'rtl' : undefined;
+const listSep = locale.startsWith('zh') || locale === 'ja-JP' ? '、' : locale === 'ar' ? '، ' : ', ';
+
+const title = fill(c.ui.shelfMetaTitle, { title: copy.title, count });
+const description = fill(c.ui.shelfMetaDesc, { intro: copy.intro, names: names.join(listSep) });
+
+const schema = [
+  {
+    '@type': 'ItemList',
+    '@id': ids.toolList(pageUrl),
+    name: copy.title,
+    numberOfItems: count,
+    itemListOrder: 'https://schema.org/ItemListOrderAscending',
+    itemListElement: shelf.tools.map((x, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: libToolName(x.id, locale),
+      url: libToolUrl(x.id, locale),
+    })),
+  },
+  breadcrumbNode(pageUrl, [
+    { name: 'OumaShu', url: `${SITE_URL}${home}` },
+    { name: c.ui.library, url: `${SITE_URL}${libHome}` },
+    { name: copy.name, url: pageUrl },
+  ]),
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  keywords={copy.keywords.join(', ')}
+  locale={locale}
+  alternatePath={path}
+  canonicalUrl={pageUrl}
+  dateModified={checked}
+  pageType="CollectionPage"
+  schema={schema}
+  mainEntityId={ids.toolList(pageUrl)}
+  breadcrumbId={ids.breadcrumb(pageUrl)}
+>
+  <PageBar locale={locale} path={path} />
+
+  <main id="main-content" class="lshelf" style={`--c:${section.color}`}>
+    <Crumbs locale={locale} trail={[{ name: 'OumaShu', href: home }, { name: c.ui.library, href: libHome }, { name: copy.name }]} />
+
+    <header class="lshelf__hero">
+      <div class="lshelf__call">
+        <span class="lshelf__code mono">{callNumber(shelfId)}</span>
+        <span class="lshelf__section">{c.sections[shelf.section]}</span>
+      </div>
+      <h1 dir={textDir}>{copy.title}</h1>
+      <p class="lshelf__intro" dir={textDir}>{copy.intro}</p>
+      <p class="lshelf__meta">
+        <span>{countText}</span>
+        <span aria-hidden="true">·</span>
+        <time datetime={checked}>{fill(c.ui.checked, { date: formatDate(checked, locale) })}</time>
+        <span aria-hidden="true">·</span>
+        <a href={localePath(locale, STANDARDS_PATH)}>{c.ui.standardsLink}</a>
+      </p>
+    </header>
+
+    <ol class="lshelf__list">
+      {shelf.tools.map((x, i) => (
+        <li><LibToolCard locale={locale} shelfId={shelfId} toolId={x.id} rank={i + 1} tested={x.tested} /></li>
+      ))}
+    </ol>
+
+    {hasOwn && <p class="lshelf__own" dir={textDir}><span class="lshelf__seal" aria-hidden="true" lang="ja">櫻</span>{c.ui.ownNote}</p>}
+
+    {siblings.length > 0 && (
+      <nav class="lshelf__more" aria-labelledby="more-shelves">
+        <h2 id="more-shelves">{fill(c.ui.moreShelves, { section: c.sections[shelf.section] })}</h2>
+        <ul>
+          {siblings.map((s) => (
+            <li>
+              <a href={localePath(locale, shelfPath(s.id))}>
+                <span class="mono">{callNumber(s.id)}</span>
+                {c.shelves[s.id].name}
+              </a>
+            </li>
+          ))}
+          <li><a class="lshelf__all" href={libHome}>{c.ui.allShelves} →</a></li>
+        </ul>
+      </nav>
+    )}
+
+    <LibSuggest locale={locale} context={copy.name} />
+  </main>
+
+  <SiteFooter locale={locale} />
+</Base>
+
+<style>
+  .lshelf {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 28px 32px 88px;
+  }
+  .lshelf__hero {
+    margin-top: 30px;
+    padding-bottom: 34px;
+    border-bottom: 3px solid var(--c);
+  }
+  .lshelf__call {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .lshelf__code {
+    padding: 5px 9px 4px;
+    border: 2.5px solid var(--c);
+    border-radius: 7px;
+    background: #fff;
+    color: #18181b;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .lshelf__section {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+  .lshelf__hero h1 {
+    margin: 18px 0 0;
+    font-size: clamp(2rem, 1.3rem + 2.4vw, 3.1rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  :global(html[lang='zh-CN']) .lshelf__hero h1,
+  :global(html[lang='zh-TW']) .lshelf__hero h1,
+  :global(html[lang='ja-JP']) .lshelf__hero h1 {
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+  }
+  .lshelf__intro {
+    margin: 14px 0 0;
+    max-width: 62ch;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+  .lshelf__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin: 18px 0 0;
+    font-size: 14px;
+    color: var(--color-muted);
+  }
+  .lshelf__meta a {
+    color: var(--color-brand-ink);
+    font-weight: 700;
+  }
+  .lshelf__list {
+    display: grid;
+    gap: 18px;
+    margin: 34px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lshelf__own {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 22px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+  .lshelf__seal {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    border-radius: 2px;
+    background: var(--shu);
+    color: #fff;
+    font: 800 12px/1 var(--font-mincho);
+  }
+  .lshelf__more {
+    margin-top: 56px;
+  }
+  .lshelf__more h2 {
+    margin: 0 0 14px;
+    font-size: 19px;
+    font-weight: 800;
+  }
+  .lshelf__more ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lshelf__more a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 14px 0 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-card);
+    color: var(--color-fg);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .lshelf__more a:hover {
+    border-color: var(--c);
+  }
+  .lshelf__more .mono {
+    padding: 3px 6px 2px;
+    border: 2px solid var(--c);
+    border-radius: 6px;
+    background: #fff;
+    color: #18181b;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .lshelf__more .lshelf__all {
+    padding-left: 14px;
+    color: var(--color-brand-ink);
+    font-weight: 700;
+  }
+  @media (max-width: 760px) {
+    .lshelf {
+      padding: 20px 16px 64px;
+    }
+    .lshelf__intro {
+      font-size: 16.5px;
+    }
+  }
+</style>

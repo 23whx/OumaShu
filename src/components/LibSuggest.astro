@@ -1,0 +1,97 @@
+---
+// 「推薦工具 / 回報問題」區塊：用郵件聯絡，主旨帶上所在的書架
+import { libCopy } from '../data/library';
+import type { Locale } from '../i18n/routes';
+
+export interface Props {
+  locale: Locale;
+  /** 郵件主旨裡的上下文，例如書架名 */
+  context?: string;
+}
+const { locale, context } = Astro.props;
+const c = libCopy(locale).ui;
+const EMAIL = 'wanghongxiang23@gmail.com';
+const mail = (subject: string) => `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}`;
+const suffix = context ? ` · ${context}` : '';
+const textDir = locale === 'ar' ? 'rtl' : undefined;
+---
+
+<aside class="lsug">
+  <div class="lsug__text" dir={textDir}>
+    <h2>{c.suggestTitle}</h2>
+    <p>{c.suggestText}</p>
+    <p class="lsug__report"><a href={mail(`[OumaShu] ${c.reportText.split(/[?？]/)[0]}${suffix}`)}>{c.reportText}</a></p>
+  </div>
+  <a class="lsug__cta" href={mail(`[OumaShu] ${c.suggestCta}${suffix}`)}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2" /><path d="m4 7 8 6 8-6" /></svg>
+    {c.suggestCta}
+  </a>
+</aside>
+
+<style>
+  .lsug {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 48px;
+    padding: 26px 28px;
+    border: 1px dashed var(--hairline-strong);
+    border-radius: 16px;
+    background: var(--color-panel);
+  }
+  .lsug__text {
+    flex: 1;
+    min-width: 0;
+  }
+  .lsug h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 800;
+  }
+  .lsug p {
+    margin: 6px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+  .lsug__report a {
+    color: inherit;
+    font-size: 14px;
+  }
+  .lsug__cta {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 10px;
+    background: var(--shu);
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .lsug__cta:hover {
+    filter: brightness(1.06);
+  }
+  .lsug__cta svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @media (max-width: 640px) {
+    .lsug {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 22px 20px;
+    }
+    .lsug__cta {
+      justify-content: center;
+    }
+  }
+</style>

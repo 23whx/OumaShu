@@ -1,0 +1,309 @@
+---
+// 收錄標準頁：/library/standards/（各語言共用）
+import Base from '../../layouts/Base.astro';
+import PageBar from '../PageBar.astro';
+import Crumbs from '../Crumbs.astro';
+import SiteFooter from '../SiteFooter.astro';
+import LibSuggest from '../LibSuggest.astro';
+import { LIB_PATH, STANDARDS_PATH, libCopy, libraryChecked } from '../../data/library';
+import { formatDate } from '../../data/stats';
+import { SITE_URL, ids, breadcrumbNode } from '../../utils/schema';
+import { fill, localePath, type Locale } from '../../i18n/routes';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = libCopy(locale);
+const s = c.standards;
+const home = localePath(locale, '/');
+const libHome = localePath(locale, LIB_PATH);
+const pageUrl = `${SITE_URL}${localePath(locale, STANDARDS_PATH)}`;
+const checked = libraryChecked();
+const textDir = locale === 'ar' ? 'rtl' : undefined;
+
+// 標籤樣本：與工具卡上的寫法一致
+const labelChips: { key: string; text: string; kind: 'ok' | 'warn' | 'info' }[] = [
+  { key: 'free', text: c.ui.price.free, kind: 'ok' },
+  { key: 'freemium', text: c.ui.price.freemium, kind: 'info' },
+  { key: 'free-personal', text: c.ui.price['free-personal'], kind: 'info' },
+  { key: 'local', text: c.ui.runs.local, kind: 'ok' },
+  { key: 'cloud', text: c.ui.runs.cloud, kind: 'warn' },
+  { key: 'app', text: c.ui.runs.app, kind: 'info' },
+  { key: 'builtin', text: c.ui.runs.builtin, kind: 'info' },
+  { key: 'site', text: c.ui.runs.site, kind: 'info' },
+  { key: 'openSource', text: c.ui.openSource, kind: 'ok' },
+  { key: 'ads', text: c.ui.ads, kind: 'warn' },
+  { key: 'tested', text: fill(c.ui.tested, { date: '' }).trim(), kind: 'info' },
+];
+
+const schema = [
+  breadcrumbNode(pageUrl, [
+    { name: 'OumaShu', url: `${SITE_URL}${home}` },
+    { name: c.ui.library, url: `${SITE_URL}${libHome}` },
+    { name: s.title, url: pageUrl },
+  ]),
+];
+---
+
+<Base
+  title={s.metaTitle}
+  description={s.metaDesc}
+  locale={locale}
+  alternatePath={STANDARDS_PATH}
+  canonicalUrl={pageUrl}
+  dateModified={checked}
+  schema={schema}
+  breadcrumbId={ids.breadcrumb(pageUrl)}
+>
+  <PageBar locale={locale} path={STANDARDS_PATH} />
+
+  <main id="main-content" class="lstd">
+    <Crumbs locale={locale} trail={[{ name: 'OumaShu', href: home }, { name: c.ui.library, href: libHome }, { name: s.title }]} />
+
+    <header class="lstd__hero">
+      <h1>{s.title}</h1>
+      <p dir={textDir}>{s.lead}</p>
+    </header>
+
+    <section class="lstd__sec" aria-labelledby="rules">
+      <h2 id="rules">{s.rulesTitle}</h2>
+      <ol class="lstd__rules">
+        {s.rules.map((r, i) => (
+          <li>
+            <span class="lstd__n mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 dir={textDir}>{r.title}</h3>
+            <p dir={textDir}>{r.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="lstd__sec" aria-labelledby="check">
+      <h2 id="check">{s.checkTitle}</h2>
+      <ol class="lstd__steps">
+        {s.check.map((step) => <li dir={textDir}>{step}</li>)}
+      </ol>
+    </section>
+
+    <section class="lstd__sec" aria-labelledby="left-out">
+      <h2 id="left-out">{s.leftOutTitle}</h2>
+      <ul class="lstd__out">
+        {s.leftOut.map((x) => (
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m9 9 6 6M15 9l-6 6" /></svg>
+            <div>
+              <h3 dir={textDir}>{x.title}</h3>
+              <p dir={textDir}>{x.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="lstd__sec" aria-labelledby="labels">
+      <h2 id="labels">{s.labelsTitle}</h2>
+      <p class="lstd__lead" dir={textDir}>{s.labelsLead}</p>
+      <dl class="lstd__labels">
+        {labelChips.map((l) => (
+          <div>
+            <dt class={`chipx chipx--${l.kind}`}>{l.text}</dt>
+            <dd dir={textDir}>{s.labels[l.key]}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <p class="lstd__updated"><time datetime={checked}>{fill(s.updated, { date: formatDate(checked, locale) })}</time> <a href={libHome}>{c.ui.allShelves} →</a></p>
+
+    <LibSuggest locale={locale} />
+  </main>
+
+  <SiteFooter locale={locale} />
+</Base>
+
+<style>
+  .lstd {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 28px 32px 88px;
+  }
+  .lstd__hero {
+    margin-top: 30px;
+    padding-bottom: 32px;
+    border-bottom: 3px solid var(--shu);
+  }
+  .lstd__hero h1 {
+    margin: 0;
+    font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+  .lstd__hero p {
+    margin: 16px 0 0;
+    max-width: 64ch;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+  .lstd__sec {
+    margin-top: 52px;
+  }
+  .lstd__sec h2 {
+    margin: 0 0 18px;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+  .lstd__rules {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lstd__rules li {
+    padding: 20px 22px;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-card);
+  }
+  .lstd__n {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 3px solid var(--shu);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .lstd__rules h3 {
+    margin: 12px 0 0;
+    font-size: 17px;
+    font-weight: 800;
+  }
+  .lstd__rules p {
+    margin: 6px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+  .lstd__steps {
+    margin: 0;
+    padding-left: 22px;
+    list-style: decimal;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .lstd__steps li + li {
+    margin-top: 8px;
+  }
+  .lstd__steps li::marker {
+    color: var(--shu);
+    font-weight: 800;
+  }
+  .lstd__out {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lstd__out li {
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: var(--color-panel);
+  }
+  .lstd__out svg {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    fill: none;
+    stroke: #b45309;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  :global([data-theme='dark']) .lstd__out svg {
+    stroke: #fbbf24;
+  }
+  .lstd__out h3 {
+    margin: 0;
+    font-size: 16.5px;
+    font-weight: 800;
+  }
+  .lstd__out p {
+    margin: 4px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+  .lstd__lead {
+    margin: -6px 0 16px;
+    font-size: 15.5px;
+    color: var(--color-muted);
+  }
+  .lstd__labels {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+  }
+  .lstd__labels > div {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+  }
+  .lstd__labels dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+  .chipx {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 10px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--wash);
+    white-space: nowrap;
+  }
+  .chipx--ok {
+    background: color-mix(in srgb, #1f8a4c 12%, transparent);
+  }
+  .chipx--warn {
+    background: color-mix(in srgb, #d97706 13%, transparent);
+  }
+  .lstd__updated {
+    margin: 44px 0 0;
+    font-size: 14px;
+    color: var(--color-muted);
+  }
+  .lstd__updated a {
+    margin-left: 10px;
+    color: var(--color-brand-ink);
+    font-weight: 700;
+  }
+  @media (max-width: 760px) {
+    .lstd {
+      padding: 20px 16px 64px;
+    }
+    .lstd__rules {
+      grid-template-columns: 1fr;
+    }
+    .lstd__labels > div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

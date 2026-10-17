@@ -4,13 +4,13 @@
 import Base from '../layouts/Base.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
-const UPDATED = 'October 12, 2026';
+const UPDATED = 'October 17, 2026';
 const EMAIL = 'wanghongxiang23@gmail.com';
 ---
 
 <Base
   title="Privacy Policy | OumaShu"
-  description="How OumaShu handles data: Google AdSense advertising cookies and how to opt out, the location and weather lookup, local preferences, and your privacy rights."
+  description="How OumaShu handles data: Google AdSense advertising cookies and how to opt out, Google Analytics, the location and weather lookup, local preferences, and your privacy rights."
   keywords="oumashu privacy policy, cookies, google adsense, personalized ads opt out"
 >
   <main id="main-content" class="policy">
@@ -32,6 +32,7 @@ const EMAIL = 'wanghongxiang23@gmail.com';
     <ul>
       <li>We do not ask for your name, email or any account details.</li>
       <li>We show ads from <strong>Google AdSense</strong>. Google and its partners use cookies to serve and measure those ads.</li>
+      <li>We use <strong>Google Analytics</strong> to count visits and to see which searches on this site find nothing, so we know which tools to add.</li>
       <li>The home page looks up your approximate city from your IP address to show local time and weather.</li>
       <li>Your theme and language choices are saved only in your own browser.</li>
     </ul>
@@ -94,13 +95,29 @@ const EMAIL = 'wanghongxiang23@gmail.com';
       The site is hosted on Vercel, which keeps standard server logs (such as IP address, browser type and the page
       requested) to operate and secure the service.
     </p>
-    <h3>Analytics</h3>
-    <p>We do not currently use any analytics service.</p>
+    <h3 id="analytics">Analytics (Google Analytics)</h3>
+    <p>
+      We use Google Analytics 4 to understand how the site is used: how many people visit, which pages they open,
+      roughly where they come from (country, referring site) and what kind of device they use. Google Analytics sets
+      first-party cookies (such as <code>_ga</code>) to tell visits apart. Reports are aggregated; we do not use them
+      to identify anyone.
+    </p>
+    <p>
+      When you type in a search box on OumaShu and pause, we send the search words and the number of results to
+      Google Analytics. We use this to find tasks people are looking for that the site does not cover yet. Please do
+      not type personal information into the search box.
+    </p>
+    <p>
+      In regions where consent is required, Google Analytics follows the choice you make in the consent message.
+      You can also block it with the
+      <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics opt-out browser add-on</a>.
+      See <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">how Google uses information from sites that use its services</a>.
+    </p>
     <h3>Email</h3>
     <p>If you email us, we receive your email address and whatever you write, and use it only to reply.</p>
 
     <h2 id="local-storage">Preferences stored in your browser</h2>
-    <p>OumaShu itself does not set cookies. It saves a few preferences in your browser’s local storage:</p>
+    <p>Apart from the Google cookies described above, OumaShu saves a few preferences in your browser’s local storage:</p>
     <ul>
       <li><code>theme</code>: light, dark or system theme</li>
       <li><code>locale</code>: the language you chose from the language menu</li>

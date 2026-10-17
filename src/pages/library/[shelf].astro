@@ -1,0 +1,11 @@
+---
+// 英文書架頁
+import LibraryShelf from '../../components/pages/LibraryShelf.astro';
+import { SHELVES } from '../../data/library';
+
+export function getStaticPaths() {
+  return SHELVES.map((s) => ({ params: { shelf: s.id } }));
+}
+---
+
+<LibraryShelf locale="en" shelfId={Astro.params.shelf!} />

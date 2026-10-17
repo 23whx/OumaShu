@@ -1,0 +1,13 @@
+---
+// 其他語言的工具圖書館首頁：/zh-cn/library/ …
+import LibraryIndex from '../../../components/pages/LibraryIndex.astro';
+import { PREFIXED, localeFromPrefix } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return PREFIXED.map((l) => ({ params: { lang: l.prefix } }));
+}
+
+const locale = localeFromPrefix(Astro.params.lang);
+---
+
+<LibraryIndex locale={locale} />

@@ -4,6 +4,7 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import { tools } from './src/data/tools.ts';
+import { LIB_TOOLS, SHELVES } from './src/data/library/catalog.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -69,7 +70,12 @@ export default defineConfig({
           : cat ? tools.filter((t) => t.category === cat[1])
           : guide ? tools.filter((t) => t.id === guide[1])
           : [];
-        const lastmod = latest(list);
+        // 圖書館頁：取該書架（或全館）工具的最近核查日期
+        const shelf = SHELVES.find((x) => path === `/library/${x.id}/`);
+        const libDates = shelf
+          ? shelf.tools.map((x) => LIB_TOOLS.find((t) => t.id === x.id).checked)
+          : path.startsWith('/library/') ? LIB_TOOLS.map((t) => t.checked) : [];
+        const lastmod = libDates.length ? libDates.sort().at(-1) : latest(list);
         if (lastmod) item.lastmod = lastmod;
         return item;
       },
